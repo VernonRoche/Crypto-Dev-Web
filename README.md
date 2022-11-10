@@ -1,2 +1,2 @@
 # Crypto-Dev-Web
-This is an awesome SPA app
+This is an awesome SPA app.
