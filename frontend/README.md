@@ -50,3 +50,25 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+
+
+
+## package install
+
+ ### tailwindcss
+
+```sh
+npm install -D tailwindcss postcss autoprefixer
+```
+puis
+
+```sh
+npx tailwindcss init
+```
+
+ ### firebase
+
+```sh
+npm install firebase
+```
