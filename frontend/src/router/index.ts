@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import {getAuth , onAuthStateChanged } from 'firebase/auth';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,7 +8,19 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      // requireAuth: true,
       component: HomeView
+
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('../views/Register.vue')
+    },
+    {
+      path: '/signin',
+      name: 'signin',
+      component: () => import('../views/SignIn.vue')
     },
     {
       path: '/about',
@@ -20,4 +33,24 @@ const router = createRouter({
   ]
 })
 
+const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const removeListerner = onAuthStateChanged(getAuth(), (user: unknown) => {
+      removeListerner();
+      resolve(user);
+    }, reject);
+  });
+}
+router.beforeEach(async(to, from, next) => {
+  if(to.matched.some(record => record.meta.requireAuth)) {
+    if(await getAuth()) {
+      next();
+    } else {
+      alert("You dont have acces !!!");
+      next("/");
+    }
+  }else {
+    next();
+  }
+})
 export default router

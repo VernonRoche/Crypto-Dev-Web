@@ -28,6 +28,7 @@
     "autoprefixer": "^10.4.13",
     "eslint": "^8.22.0",
     "eslint-plugin-vue": "^9.3.0",
+    "firebase": "^9.14.0",
     "jsdom": "^20.0.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.19",
@@ -39,3 +40,4 @@
     "vue-tsc": "^1.0.8"
   }
 }
+
