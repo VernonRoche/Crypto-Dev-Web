@@ -15,6 +15,12 @@ test('create data for database test',async() => {
             await UserModel.create(user);
             console.log(`Created user ${user.firstname} ${user.lastname}`);
         }
+
+        for (const user of users) {
+            new Promise(resolve => UserModel.remove(user.firstname));
+            console.log(`Deleted user ${user.firstname} ${user.lastname}`);
+        }
+
         disconnect();
     } catch (error) {
         console.error(error);
