@@ -12,7 +12,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <nav>
         <!-- <RouterLink to="/">Home</RouterLink> -->
         <center><RouterLink to="/about">About</RouterLink></center>
-        <center><router-link to="/register">Register</router-link></center>
+        <!-- <center><router-link to="/register">Register</router-link></center> -->
         <center><router-link to="/signin">Sign In</router-link></center>
         <!-- <button @click="handleSignOut" v-if="isLoggedIn">Sign Out</button> -->
       </nav>

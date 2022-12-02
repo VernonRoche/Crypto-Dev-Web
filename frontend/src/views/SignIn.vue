@@ -2,9 +2,12 @@
   <h1>Sign In an account</h1>
   <p><input type="text" placeholder="Email" v-model="email"/></p>
   <p><input type="text" placeholder="Password" v-model="password"/></p>
-  <p v-if="errMsg">{{errMsg}}</p>
-  <p><button @click="register">Submit</button></p>
-  <p><button @click="signInWithGoogle">Sign in With Google</button></p>
+  <p><button @click="sign">Sign</button></p>
+  <p><button @click="register">Register</button></p>
+  <p class="text-red-500" v-if="errMsg">{{errMsg}}</p>
+  <!--  <p><input type="text" placeholder="Number" v-model="number"></p>
+  <p><button @click="signInWithGoogle">Sign with Smartphone</button></p> -->
+  <p><button @click="signInWithGoogle">Sign with <img src="../assets/Google_ G _Logo.svg.png"  width="50"  height="50"></button></p>
 
 
 </template>
@@ -12,17 +15,20 @@
 
 <script setup>
 import { ref } from 'vue';
-import { getAuth ,signInWithEmailAndPassword , GoogleAuthProvider,signInWithPopup } from 'firebase/auth';
+import { getAuth ,createUserWithEmailAndPassword,signInWithEmailAndPassword , GoogleAuthProvider , signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'vue-router';
 const email = ref("");
 const password = ref("");
 const router = useRouter();
 const errMsg = ref();
-const register =  () => {
+const number = ref("");
+// sign 
+const sign =  () => {
   signInWithEmailAndPassword(getAuth(),email.value,password.value)
       .then((data) => {
         console.log("Successfully signed in !!! ");
         router.push("/feed");
+        alert("Successfully signed in !!!")
       })
       .catch((error) => {
         console.log(error.code);
@@ -42,14 +48,45 @@ const register =  () => {
         }
       })
 };
-const signInWithGoogle = () => {
-  // const provider  = new GoogleAuthProvider();
-  //  signInWithPopup(getAuth(),provider).then((result) => {
-  //      console.log(result);
-  //      router.push("/about");
-  //  }).catch((error) => {
-  //      console.log(error);
-  //  })
+
+// register
+
+const register =  () => {
+  createUserWithEmailAndPassword(getAuth(),email.value,password.value)
+      .then((data) => {
+        console.log("Successfully registered !!! ");
+        alert("Successfully registered !!! ");
+        router.push("/home");
+      })
+      .catch((error) => {
+        console.log(error.code);
+        //alert(error.message);
+        switch(error.code){
+          case "auth/invalid-email":
+            errMsg.value = "Invalid Email";
+            break;
+          case "auth/weak-password":
+            errMsg.value = "Password should be at least 6 characters";
+            break;
+          case "auth/email-already-in-use":
+            errMsg.value = "Email already in use";
+            break;
+          case "auth/internal-error":
+            errMsg.value = "Mettez un mot de passe ";
+            break;
+        }
+      })
 };
+const signInWithGoogle = () => {
+  const provider  = new GoogleAuthProvider();
+  signInWithPopup(getAuth(),provider).then((result) => {
+    console.log(result);
+    router.push("/home");
+    alert("Successfully signed in !!! ");
+  }).catch((error) => {
+    console.log(error);
+  })
+};
+
 
 </script>
