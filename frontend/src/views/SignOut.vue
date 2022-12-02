@@ -4,7 +4,7 @@
       <router-link to="/"> Home </router-link> |
       <span v-if="isLoggedIn"
       >>
-          <button @click="signOut">Logout</button>
+          <button @click="signOutLoigin">Logout</button>
         </span>
       <span v-else>
           <router-link to="/register"> Register </router-link> |
@@ -17,31 +17,33 @@
 
 <script setup>
 import { ref, watchEffect } from 'vue' // used for conditional rendering
-import firebase from 'firebase'
+import {getAuth} from 'firebase'
 import { useRouter } from 'vue-router'
-const router = useRouter()
-const isLoggedIn = ref(true)
+const router = useRouter();
+const isLoggedIn = ref(true);
+const auth = getAuth();
 // runs after firebase is initialized
-firebase.auth().onAuthStateChanged(function(user) {
-  if (user) {
-    isLoggedIn.value = true // if we have a user
-  } else {
-    isLoggedIn.value = false // if we do not
-  }
-})
-const signOut = () => {
-  firebase.auth().signOut()
-  router.push('/')
+// firebase.auth().onAuthStateChanged(function(user) {
+//   if (user) {
+//     isLoggedIn.value = true // if we have a user
+//   } else {
+//     isLoggedIn.value = false // if we do not
+//   }
+// })
+// const signOut = () => {
+//   firebase.auth().signOut()
+//   router.push('/')
+// }
+
+const signOutLoigin = () => {
+  signOut(auth).then(() => {
+    // Sign-out successful.
+    this.user='';
+    this.isLoggedIn=false;
+    router.push('/');
+  }).catch((error) => {
+    // An error happened.
+    console.log(error);
+  });
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
