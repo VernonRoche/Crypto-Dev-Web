@@ -2,7 +2,7 @@
   <h1>Sign In an account</h1>
   <p><input type="text" placeholder="Email" v-model="email"/></p>
   <p><input type="text" placeholder="Password" v-model="password"/></p>
-  <p v-if="errMSG">{{errMSG}}</p>
+  <p v-if="errMsg">{{errMsg}}</p>
   <p><button @click="register">Submit</button></p>
   <p><button @click="signInWithGoogle">Sign in With Google</button></p>
 
@@ -28,13 +28,13 @@ const register =  () => {
         console.log(error.code);
         switch(error.code){
           case "auth/invalid-email":
-            errMSG.value = "Invalid Email";
+            errMsg.value = "Invalid Email";
             break;
           case "auth/user-not-found":
-            errMSG.value = "User Not Found";
+            errMsg.value = "User Not Found";
             break;
           case "auth/wrong-password":
-            errMSG.value = "Wrong Password";
+            errMsg.value = "Wrong Password";
             break;
           default:
             errMsg.value = 'Email or password was incorrect';

@@ -5,7 +5,7 @@
   <p><button @click="register">Submit</button></p>
   <p><button @click="signInWithGoogle">Sign in With Google</button></p>
   <p><input type="text" placeholder="Number" v-model="number"></p>
-  <p><button @click="">Sign with Smartphone</button></p>
+  <p><button @click="signInWithGoogle">Sign with Smartphone</button></p>
 
 
 </template>
