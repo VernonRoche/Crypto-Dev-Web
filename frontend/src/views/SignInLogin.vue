@@ -5,6 +5,12 @@
   <p><button @click="sign">Sign</button></p>
   <p><button @click="register">Register</button></p>
   <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
+  <div v-if="(cpt >= 3)">
+  <buton @click="resetPassWord">Reinitialiser Mot De Passe</buton>
+  <div v-if="isResetPassWord">
+    <p><input type="text" placeholder="Email" v-model="email" /></p>
+  </div>
+</div>
   <p><button @click="signInWithphone">Sign with Smartphone</button></p>
   <div v-if="isSignInWithPhone">
     <div id="recaptcha-container" style="background-color:#1b1a1a;width:300px;margin:auto;"></div>
@@ -45,20 +51,22 @@
 
 <script setup>
 import { ref } from 'vue';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, OAuthProvider, signInWithPhoneNumber  ,RecaptchaVerifier , sendSignInLinkToEmail } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, OAuthProvider, signInWithPhoneNumber  ,RecaptchaVerifier , sendSignInLinkToEmail , sendPasswordResetEmail } from 'firebase/auth';
 import { useRouter } from 'vue-router';
 const email = ref("");
 const password = ref("");
 const router = useRouter();
 const errMsg = ref();
-
+let cpt = 0;
 // sign 
 const sign = () => {
+  console.log("cpt " + cpt);
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((data) => {
       console.log("Successfully signed in !!! ");
       router.push("/feed");
-      alert("Successfully signed in !!!")
+      alert("Successfully signed in !!!");
+      cpt = 0;
     })
     .catch((error) => {
       console.log(error.code);
@@ -71,12 +79,14 @@ const sign = () => {
           break;
         case "auth/wrong-password":
           errMsg.value = "Wrong Password";
+           cpt++;
           break;
         case "auth/user-disabled":
           errMsg.value = "User Disabled";
           break;
         default:
           errMsg.value = 'Email or password was incorrect';
+          cpt++;
           break;
       }
     })
@@ -110,6 +120,25 @@ const register = () => {
       }
     })
 };
+
+//reset Pasword
+
+const resetPassWord = () => {
+  const auth = getAuth();
+  const emailAddress = email.value;
+  sendPasswordResetEmail(auth,emailAddress)
+    .then(() => {
+      // Password reset email sent!
+      // ..
+      alert("Email sent");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // ..
+      alert(errorMessage);
+    });
+}
 
 // sign with link to email
 const linksent = ref(false);
