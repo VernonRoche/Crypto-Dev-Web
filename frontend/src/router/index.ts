@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import {getAuth , onAuthStateChanged } from 'firebase/auth';
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -12,9 +13,9 @@ const router = createRouter({
 
     },
     {
-      path: '/signin',
-      name: 'signin',
-      component: () => import('../views/SignIn.vue')
+      path: '/connection',
+      name: 'connection',
+      component: () => import('../views/SignInLogin.vue')
     },
     {
       path: '/about',
@@ -48,3 +49,8 @@ router.beforeEach(async(to, from, next) => {
   }
 })
 export default router
+
+function alert(arg0: string) {
+  throw new Error('Function not implemented.');
+}
+
