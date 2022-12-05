@@ -11,39 +11,31 @@
     <p><input type="text" placeholder="Email" v-model="email" /></p>
   </div>
 </div>
-  <p><button @click="signInWithphone">Sign with Smartphone</button></p>
+  <center><p><button @click="signInWithPhone">Sign with <img src="../assets/phone.jpeg" width="50" height="50"></button></p>
   <div v-if="isSignInWithPhone">
-    <div id="recaptcha-container" style="background-color:#1b1a1a;width:300px;margin:auto;"></div>
     <p><input type="text" placeholder="Phone Number" v-model="phoneNumber" /></p>
-    <p><button @click="sendCode">Send Code</button></p>
-    <p><input type="text" placeholder="Code" v-model="code" /></p>
-    <p><button @click="confirmCode">Confirm Code</button></p>
+    <div id="recaptcha-container">recap</div>
+    <p><button @click="signInWithPhoneCodeSend">Send Code</button></p>
+    <div v-if="isCode">
+      <p><input type="text" placeholder="Enter Code" v-model="code" /></p>
+      <p><button @click="confirmCode">Confirm Code</button></p>
+    </div>
   </div>
   <br />
-  <div v-if="smsSent" style="background-color:#1b1a1a;width:300px;height:180px;margin:auto; border-radius:10px;">
-            <div style="background-color:black">
-            <label style="font:family:system-ui;font-size: x-large;">Enter Otp</label>
-            </div>
-            <br>
-            <div>
-            <input type="text" placeholder="Enter Otp" v-model="otp">
-            </div>
-            <br>
-            <div>
-            <button @click="verifyOtp">Verify</button>
-            <button @click="sendOtp()">Resend OTP</button>
-            </div>
-        </div>
 
   <p><button @click="signInWithGoogle">Sign with <img src="../assets/Google_ G _Logo.svg.png" width="50"
         height="50"></button></p>
+        <br>
   <p><button @click="signInWithMicrosoft">Sign with <img src="../assets/Microsoft_logo.svg.png" width="50"
         height="50"></button></p>
-  <p><button @click="signOnlyLinkEmail">Sign with link email <img src="../assets/Mail_(Apple)_logo.png" width="50" height="50" ></button></p>
+        <br>
+  <p><button @click="signOnlyLinkEmail">Sign with  <img src="../assets/Mail_(Apple)_logo.png" width="50" height="50" ></button></p>
   <div v-if="linksent" >
     <p><input type="text" placeholder="Email" v-model="email" /></p>
     <p><button @click="signInWithLinkEmail">Sign with link email</button></p>
   </div>
+  </center>
+
 
 
 </template>
@@ -64,7 +56,7 @@ const sign = () => {
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((data) => {
       console.log("Successfully signed in !!! ");
-      router.push("/feed");
+      router.push("/about");
       alert("Successfully signed in !!!");
       cpt = 0;
     })
@@ -99,7 +91,7 @@ const register = () => {
     .then((data) => {
       console.log("Successfully registered !!! ");
       alert("Successfully registered !!! ");
-      router.push("/home");
+      router.push("/about");
     })
     .catch((error) => {
       console.log(error.code);
@@ -149,7 +141,7 @@ const signOnlyLinkEmail = () => {
 const signInWithLinkEmail = () => {
   const auth = getAuth();
   const actionCodeSettings = {
-    url: 'http://localhost:5173/home',
+    url: 'http://localhost:5173/about',
     handleCodeInApp: true,
   };
   sendSignInLinkToEmail(auth,email.value, actionCodeSettings)
@@ -184,7 +176,7 @@ const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider).then((result) => {
     console.log(result);
-    router.push("/home");
+    router.push("/about");
     alert("Successfully signed in !!! ");
   }).catch((error) => {
     console.log(error);
@@ -201,7 +193,7 @@ const signInWithMicrosoft = () => {
   const provider = new OAuthProvider('microsoft.com');
   signInWithPopup(getAuth(), provider).then((result) => {
     console.log(result);
-    router.push("/home");
+    router.push("/about");
     alert("Successfully signed in !!! ");
   }).catch((error) => {
     console.log(error);
@@ -214,87 +206,63 @@ const signInWithMicrosoft = () => {
 };
 
 // sign with phone number
+const isSignInWithPhone = ref(false);
+const signInWithPhone = () => {
+  isSignInWithPhone.value = true;
+}
 
-const number = ref("");
-const smsSent = ref(false);
-const otp = ref("");
-const recaptchaVerifier = ref("");
-const recaptchaWidgetId = ref("");
+const isCode = ref(false);
 
+const signInWithPhoneCode = () => {
+  isCode.value = true;
+}
+const auth = getAuth();
+const phoneNumber = ref("");
+const code = ref("");
 
-
-
-const signInWithphone = () => {
-  recaptchaVerifier.value = new RecaptchaVerifier('recaptcha-container', {
+const initRecaptchatVerifier = () => {
+  window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
     'size': 'invisible',
     'callback': (response) => {
       // reCAPTCHA solved, allow signInWithPhoneNumber.
       onSignInSubmit();
     }
   });
-  recaptchaVerifier.value.render().then(function (widgetId) {
-    recaptchaWidgetId.value = widgetId;
-  });
-  smsSent.value = true;
-  signInWithPhoneNumber(getAuth(), number.value, recaptchaVerifier.value)
+}
+
+
+
+const signInWithPhoneCodeSend = () => {
+  initRecaptchatVerifier();
+  const appVerifier = window.recaptchaVerifier;
+  signInWithPhoneNumber(auth, phoneNumber.value, appVerifier)
     .then((confirmationResult) => {
       // SMS sent. Prompt user to type the code from the message, then sign the
       // user in with confirmationResult.confirm(code).
       window.confirmationResult = confirmationResult;
-      console.log("SMS sent");
+      alert("We sent SMS !!! ");
     }).catch((error) => {
       // Error; SMS not sent
       // ...
       console.log(error);
+      window.recaptchaVerifier.render().then(function(widgetId) {
+  grecaptcha.reset(widgetId);
+});
     });
-};
-// const signInWithphone = () => {
-//   this.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container')
-//             this.recaptchaVerifier.render().then((widgetId)=>{
-//             this.recaptchaWidgetId = widgetId    
-//             })
-            
-//             var number = this.phoneNumber            
-//             firebase.auth().signInWithPhoneNumber(number,this.recaptchaVerifier)
-//             .then((confirmationResult)=>{                
-//                 this.confirmResult = confirmationResult
-//                 console.log(this.confirmResult)
-//                 alert("Sms Sent!")
-//                 this.smsSent=true
-//             })
-//             .catch((error)=>{
-//                 console.log("Sms not sent",error.message)
-//             })
-// };
+}
 
-const verifyOtp = () => {
-  const auth = getAuth();
-  const appVerifier = window.recaptchaVerifier;
-  const confirmationResult = window.confirmationResult;
-  confirmationResult.confirm(otp.value).then((result) => {
-    console.log(result);
-    router.push("/home");
-    alert("Successfully signed in !!! ");
-  }).catch((error) => {
-    console.log(error);
-  });
-};
+const confirmCode = () => {
+  code = getCodeFromUserInput();
+  confirmationResult.confirm(code.value);
+  router.push("/aubout");
+  alert("Successfully signed in !!! ");
+}
 
-const sendOtp = () => {
-  const auth = getAuth();
-  const appVerifier = window.recaptchaVerifier;
-  const confirmationResult = window.confirmationResult;
-  confirmationResult
-    .confirm(otp.value)
-    .then((result) => {
-      console.log(result);
-      router.push("/home");
-      alert("Successfully signed in !!! ");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+
+
+
+
+
 
 
 

@@ -23,34 +23,33 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      component: () => import('../views/AboutView.vue'),
+      meta: {
+        requiresAuth: true,
+      }
     }
   ]
 })
 
 const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
-    const removeListerner = onAuthStateChanged(getAuth(), (user: unknown) => {
+    const removeListerner = onAuthStateChanged(getAuth(), (user) => {
       removeListerner();
       resolve(user);
     }, reject);
   });
 }
 router.beforeEach(async(to, from, next) => {
-  if(to.matched.some(record => record.meta.requireAuth)) {
-    if(await getAuth()) {
+  if(to.matched.some((record) => record.meta.requireAuth)) {
+    if(await getCurrentUser()) {
       next();
     } else {
       alert("You dont have acces !!!");
-      next("/");
+      next("/connection");
     }
   }else {
     next();
   }
 })
 export default router
-
-function alert(arg0: string) {
-  throw new Error('Function not implemented.');
-}
 
