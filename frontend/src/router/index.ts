@@ -31,25 +31,6 @@ const router = createRouter({
   ]
 })
 
-const getCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    const removeListerner = onAuthStateChanged(getAuth(), (user) => {
-      removeListerner();
-      resolve(user);
-    }, reject);
-  });
-}
-router.beforeEach(async(to, from, next) => {
-  if(to.matched.some((record) => record.meta.requireAuth)) {
-    if(await getCurrentUser()) {
-      next();
-    } else {
-      alert("You dont have acces !!!");
-      next("/connection");
-    }
-  }else {
-    next();
-  }
-})
+
 export default router
 

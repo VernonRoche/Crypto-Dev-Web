@@ -15,9 +15,9 @@
   </div>
 </template>
 
-<script setup>
+<script setup >
 import { ref, watchEffect } from 'vue' // used for conditional rendering
-import {getAuth} from 'firebase'
+import {getAuth, type Auth} from 'firebase//auth'
 import { useRouter } from 'vue-router'
 const router = useRouter();
 const isLoggedIn = ref(true);
@@ -41,7 +41,7 @@ const signOutLoigin = () => {
     this.user='';
     this.isLoggedIn=false;
     router.push('/');
-  }).catch((error) => {
+  }).catch((error: any) => {
     // An error happened.
     console.log(error);
   });

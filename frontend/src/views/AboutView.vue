@@ -4,12 +4,19 @@
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<script setup lang="ts">
+import {onAuthStateChanged, getAuth} from 'firebase/auth';
+import { onBeforeMount } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const auth = getAuth();
+
+onBeforeMount(() => {
+  onAuthStateChanged(auth, (user: any) => {
+    if (!user) {
+      
+      router.push('/sign-in');
+    }
+  });
+});
+</script>

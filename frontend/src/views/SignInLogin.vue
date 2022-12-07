@@ -14,8 +14,8 @@
 </div>
   <center><p><button @click="signInWithPhone">Sign with <img src="../assets/phone.jpeg" width="50" height="50"></button></p>
   <div v-if="isSignInWithPhone">
-    <p><input type="text" placeholder="Phone Number" v-model="phoneNumber" /></p>
-    <div id="recaptcha-container">recap</div>
+    <p><input type="text" placeholder="Phone Number with indicator " v-model="phoneNumber" /></p>
+    <div id="recaptcha-container"></div>
     <p><button @click="signInWithPhoneCodeSend">Send Code</button></p>
     <div v-if="isCode">
       <p><input type="text" placeholder="Enter Code" v-model="code" /></p>
@@ -205,7 +205,10 @@ const signInWithMicrosoft = () => {
 };
 
 // sign with phone number
-
+const isSignInWithPhone = ref(false);
+const signInWithPhone = () => {
+  isSignInWithPhone.value = true;
+}
 
 const isCode = ref(false);
 
@@ -218,10 +221,9 @@ const code = ref("");
 
 const initRecaptchatVerifier = () => {
   window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-    'size': 'invisible',
-    'callback': (_response: any) => {
-      // reCAPTCHA solved, allow signInWithPhoneNumber.
-    }
+    // 'size': 'normal',
+    // 'callback': (_response: any) => {
+    // }
   },auth);
 }
 
@@ -229,33 +231,35 @@ const initRecaptchatVerifier = () => {
 
 const signInWithPhoneCodeSend = () => {
   initRecaptchatVerifier();
+  signInWithPhoneCode();
   const appVerifier = window.recaptchaVerifier;
   signInWithPhoneNumber(auth, phoneNumber.value, appVerifier)
     .then((confirmationResult) => {
-      // SMS sent. Prompt user to type the code from the message, then sign the
-      // user in with confirmationResult.confirm(code).
       window.confirmationResult = confirmationResult;
       alert("We sent SMS !!! ");
     }).catch((error) => {
       // Error; SMS not sent
       // ...
-      console.log(error);
-    });
+      console.log(error);    });
 }
 
 const confirmCode = () => {
-  //code = getCodeFromUserInput();
-  confirmationResult.confirm(code.value);
-  router.push("/aubout");
-  alert("Successfully signed in !!! ");
+  const confirmationResult = window.confirmationResult;
+  confirmationResult.confirm(code.value).then((result: { user: any; }) => {
+    // User signed in successfully.
+    const user = result.user;
+    alert("User signed in successfully !!! ");
+    router.push("/about");
+    
+
+    // ...
 }
-
-
-
-
-
-
-
+  ).catch((error: any) => {
+    // User couldn't sign in (bad verification code?)
+    // ...
+    console.log(error);
+  });
+}
 
 
 
