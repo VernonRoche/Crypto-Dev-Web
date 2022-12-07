@@ -1,4 +1,5 @@
 <template>
+  <!-- <center><RouterLink to="/">Home</RouterLink></center> -->
   <h1>Create or Sign in an account</h1>
   <p><input type="text" placeholder="Email" v-model="email" /></p>
   <p><input type="text" placeholder="Password" v-model="password" /></p>
@@ -41,7 +42,7 @@
 </template>
 
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, OAuthProvider, signInWithPhoneNumber  ,RecaptchaVerifier , sendSignInLinkToEmail , sendPasswordResetEmail } from 'firebase/auth';
 import { useRouter } from 'vue-router';
@@ -54,33 +55,30 @@ let cpt = 0;
 const sign = () => {
   console.log("cpt " + cpt);
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
-    .then((data) => {
+    .then((_data) => {
       console.log("Successfully signed in !!! ");
       router.push("/about");
       alert("Successfully signed in !!!");
       cpt = 0;
     })
     .catch((error) => {
-      console.log(error.code);
-      switch (error.code) {
-        case "auth/invalid-email":
-          errMsg.value = "Invalid Email";
-          break;
-        case "auth/user-not-found":
-          errMsg.value = "User Not Found";
-          break;
-        case "auth/wrong-password":
-          errMsg.value = "Wrong Password";
-           cpt++;
-          break;
-        case "auth/user-disabled":
-          errMsg.value = "User Disabled";
-          break;
-        default:
-          errMsg.value = 'Email or password was incorrect';
-          cpt++;
-          break;
+      const obj: Record<string, string> = {
+        "auth/invalid-email": "Invalid Email",
+        "auth/user-not-found": "User Not Found",
+        "auth/wrong-password": "Wrong Password",
+        "auth/user-disabled": "User Disabled",
       }
+      const message = obj[error.code];
+      if (!message) {
+        errMsg.value = error.message;
+        cpt++;
+      } else {
+        errMsg.value = message;
+      }
+      if(message == "Wrong Password" ){
+        cpt++;
+      }
+      console.log(error.code);
     })
 };
 
@@ -88,32 +86,37 @@ const sign = () => {
 
 const register = () => {
   createUserWithEmailAndPassword(getAuth(), email.value, password.value)
-    .then((data) => {
+    .then((_data) => {
       console.log("Successfully registered !!! ");
       alert("Successfully registered !!! ");
       router.push("/about");
     })
     .catch((error) => {
-      console.log(error.code);
+      //console.log(error.code);
       //alert(error.message);
-      switch (error.code) {
-        case "auth/invalid-email":
-          errMsg.value = "Invalid Email";
-          break;
-        case "auth/weak-password":
-          errMsg.value = "Password should be at least 6 characters";
-          break;
-        case "auth/email-already-in-use":
-          errMsg.value = "Email already in use";
-          break;
-        case "auth/internal-error":
-          errMsg.value = "Mettez un mot de passe ";
-          break;
+      const obj:Record<string,string> = {
+        "auth/invalid-email": "Invalid Email",
+        "auth/weak-password": "Password should be at least 6 characters",
+        "auth/email-already-in-use": "Email already in use",
+        "auth/internal-error": "Mettez un mot de passe ",
+      } 
+      const message = obj[error.code] ;
+      if(!message){
+        errMsg.value = error.message;
+      }else{
+        errMsg.value = message;
       }
     })
 };
 
 //reset Pasword
+
+const isResetPassWord = ref(false);
+
+const isReset = () => {
+  isResetPassWord.value = true;
+
+}
 
 const resetPassWord = () => {
   const auth = getAuth();
@@ -123,6 +126,7 @@ const resetPassWord = () => {
       // Password reset email sent!
       // ..
       alert("Email sent");
+      isReset();
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -150,24 +154,19 @@ const signInWithLinkEmail = () => {
       alert("Email sent");
     })
     .catch((error) => {
-      console.log(error.code);
-      switch (error.code) {
-        case "auth/invalid-email":
-          errMsg.value = "Invalid Email";
-          break;
-        case "auth/user-not-found":
-          errMsg.value = "User Not Found";
-          break;
-        case "auth/wrong-password":
-          errMsg.value = "Wrong Password";
-          break;
-        case "auth/user-disabled":
-          errMsg.value = "User Disabled";
-          break;
-        default:
-          errMsg.value = 'Email or password was incorrect';
-          break;
+      const obj: Record<string, string> = {
+        "auth/invalid-email": "Invalid Email",
+        "auth/user-not-found": "User Not Found",
+        "auth/wrong-password": "Wrong Password",
+        "auth/user-disabled": "User Disabled",
       }
+      const message = obj[error.code];
+      if(!message) {
+        errMsg.value = 'Email or password was incorrect';
+      } else {
+        errMsg.value = message;
+      }
+      console.log(error.code);
     })
 };
 
@@ -206,10 +205,7 @@ const signInWithMicrosoft = () => {
 };
 
 // sign with phone number
-const isSignInWithPhone = ref(false);
-const signInWithPhone = () => {
-  isSignInWithPhone.value = true;
-}
+
 
 const isCode = ref(false);
 
@@ -223,11 +219,10 @@ const code = ref("");
 const initRecaptchatVerifier = () => {
   window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
     'size': 'invisible',
-    'callback': (response) => {
+    'callback': (_response: any) => {
       // reCAPTCHA solved, allow signInWithPhoneNumber.
-      onSignInSubmit();
     }
-  });
+  },auth);
 }
 
 
@@ -245,14 +240,11 @@ const signInWithPhoneCodeSend = () => {
       // Error; SMS not sent
       // ...
       console.log(error);
-      window.recaptchaVerifier.render().then(function(widgetId) {
-  grecaptcha.reset(widgetId);
-});
     });
 }
 
 const confirmCode = () => {
-  code = getCodeFromUserInput();
+  //code = getCodeFromUserInput();
   confirmationResult.confirm(code.value);
   router.push("/aubout");
   alert("Successfully signed in !!! ");
