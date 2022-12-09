@@ -15,7 +15,8 @@ import HelloWorld from './components/HelloWorld.vue'
           <button @click="handleSignOut">Logout</button>
         </span>
         <span v-else> -->
-          <router-link to="/connection"> Login </router-link>
+          <router-link to="/connection"> Login </router-link> |
+          <router-link  to="/account"> My Account </router-link>
         <!-- </span> -->
       </nav>
     </div>
