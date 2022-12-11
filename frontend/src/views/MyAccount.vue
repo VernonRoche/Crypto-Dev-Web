@@ -1,6 +1,6 @@
 <template>
   <router-link to="/"> Home </router-link>
-  <h1>Hello {{ user?.displayName }}</h1>
+  <h1>Hello {{ user?.displayName || user?.phoneNumber || user?.email }}</h1>
   <br />
   <button @click="clickchangedMail">Changer l'adresse mail</button>
   <br />
