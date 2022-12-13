@@ -3,6 +3,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// Load MongoDB
+
+
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://astergiou:cryptohub@cryptohubcluster.lxmrqbv.mongodb.net/?retryWrites=true&w=majority";
+const mongoClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+
+// Load routes
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -20,6 +28,15 @@ app.use('/users', usersRouter);
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
+});
+
+mongoClient.connect(async (err: any) => {
+    if (err) throw err;
+    const collection = mongoClient.db("test").collection("UserPreferences");
+    // perform actions on the collection object
+    console.log("Connected to MongoDB!");
+    await collection.find({user_id: "1234567890"}).forEach(console.dir);
+    mongoClient.close();
 });
 
 module.exports = app;

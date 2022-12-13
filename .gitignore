@@ -108,6 +108,3 @@ dist
 
 # Webstorm
 .idea
-
-# Database
-database/
