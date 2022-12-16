@@ -1,63 +1,71 @@
 <template>
-  <!-- <center><RouterLink to="/">Home</RouterLink></center> -->
-  <h1>Create or Sign in an account</h1>
-  <!-- <p> <input type="text" placeholder="Name" v-model="name"</p> -->
-  <p><input type="text" placeholder="Email" v-model="email" /></p>
-  <p><input type="text" placeholder="Password" v-model="password" /></p>
-  <p><button @click="sign">Sign</button></p>
-  <p><button @click="register">Register</button></p>
-  <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
-  <div v-if="cpt >= 3">
-    <buton @click="resetPassWord">Reinitialiser Mot De Passe</buton>
-    <div v-if="isResetPassWord">
+  <div class="popup">
+    <div class="popup-inner">
+      <slot />
+      <h1>Create or Sign in an account</h1>
+      <!-- <p> <input type="text" placeholder="Name" v-model="name"</p> -->
       <p><input type="text" placeholder="Email" v-model="email" /></p>
-    </div>
-  </div>
-  <p>
-    <button @click="signInWithPhone">
-      Sign with <img src="../assets/phone.jpeg" width="50" height="50" />
-    </button>
-  </p>
-  <div v-if="isSignInWithPhone">
-    <p>
-      <input
-        type="text"
-        placeholder="Phone Number with indicator "
-        v-model="phoneNumber"
-      />
-    </p>
-    <div id="recaptcha-container"></div>
-    <p><button @click="signInWithPhoneCodeSend">Send Code</button></p>
-    <div v-if="isCode">
-      <p><input type="text" placeholder="Enter Code" v-model="code" /></p>
-      <p><button @click="confirmCode">Confirm Code</button></p>
-    </div>
-  </div>
-  <br />
+      <p><input type="text" placeholder="Password" v-model="password" /></p>
+      <p><button @click="sign">Sign</button></p>
+      <p><button @click="register">Register</button></p>
+      <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
+      <div v-if="cpt >= 3">
+        <buton @click="resetPassWord">Reinitialiser Mot De Passe</buton>
+        <div v-if="isResetPassWord">
+          <p><input type="text" placeholder="Email" v-model="email" /></p>
+        </div>
+      </div>
+      <p>
+        <button @click="signInWithPhone">
+          Sign with <img src="../assets/phone.jpeg" width="50" height="50" />
+        </button>
+      </p>
+      <div v-if="isSignInWithPhone">
+        <p>
+          <input
+            type="text"
+            placeholder="Phone Number with indicator "
+            v-model="phoneNumber"
+          />
+        </p>
+        <div id="recaptcha-container"></div>
+        <p><button @click="signInWithPhoneCodeSend">Send Code</button></p>
+        <div v-if="isCode">
+          <p><input type="text" placeholder="Enter Code" v-model="code" /></p>
+          <p><button @click="confirmCode">Confirm Code</button></p>
+        </div>
+      </div>
+      <br />
 
-  <p>
-    <button @click="signInWithGoogle">
-      Sign with
-      <img src="../assets/Google_ G _Logo.svg.png" width="50" height="50" />
-    </button>
-  </p>
-  <br />
-  <p>
-    <button @click="signInWithMicrosoft">
-      Sign with
-      <img src="../assets/Microsoft_logo.svg.png" width="50" height="50" />
-    </button>
-  </p>
-  <br />
-  <p>
-    <button @click="signOnlyLinkEmail">
-      Sign with
-      <img src="../assets/Mail_(Apple)_logo.png" width="50" height="50" />
-    </button>
-  </p>
-  <div v-if="linksent">
-    <p><input type="text" placeholder="Email" v-model="email2" /></p>
-    <p><button @click="signInWithLinkEmail">Sign with link email</button></p>
+      <p>
+        <button @click="signInWithGoogle">
+          Sign with
+          <img src="../assets/Google_ G _Logo.svg.png" width="50" height="50" />
+        </button>
+      </p>
+      <br />
+      <p>
+        <button @click="signInWithMicrosoft">
+          Sign with
+          <img src="../assets/Microsoft_logo.svg.png" width="50" height="50" />
+        </button>
+      </p>
+      <br />
+      <p>
+        <button @click="signOnlyLinkEmail">
+          Sign with
+          <img src="../assets/Mail_(Apple)_logo.png" width="50" height="50" />
+        </button>
+      </p>
+      <div v-if="linksent">
+        <p><input type="text" placeholder="Email" v-model="email2" /></p>
+        <p>
+          <button @click="signInWithLinkEmail">Sign with link email</button>
+        </p>
+      </div>
+
+      <button class="popup-close" @click="handlePopupLogin">close popup</button>
+    </div>
   </div>
 </template>
 
@@ -76,6 +84,8 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 import { useRouter } from "vue-router";
+import { popupTrigger, handlePopupLogin } from "../types/popup";
+
 const email = ref("");
 const email2 = ref("");
 const password = ref("");
@@ -109,7 +119,7 @@ const sign = () => {
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((_data) => {
       console.log("Successfully signed in !!! ");
-      router.push("/about");
+      //router.push("/about");
       alert("Successfully signed in !!!");
       cpt = 0;
       //useridentity();
@@ -143,7 +153,7 @@ const register = () => {
       //useridentity();
       console.log("Successfully registered !!! ");
       alert("Successfully registered !!! ");
-      router.push("/about");
+      //router.push("/about");
     })
     .catch((error) => {
       //console.log(error.code);
@@ -230,7 +240,7 @@ const signInWithGoogle = () => {
   signInWithPopup(getAuth(), provider)
     .then((result) => {
       console.log(result);
-      router.push("/about");
+      //router.push("/about");
       //useridentity();
       alert("Successfully signed in !!! ");
     })
@@ -255,7 +265,7 @@ const signInWithMicrosoft = () => {
       const idToken = credential?.idToken;
       //useridentity();
       console.log(result);
-      router.push("/about");
+      //router.push("/about");
       alert("Successfully signed in !!! ");
     })
     .catch((error) => {
@@ -320,7 +330,7 @@ const confirmCode = () => {
       const user = result.user;
       //useridentity();
       alert("User signed in successfully !!! ");
-      router.push("/about");
+      //router.push("/about");
 
       // ...
     })
@@ -331,3 +341,23 @@ const confirmCode = () => {
     });
 };
 </script>
+
+<style lang="scss" scoped>
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .popup-inner {
+    background: #fff;
+    padding: 32px;
+  }
+}
+</style>
