@@ -2,12 +2,13 @@
   <div class="popup">
     <div class="popup-inner">
       <slot />
-      <h1>Create or Sign in an account</h1>
-      <!-- <p> <input type="text" placeholder="Name" v-model="name"</p> -->
+      <h1>Create or Sign in account</h1>
       <p><input type="text" placeholder="Email" v-model="email" /></p>
       <p><input type="text" placeholder="Password" v-model="password" /></p>
-      <p><button @click="sign">Sign</button></p>
-      <p><button @click="register">Register</button></p>
+      <div style="margin-top: 42px"></div>
+      <button @click="sign">Sign</button>
+      <button @click="register">Register</button>
+
       <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
       <div v-if="cpt >= 3">
         <buton @click="resetPassWord">Reinitialiser Mot De Passe</buton>
@@ -15,12 +16,15 @@
           <p><input type="text" placeholder="Email" v-model="email" /></p>
         </div>
       </div>
-      <p>
-        <button @click="signInWithPhone">
-          Sign with <img src="../assets/phone.jpeg" width="50" height="50" />
-        </button>
-      </p>
-      <div v-if="isSignInWithPhone">
+
+      <div>
+        <p>
+          <button @click="signInWithPhone">
+            <img src="../assets/phone.jpeg" width="50" height="50" />
+          </button>
+        </p>
+      </div>
+      <div id="myDiv" class="hidden" v-if="isSignInWithPhone">
         <p>
           <input
             type="text"
@@ -39,25 +43,22 @@
 
       <p>
         <button @click="signInWithGoogle">
-          Sign with
           <img src="../assets/Google_ G _Logo.svg.png" width="50" height="50" />
         </button>
       </p>
       <br />
       <p>
         <button @click="signInWithMicrosoft">
-          Sign with
           <img src="../assets/Microsoft_logo.svg.png" width="50" height="50" />
         </button>
       </p>
       <br />
       <p>
         <button @click="signOnlyLinkEmail">
-          Sign with
           <img src="../assets/Mail_(Apple)_logo.png" width="50" height="50" />
         </button>
       </p>
-      <div v-if="linksent">
+      <div id="myDiv2" class="hidden" v-if="linksent">
         <p><input type="text" placeholder="Email" v-model="email2" /></p>
         <p>
           <button @click="signInWithLinkEmail">Sign with link email</button>
@@ -93,8 +94,10 @@ const router = useRouter();
 const errMsg = ref();
 
 const user = getAuth().currentUser;
+//const name = ref("");
 
 let cpt = 0;
+
 // sign
 
 const useridentity = () => {
@@ -119,10 +122,8 @@ const sign = () => {
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((_data) => {
       console.log("Successfully signed in !!! ");
-      //router.push("/about");
       alert("Successfully signed in !!!");
       cpt = 0;
-      //useridentity();
     })
     .catch((error) => {
       const obj: Record<string, string> = {
@@ -150,14 +151,10 @@ const sign = () => {
 const register = () => {
   createUserWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((_data) => {
-      //useridentity();
       console.log("Successfully registered !!! ");
       alert("Successfully registered !!! ");
-      //router.push("/about");
     })
     .catch((error) => {
-      //console.log(error.code);
-      //alert(error.message);
       const obj: Record<string, string> = {
         "auth/invalid-email": "Invalid Email",
         "auth/weak-password": "Password should be at least 6 characters",
@@ -186,8 +183,6 @@ const resetPassWord = () => {
   const emailAddress = email.value;
   sendPasswordResetEmail(auth, emailAddress)
     .then(() => {
-      // Password reset email sent!
-      // ..
       alert("Email sent");
       isReset();
     })
@@ -203,6 +198,8 @@ const resetPassWord = () => {
 const linksent = ref(false);
 const signOnlyLinkEmail = () => {
   linksent.value = true;
+  const div = document.querySelector("#myDiv2");
+  div?.classList.toggle("hidden");
 };
 
 const signInWithLinkEmail = () => {
@@ -214,7 +211,6 @@ const signInWithLinkEmail = () => {
   sendSignInLinkToEmail(auth, email2.value, actionCodeSettings)
     .then(() => {
       window.localStorage.setItem("emailForSignIn", email.value);
-      //useridentity();
       alert("Email sent");
     })
     .catch((error) => {
@@ -240,8 +236,7 @@ const signInWithGoogle = () => {
   signInWithPopup(getAuth(), provider)
     .then((result) => {
       console.log(result);
-      //router.push("/about");
-      //useridentity();
+
       alert("Successfully signed in !!! ");
     })
     .catch((error) => {
@@ -259,13 +254,10 @@ const signInWithMicrosoft = () => {
   const provider = new OAuthProvider("microsoft.com");
   signInWithPopup(getAuth(), provider)
     .then((result) => {
-      // Get the OAuth access token and ID Token
       const credential = OAuthProvider.credentialFromResult(result);
       const accessToken = credential?.accessToken;
       const idToken = credential?.idToken;
-      //useridentity();
       console.log(result);
-      //router.push("/about");
       alert("Successfully signed in !!! ");
     })
     .catch((error) => {
@@ -279,9 +271,12 @@ const signInWithMicrosoft = () => {
 };
 
 // sign with phone number
+
 const isSignInWithPhone = ref(false);
 const signInWithPhone = () => {
   isSignInWithPhone.value = true;
+  const div = document.querySelector("#myDiv");
+  div?.classList.toggle("hidden");
 };
 
 const isCode = ref(false);
@@ -330,13 +325,8 @@ const confirmCode = () => {
       const user = result.user;
       //useridentity();
       alert("User signed in successfully !!! ");
-      //router.push("/about");
-
-      // ...
     })
     .catch((error: any) => {
-      // User couldn't sign in (bad verification code?)
-      // ...
       console.log(error);
     });
 };
@@ -355,6 +345,7 @@ const confirmCode = () => {
   display: flex;
   align-items: center;
   justify-content: center;
+
   .popup-inner {
     background: #fff;
     padding: 32px;

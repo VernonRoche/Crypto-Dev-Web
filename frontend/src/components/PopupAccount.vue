@@ -6,7 +6,7 @@
       <br />
       <button @click="clickchangedMail">Changer l'adresse mail</button>
       <br />
-      <div v-if="ischangedMail">
+      <div id="myDiv" class="hidden" v-if="ischangedMail">
         <input
           type="text"
           placeholder="enter the new address"
@@ -18,7 +18,7 @@
       <br />
       <button @click="clickchangedPassWord">Changer le mot de passe</button>
       <br />
-      <div v-if="ischangedPassword">
+      <div id="myDiv2" class="hidden" v-if="ischangedPassword">
         <input
           type="text"
           placeholder="enter the new PassWord"
@@ -30,7 +30,7 @@
       <br />
       <button @click="clickDeleteAccount">Supprimer mon compte</button>
       <br />
-      <div v-if="isdelete">
+      <div id="myDiv3" class="hidden" v-if="isdelete">
         <h1>confirmer</h1>
         <button @click="deleteAccount">oui</button>
       </div>
@@ -93,21 +93,19 @@ onAuthStateChanged(auth, (user: any) => {
 
 const clickchangedMail = () => {
   ischangedMail.value = true;
+  const div = document.querySelector("#myDiv");
+  div?.classList.toggle("hidden");
 };
 
 const changeAdresseMail = () => {
   updateEmail(user as any, email.value)
     .then(() => {
-      // Email updated!
-      // ...
       sendEmailVerification(user as any).then(() => {
         console.log("Successfully signed in !!! ");
         alert("Mail updated");
       });
     })
     .catch((error) => {
-      // An error occurred
-      // ...
       console.log(error);
       alert(error.message);
     });
@@ -115,42 +113,38 @@ const changeAdresseMail = () => {
 
 const clickchangedPassWord = () => {
   ischangedPassword.value = true;
+  const div = document.querySelector("#myDiv2");
+  div?.classList.toggle("hidden");
 };
 
 const changepassWord = () => {
   updatePassword(user as any, newPassword.value)
     .then(() => {
-      // Update successful.
       console.log("Successfully updated password");
       alert("Successfully updated password");
       sendPasswordResetEmail(auth, email.value).then(() => {
         alert("Mail reset password end");
-        // Password reset email sent!
-        // ..
       });
     })
     .catch((error) => {
-      // An error ocurred
-      // ...
       const errorCode = error.code;
       const errorMessage = error.message;
     });
 };
 const clickDeleteAccount = () => {
   isdelete.value = true;
+  const div = document.querySelector("#myDiv3");
+  div?.classList.toggle("hidden");
 };
 
 const deleteAccount = () => {
   deleteUser(user as any)
     .then(() => {
-      // User deleted.
+      console.log("account deleted");
       alert("account deleted");
       router.push("/");
     })
-    .catch((error) => {
-      // An error ocurred
-      // ...
-    });
+    .catch((error) => {});
 };
 </script>
 

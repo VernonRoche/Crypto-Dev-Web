@@ -11,17 +11,6 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/connection",
-      name: "connection",
-      component: () => import("../views/SignInLogin.vue"),
-    },
-
-    {
-      path: "/account",
-      name: "account",
-      component: () => import("../views/MyAccount.vue"),
-    },
-    {
       path: "/about",
       name: "about",
       // route level code-splitting
@@ -41,7 +30,7 @@ router.beforeEach((to, from, next) => {
 
   if (requiresAuth && !currentUser) {
     alert("you must be logged in to view this. redirecting to the connection");
-    next("/connection");
+    next("/");
   } else if (requiresAuth && currentUser) {
     next();
   } else {
