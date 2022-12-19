@@ -12,12 +12,9 @@
           viewBox="0 0 1261.000000 890.000000"
           preserveAspectRatio="xMidYMid meet"
         >
-          <metadata>
-            Created by potrace 1.16, written by Peter Selinger 2001-2019
-          </metadata>
           <g
             transform="translate(0.000000,950.000000) scale(0.100000,-0.100000)"
-            fill="#511111"
+            fill="#c084fc"
             stroke="none"
           >
             <path
@@ -37,19 +34,9 @@
 
         <div class="flex items-center gap-4">
           <div class="sm:flex sm:gap-4">
-            <a
-              class="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700 dark:hover:bg-teal-500"
-              href="/"
-            >
-              Login
-            </a>
+            <a class="btn btn-default" href="/"> Login </a>
 
-            <a
-              class="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-600/75 dark:bg-gray-800 dark:text-white dark:hover:text-white/75 sm:block"
-              href="/"
-            >
-              Register
-            </a>
+            <a class="btn btn-primary" href="/"> Register </a>
           </div>
 
           <button
@@ -81,7 +68,7 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "TestNavbar.vue",
+  name: "NavbarHeader.vue",
 });
 </script>
 

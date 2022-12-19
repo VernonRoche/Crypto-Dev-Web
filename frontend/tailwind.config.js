@@ -5,6 +5,12 @@ module.exports = {
   themes: [
     {
       daisyui: {
+        styled: true,
+        base: true,
+        utils: true,
+        logs: true,
+        rtl: false,
+        darkTheme: "dark",
         themes: [
           {
             mytheme: {
