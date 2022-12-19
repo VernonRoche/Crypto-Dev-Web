@@ -1,26 +1,15 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import TestNavbar from "@/components/topbar/TestNavbar.vue";
 </script>
 
 <template>
-<link rel="stylesheet" href="@/assets/style.css">
+  <link rel="stylesheet" href="@/assets/style.css" />
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
+    <TestNavbar />
   </header>
   <body>
-      <div class="bg-gradient-to-r from-red-500 ...">
-    Ceci est un exemple de gradient
-  </div>
+    <div class="bg-gradient-to-r from-red-500 ...">
+      Ceci est un exemple de gradient
+    </div>
   </body>
-  <RouterView />
 </template>
