@@ -3,17 +3,17 @@
     <div
       class="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8"
     >
-      <a class="block text-teal-600 dark:text-teal-300" href="/">
+      <a class="flex items-center text-purple-500" href="/">
         <span class="sr-only">Home</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="50%"
           height="890.000000pt"
-          viewBox="0 0 1261.000000 890.000000"
+          viewBox="0 0 1261.000000 850.000000"
           preserveAspectRatio="xMidYMid meet"
         >
           <g
-            transform="translate(0.000000,950.000000) scale(0.100000,-0.100000)"
+            transform="translate(0.000000,920.000000) scale(0.100000,-0.100000)"
             fill="#c084fc"
             stroke="none"
           >
@@ -27,6 +27,8 @@
             />
           </g>
         </svg>
+
+        <h1 class="text-4xl font-extrabold text-primary">Cryptohub</h1>
       </a>
 
       <div class="flex flex-1 items-center justify-end md:justify-between">

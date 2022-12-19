@@ -10,7 +10,6 @@ module.exports = {
         utils: true,
         logs: true,
         rtl: false,
-        darkTheme: "dark",
         themes: [
           {
             mytheme: {
