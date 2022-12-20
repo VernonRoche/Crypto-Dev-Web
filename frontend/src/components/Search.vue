@@ -1,8 +1,6 @@
 <template>
   <div>
     <link rel="stylesheet" href="@/assets/style.css">
-    <div class="container mx-auto border-2" id="trend">
-    </div>
     <div class="grid-cols-{2}" id="crypto">
       <div class="flex justify-center border-2" >
         <div class="mb-3 xl:w-96">
