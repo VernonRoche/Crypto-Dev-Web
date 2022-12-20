@@ -19,19 +19,31 @@
           :handlePopupLogin="() => handlePopupLogin"
         >
         </PopupLogin>
+        <button class="btn btn-primary" @click="handlePopupRegister">
+          Register
+        </button>
+        <RegisterPopup
+          v-if="popupTriggerRegister.buttonTriggerRegister"
+          :handlePopupRegister="() => handlePopupRegister"
+        />
       </span>
     </nav>
   </div>
 </template>
 
 <script setup lang="ts">
-import { watchEffect, ref } from "vue";
+import { ref } from "vue";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
-import firebase from "firebase/auth";
 import { useRouter } from "vue-router";
 import PopupLogin from "./PopupLogin.vue";
-import { popupTrigger, handlePopupLogin } from "../types/popup";
+import {
+  popupTrigger,
+  popupTriggerRegister,
+  handlePopupLogin,
+  handlePopupRegister,
+} from "@/types/popup";
 import PopupMyAccount from "./PopupAccount.vue";
+import RegisterPopup from "@/components/authentication/RegisterPopup.vue";
 
 const isLoggedIn = ref(true);
 
@@ -40,11 +52,7 @@ const router = useRouter();
 const auth = getAuth();
 
 onAuthStateChanged(auth, (user: any) => {
-  if (user) {
-    isLoggedIn.value = true;
-  } else {
-    isLoggedIn.value = false;
-  }
+  isLoggedIn.value = !!user;
 });
 
 const handleSignOut = () => {
