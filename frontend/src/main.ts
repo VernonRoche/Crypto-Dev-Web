@@ -13,7 +13,7 @@ import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
+// Your web mainApp's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCrazPzNJwg2Gx8JHO6X4p8aQ8hkcIbGgY",
@@ -34,4 +34,4 @@ const app = createApp(App);
 app.use(createPinia());
 app.use(router);
 
-app.mount("#app");
+app.mount("#mainApp");

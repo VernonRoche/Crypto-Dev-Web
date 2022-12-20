@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="appNavbar">
     <nav>
       <router-link to="/about"> About </router-link> |
       <span v-if="isLoggedIn">
@@ -67,7 +67,7 @@ const handleSignOut = () => {
 </script>
 
 <style>
-#app {
+#appNavbar {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
