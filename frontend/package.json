@@ -17,6 +17,7 @@
     "@types/chai": "^4.3.4",
     "@vue/cli-plugin-unit-mocha": "^5.0.8",
     "chai": "^4.3.7",
+    "daisyui": "^2.45.0",
     "mocha": "^10.2.0",
     "mongodb": "^4.12.1",
     "nyc": "^15.1.0",
