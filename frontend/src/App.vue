@@ -5,6 +5,7 @@ import Currency from "./components/CurrencySelector.vue";
 </script>
 
 <template>
+<div>
   <link rel="stylesheet" href="@/assets/style.css" />
   <header></header>
   <body>
@@ -14,4 +15,5 @@ import Currency from "./components/CurrencySelector.vue";
       <Currency />
     </div>
   </body>
+</div>
 </template>

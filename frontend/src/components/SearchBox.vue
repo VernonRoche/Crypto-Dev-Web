@@ -31,10 +31,60 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-export default defineComponent({
+import { CoinGeckoApi } from "../stores/CoinGeckoApi";
+
+function SearchCoin(query:string):HTMLDivElement{
+  let coinsGrid:HTMLDivElement = document.createElement("div");
+  //coinsGrid.setAttribute("class","grid-rows-{2}");
+  coinsGrid.setAttribute("class","container mx-auto overflow-scroll");
+  const data = CoinGeckoApi.Search(query);
+  data.then( (value:string) => {
+    value["coins"].forEach((element:any) => {
+      /*
+      element:
+        id: crypto id
+        name:
+        api_symbol: 
+        large: logo large
+        market_cap_rank:
+        symbol:
+        thumb:
+      */
+     
+        let coin:HTMLDivElement = document.createElement("div");
+        coin.setAttribute("class","container mx-auto");
+        coin.setAttribute("class","flex");
+
+        let name:HTMLParagraphElement = document.createElement("p");
+        name.innerHTML = element["name"];
+        let img:HTMLImageElement = document.createElement("img");
+        img.setAttribute("class","inline");
+        img.src = element["thumb"];
+        let rank:HTMLParagraphElement = document.createElement("p");
+        rank.innerHTML = "&nbsp&nbsp"+element["market_cap_rank"];
+
+        coin.appendChild(img);
+        coin.appendChild(name);
+        coin.appendChild(rank);
+
+        coinsGrid.appendChild(coin);
+    });
+  });
+  return coinsGrid;
+}
+
+export default   
+{
   name: "SearchBox.vue",
-});
+  mounted(){
+    const button = document.getElementById("CoinSearch");
+    button?.addEventListener('click',() => {
+      const input = document.getElementById("cryptoSearch") as HTMLInputElement;
+      const searchVal = input?.value;      
+      document.getElementById("crypto")?.appendChild(SearchCoin(searchVal));
+    })
+  } 
+}
 </script>
 
 <style scoped></style>
