@@ -1,0 +1,23 @@
+<template>
+  <div>
+    <label
+      for="currency"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+    ></label>
+    <select
+      id="currency"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    >
+      <option selected>Choose a Currency</option>
+    </select>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+export default defineComponent({
+  name: "CurrencySelector.vue",
+});
+</script>
+
+<style scoped></style>
