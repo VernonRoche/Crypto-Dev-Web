@@ -80,6 +80,14 @@ export function SearchCoin(query:string):HTMLDivElement{
   return coinsGrid;
 }
 
+export function getSupportedCurrency():HTMLDivElement{
+  let options:HTMLDivElement = document.createElement("div");
+  const data = CoinGeckoApi.getSupportedCurrency();
+  data.then( (value:string) => {
+    console.log(value);
+  });
+  return options;
+} 
 
 export default {
   mounted() {
@@ -90,6 +98,7 @@ export default {
       document.getElementById("crypto")?.appendChild(SearchCoin(searchVal));
     });
     document.getElementById("trend")?.appendChild(CreateTrendElement());
+    document.getElementById("currency")?.appendChild(getSupportedCurrency());
   }
 }
 

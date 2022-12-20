@@ -107,7 +107,7 @@ export namespace CoinGeckoApi {
    * get the list of supported vs_currency (euro,dollar,...)
    * @returns Promise responce from the fetch
    */
-  export async function getSupportedCurrency(): Promise<JSON> {
+  export async function getSupportedCurrency(): Promise<string> {
     const URL =
       "https://api.coingecko.com/api/v3/simple/supported_vs_currencies";
     const responce = await fetch(URL);

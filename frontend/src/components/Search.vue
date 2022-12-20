@@ -1,6 +1,5 @@
 <template>
   <div>
-    <link rel="stylesheet" href="@/assets/style.css">
     <div class="grid-cols-{2}" id="crypto">
       <div class="flex justify-center border-2" >
         <div class="mb-3 xl:w-96">
@@ -17,4 +16,8 @@
     </div>
   </div>
 </template>
-<script lang="ts" src="./stores/App"></script>
+<script lang="ts" src="../stores/App">
+export default {
+  name: "Search",
+};
+</script>
