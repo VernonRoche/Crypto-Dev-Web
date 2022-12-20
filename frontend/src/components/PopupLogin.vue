@@ -11,7 +11,7 @@
 
       <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
       <div v-if="cpt >= 3">
-        <buton @click="resetPassWord">Reinitialiser Mot De Passe</buton>
+        <button @click="resetPassWord">Reinitialiser Mot De Passe</button>
         <div v-if="isResetPassWord">
           <p><input type="text" placeholder="Email" v-model="email" /></p>
         </div>
@@ -20,7 +20,7 @@
       <div>
         <p>
           <button @click="signInWithPhone">
-            <img src="../assets/phone.jpeg" width="50" height="50" />
+            <img src="../assets/phone.jpeg" width="50" height="50" alt="" />
           </button>
         </p>
       </div>
@@ -43,19 +43,34 @@
 
       <p>
         <button @click="signInWithGoogle">
-          <img src="../assets/Google_ G _Logo.svg.png" width="50" height="50" />
+          <img
+            src="../assets/Google_ G _Logo.svg.png"
+            width="50"
+            height="50"
+            alt=""
+          />
         </button>
       </p>
       <br />
       <p>
         <button @click="signInWithMicrosoft">
-          <img src="../assets/Microsoft_logo.svg.png" width="50" height="50" />
+          <img
+            src="../assets/Microsoft_logo.svg.png"
+            width="50"
+            height="50"
+            alt=""
+          />
         </button>
       </p>
       <br />
       <p>
         <button @click="signOnlyLinkEmail">
-          <img src="../assets/Mail_(Apple)_logo.png" width="50" height="50" />
+          <img
+            src="../assets/Mail_(Apple)_logo.png"
+            width="50"
+            height="50"
+            alt=""
+          />
         </button>
       </p>
       <div id="myDiv2" class="hidden" v-if="linksent">
@@ -85,7 +100,7 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 import { useRouter } from "vue-router";
-import { popupTrigger, handlePopupLogin } from "../types/popup";
+import { handlePopupLogin } from "@/types/popup";
 
 const email = ref("");
 const email2 = ref("");
