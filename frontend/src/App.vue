@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Trend from './components/Trend.vue'
 import Search from './components/Search.vue'
+import Currency from './components/Currency.vue'
 </script>
 
 <template>
@@ -10,6 +11,7 @@ import Search from './components/Search.vue'
       <div>
         <Trend />
         <Search />
+        <Currency />
       </div>
     </body>
   </div>
