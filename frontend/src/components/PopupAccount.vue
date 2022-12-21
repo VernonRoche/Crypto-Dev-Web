@@ -36,13 +36,15 @@
       </div>
       <br />
 
-      <button class="popup-close" @click="handlePopupLogin">close popup</button>
+      <button class="popup-close" @click="handlePopupAccount">
+        close popup
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { popupTrigger, handlePopupLogin } from "../types/popup";
+import { popupTriggerAccount, handlePopupAccount } from "../types/popup";
 
 import router from "@/router";
 import { ref } from "vue";

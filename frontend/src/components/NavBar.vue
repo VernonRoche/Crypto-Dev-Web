@@ -5,17 +5,17 @@
       <span v-if="isLoggedIn">
         <button @click="handleSignOut">Logout</button> |
         <!-- <router-link to="/account"> My Account </router-link> -->
-        <button @click="handlePopupLogin">Myaccount</button>
+        <button @click="handlePopupAccount">Myaccount</button>
         <PopupMyAccount
-          v-if="popupTrigger.buttonTrigger"
-          :handlePopupLogin="() => handlePopupLogin"
+          v-if="popupTriggerAccount.buttonTriggerAccount"
+          :handlePopupAccount="() => handlePopupAccount"
         >
         </PopupMyAccount>
       </span>
       <span v-else>
         <button @click="handlePopupLogin">Login</button>
         <PopupLogin
-          v-if="popupTrigger.buttonTrigger"
+          v-if="popupTriggerLogin.buttonTrigger"
           :handlePopupLogin="() => handlePopupLogin"
         >
         </PopupLogin>
@@ -35,15 +35,18 @@
 import { ref } from "vue";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "vue-router";
-import PopupLogin from "./PopupLogin.vue";
 import {
-  popupTrigger,
+  popupTriggerLogin,
+  popupTriggerAccount,
   popupTriggerRegister,
+  handlePopupAccount,
   handlePopupLogin,
   handlePopupRegister,
 } from "@/types/popup";
-import PopupMyAccount from "./PopupAccount.vue";
+import PopupMyAccount from "@/components/authentication/AccountPopup.vue";
+// import PopupMyAccount from "../components/PopupAccount.vue";
 import RegisterPopup from "@/components/authentication/RegisterPopup.vue";
+import PopupLogin from "@/components/authentication/LoginPopup.vue";
 
 const isLoggedIn = ref(true);
 

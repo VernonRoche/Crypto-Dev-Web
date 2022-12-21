@@ -1,18 +1,30 @@
 import { ref } from "vue";
 
-const popupTrigger = ref({
+const popupTriggerLogin = ref({
   buttonTrigger: false,
+});
+
+const popupTriggerAccount = ref({
+  buttonTriggerAccount: false,
 });
 
 const popupTriggerRegister = ref({
   buttonTriggerRegister: false,
 });
 
-console.log("test popupTrigger de base " + popupTrigger.value.buttonTrigger);
-
 const handlePopupLogin = () => {
-  popupTrigger.value.buttonTrigger = !popupTrigger.value.buttonTrigger;
-  console.log("test et buttonTrigger " + popupTrigger.value.buttonTrigger);
+  popupTriggerLogin.value.buttonTrigger =
+    !popupTriggerLogin.value.buttonTrigger;
+  console.log("test et buttonTrigger " + popupTriggerLogin.value.buttonTrigger);
+};
+
+const handlePopupAccount = () => {
+  popupTriggerAccount.value.buttonTriggerAccount =
+    !popupTriggerAccount.value.buttonTriggerAccount;
+  console.log(
+    "test et buttonTriggerAccount " +
+      popupTriggerAccount.value.buttonTriggerAccount
+  );
 };
 
 const handlePopupRegister = () => {
@@ -25,11 +37,13 @@ const handlePopupRegister = () => {
 };
 
 export default {
-  props: ["handlePopupLogin", "handlePopupRegister"],
+  props: ["handlePopupLogin", "handlePopupRegister", "handlePopupAccount"],
 };
 export {
-  popupTrigger,
+  popupTriggerLogin,
+  popupTriggerAccount,
   popupTriggerRegister,
   handlePopupLogin,
   handlePopupRegister,
+  handlePopupAccount,
 };
