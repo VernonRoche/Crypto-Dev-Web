@@ -82,6 +82,7 @@
               </label>
 
               <input
+                required
                 type="email"
                 id="Email"
                 name="email"
@@ -99,6 +100,7 @@
               </label>
 
               <input
+                required
                 type="password"
                 id="Password"
                 name="password"
