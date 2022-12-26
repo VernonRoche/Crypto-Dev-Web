@@ -15,7 +15,9 @@ const popupTriggerRegister = ref({
 const handlePopupLogin = () => {
   popupTriggerLogin.value.buttonTrigger =
     !popupTriggerLogin.value.buttonTrigger;
-  console.log("test et buttonTrigger " + popupTriggerLogin.value.buttonTrigger);
+  console.log(
+    "test et buttonTriggerloggin " + popupTriggerLogin.value.buttonTrigger
+  );
 };
 
 const handlePopupAccount = () => {

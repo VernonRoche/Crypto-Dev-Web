@@ -72,67 +72,67 @@
             </p>
           </div>
 
-          <form action="#" class="mt-8 grid grid-cols-6 gap-6">
-            <div class="col-span-6">
-              <label
-                for="Hello"
-                class="block text-sm font-medium text-gray-700 dark:text-gray-200"
-              >
-                Hello
-                {{ user?.displayName || user?.phoneNumber || user?.email }}
-              </label>
-            </div>
+          <!-- <form action="#" class="mt-8 grid grid-cols-6 gap-6"> -->
+          <div class="col-span-6">
+            <label
+              for="Hello"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >
+              Hello
+              {{ user?.displayName || user?.phoneNumber || user?.email }}
+            </label>
+          </div>
 
-            <div class="col-span-6 sm:col-span-3">
-              <button @click="clickchangedMail">Changer l'adresse mail</button>
-              <div id="myDiv" class="hidden" v-if="ischangedMail">
-                <input
-                  type="text"
-                  placeholder="enter the new address"
-                  class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-                />
-                v-model="email" />
-                <br />
-                <button @click="changeAdresseMail">confirmer</button>
-              </div>
-            </div>
-
-            <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-              <button @click="clickchangedPassWord">
-                Changer le mot de passe
-              </button>
+          <div class="col-span-6 sm:col-span-3">
+            <button @click="clickchangedMail">Changer l'adresse mail</button>
+            <div id="myDiv" class="hidden" v-if="ischangedMail">
+              <input
+                type="text"
+                placeholder="enter the new address"
+                class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+                v-model="email"
+              />
               <br />
-              <div id="myDiv2" class="hidden" v-if="ischangedPassword">
-                <input
-                  type="text"
-                  placeholder="enter the new PassWord"
-                  class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-                />
-                v-model="newPassword" />
-                <br />
-                <button @click="changepassWord">confirmer</button>
-              </div>
+              <button @click="changeAdresseMail">confirmer</button>
             </div>
+          </div>
 
-            <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button @click="clickchangedPassWord">
+              Changer le mot de passe
+            </button>
+            <br />
+            <div id="myDiv2" class="hidden" v-if="ischangedPassword">
+              <input
+                type="text"
+                placeholder="enter the new PassWord"
+                class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+              />
+              v-model="newPassword" />
+              <br />
+              <button @click="changepassWord">confirmer</button>
+            </div>
+          </div>
+
+          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button
+              @click="clickDeleteAccount"
+              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+            >
+              Supprimer mon compte
+            </button>
+            <br />
+            <div id="myDiv3" class="hidden" v-if="isdelete">
+              <h1>confirmer</h1>
               <button
-                @click="clickDeleteAccount"
+                @click="deleteAccount"
                 class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
               >
-                Supprimer mon compte
+                oui
               </button>
-              <br />
-              <div id="myDiv3" class="hidden" v-if="isdelete">
-                <h1>confirmer</h1>
-                <button
-                  @click="deleteAccount"
-                  class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-                >
-                  oui
-                </button>
-              </div>
             </div>
-          </form>
+          </div>
+          <!-- </form> -->
         </div>
       </main>
     </div>

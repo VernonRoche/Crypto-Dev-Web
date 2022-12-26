@@ -72,115 +72,115 @@
             </p>
           </div>
 
-          <form action="#" class="mt-8 grid grid-cols-6 gap-6">
-            <div class="col-span-6">
-              <label
-                for="Email"
-                class="block text-sm font-medium text-gray-700 dark:text-gray-200"
-              >
-                Email
-              </label>
+          <!-- <form  class="mt-8 grid grid-cols-6 gap-6"> -->
+          <div class="col-span-6">
+            <label
+              for="Email"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >
+              Email
+            </label>
 
-              <input
-                required
-                type="email"
-                id="Email"
-                name="email"
-                v-model="email"
-                class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+            <input
+              required
+              type="email"
+              id="Email"
+              name="email"
+              v-model="email"
+              class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+            />
+          </div>
+
+          <div class="col-span-6 sm:col-span-3">
+            <label
+              for="Password"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >
+              Password
+            </label>
+
+            <input
+              required
+              type="password"
+              id="Password"
+              name="password"
+              v-model="password"
+              class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+            />
+          </div>
+
+          <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
+
+          <div class="col-span-6 sm:col-span-3" v-if="cpt >= 3">
+            <button @click="resetPassWord">Reinitialiser Mot De Passe</button>
+            <div v-if="isResetPassWord">
+              <p>
+                <input type="text" placeholder="Email" v-model="email2" />
+              </p>
+            </div>
+          </div>
+
+          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button
+              @click="sign"
+              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+            >
+              Sign-in
+            </button>
+          </div>
+
+          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button
+              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+              @click="signInWithGoogle"
+            >
+              <img
+                src="@/assets/Google_ G _Logo.svg.png"
+                width="50"
+                height="50"
+                alt=""
               />
-            </div>
+            </button>
+          </div>
 
-            <div class="col-span-6 sm:col-span-3">
-              <label
-                for="Password"
-                class="block text-sm font-medium text-gray-700 dark:text-gray-200"
-              >
-                Password
-              </label>
-
-              <input
-                required
-                type="password"
-                id="Password"
-                name="password"
-                v-model="password"
-                class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button
+              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+              @click="signInWithMicrosoft"
+            >
+              <img
+                src="@/assets/Microsoft_logo.svg.png"
+                width="50"
+                height="50"
+                alt=""
               />
-            </div>
+            </button>
+          </div>
 
-            <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
-
-            <div class="col-span-6 sm:col-span-3" v-if="cpt >= 3">
-              <button @click="resetPassWord">Reinitialiser Mot De Passe</button>
-              <div v-if="isResetPassWord">
-                <p>
-                  <input type="text" placeholder="Email" v-model="email2" />
-                </p>
-              </div>
+          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button
+              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+              @click="signOnlyLinkEmail"
+            >
+              <img
+                src="@/assets/Mail_(Apple)_logo.png"
+                width="50"
+                height="50"
+                alt=""
+              />
+            </button>
+            <div id="myDiv2" class="hidden" v-if="linksent">
+              <p>
+                <input type="text" placeholder="Email" v-model="email2" />
+              </p>
+              <p>
+                <button @click="signInWithLinkEmail">
+                  Sign with link email
+                </button>
+              </p>
             </div>
-
-            <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-              <button
-                @click="sign"
-                class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-              >
-                Sign-in
-              </button>
-            </div>
-
-            <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-              <button
-                class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-                @click="signInWithGoogle"
-              >
-                <img
-                  src="@/assets/Google_ G _Logo.svg.png"
-                  width="50"
-                  height="50"
-                  alt=""
-                />
-              </button>
-            </div>
-
-            <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-              <button
-                class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-                @click="signInWithMicrosoft"
-              >
-                <img
-                  src="@/assets/Microsoft_logo.svg.png"
-                  width="50"
-                  height="50"
-                  alt=""
-                />
-              </button>
-            </div>
-
-            <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-              <button
-                class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-                @click="signOnlyLinkEmail"
-              >
-                <img
-                  src="@/assets/Mail_(Apple)_logo.png"
-                  width="50"
-                  height="50"
-                  alt=""
-                />
-              </button>
-              <div id="myDiv2" class="hidden" v-if="linksent">
-                <p>
-                  <input type="text" placeholder="Email" v-model="email2" />
-                </p>
-                <p>
-                  <button @click="signInWithLinkEmail">
-                    Sign with link email
-                  </button>
-                </p>
-              </div>
-            </div>
-          </form>
+          </div>
+          <!-- </form> -->
         </div>
       </main>
     </div>

@@ -13,15 +13,13 @@
         </PopupMyAccount>
       </span>
       <span v-else>
-        <button @click="handlePopupLogin">Login</button>
+        <button @click="clickLogin">Login</button>
         <PopupLogin
           v-if="popupTriggerLogin.buttonTrigger"
           :handlePopupLogin="() => handlePopupLogin"
         >
         </PopupLogin>
-        <button class="btn btn-primary" @click="handlePopupRegister">
-          Register
-        </button>
+        <button class="btn btn-primary" @click="clickRegister">Register</button>
         <RegisterPopup
           v-if="popupTriggerRegister.buttonTriggerRegister"
           :handlePopupRegister="() => handlePopupRegister"
@@ -47,6 +45,7 @@ import PopupMyAccount from "@/components/authentication/AccountPopup.vue";
 // import PopupMyAccount from "../components/PopupAccount.vue";
 import RegisterPopup from "@/components/authentication/RegisterPopup.vue";
 import PopupLogin from "@/components/authentication/LoginPopup.vue";
+//import PopupLogin from "../components/PopupLogin.vue";
 
 const isLoggedIn = ref(true);
 
@@ -66,6 +65,16 @@ const handleSignOut = () => {
     .catch((error) => {
       console.log(error);
     });
+};
+
+const clickLogin = () => {
+  handlePopupLogin();
+  popupTriggerRegister.value.buttonTriggerRegister = false;
+};
+
+const clickRegister = () => {
+  handlePopupRegister();
+  popupTriggerLogin.value.buttonTrigger = false;
 };
 </script>
 

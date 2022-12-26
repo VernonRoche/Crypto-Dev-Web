@@ -72,87 +72,79 @@
             </p>
           </div>
 
-          <form action="#" class="mt-8 grid grid-cols-6 gap-6">
-            <div class="col-span-6">
-              <label
-                for="Email"
-                class="block text-sm font-medium text-gray-700 dark:text-gray-200"
-              >
-                Email
-              </label>
+          <!-- <form  class="mt-8 grid grid-cols-6 gap-6"> -->
+          <div class="col-span-6">
+            <label
+              for="Email"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >
+              Email
+            </label>
 
-              <input
-                type="email"
-                id="Email"
-                name="email"
-                v-model="email"
-                class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-              />
-            </div>
+            <input
+              type="email"
+              id="Email"
+              name="email"
+              v-model="email"
+              class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+            />
+          </div>
 
-            <div class="col-span-6 sm:col-span-3">
-              <label
-                for="Password"
-                class="block text-sm font-medium text-gray-700 dark:text-gray-200"
-              >
-                Password
-              </label>
+          <div class="col-span-6 sm:col-span-3">
+            <label
+              for="Password"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >
+              Password
+            </label>
 
-              <input
-                type="password"
-                id="Password"
-                name="password"
-                v-model="password"
-                class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-              />
-            </div>
+            <input
+              type="password"
+              id="Password"
+              name="password"
+              v-model="password"
+              class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+            />
+          </div>
 
-            <div class="col-span-6 sm:col-span-3">
-              <label
-                for="PasswordConfirmation"
-                class="block text-sm font-medium text-gray-700 dark:text-gray-200"
-              >
-                Password Confirmation
-              </label>
+          <div class="col-span-6 sm:col-span-3">
+            <label
+              for="PasswordConfirmation"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >
+              Password Confirmation
+            </label>
 
-              <input
-                type="password"
-                id="PasswordConfirmation"
-                name="password_confirmation"
-                v-model="password2"
-                class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-              />
-            </div>
+            <input
+              type="password"
+              id="PasswordConfirmation"
+              name="password_confirmation"
+              v-model="password2"
+              class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+            />
+          </div>
 
-            <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button
+              @click="register"
+              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+            >
+              Create an account
+            </button>
+            <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
+
+            <p class="mt-4 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
+              Already have an account?
+
               <button
-                @click="register"
-                class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+                @click="onOkClick"
+                class="text-gray-700 underline dark:text-gray-200"
               >
-                Create an account
+                Log in
               </button>
-              <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
-
-              <p class="mt-4 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
-                Already have an account?
-
-                <!-- <a href="#" class="text-gray-700 underline dark:text-gray-200"
-                  >Log in</a
-                >. -->
-                <button
-                  @click="handlePopupLogin, handlePopupRegister"
-                  class="text-gray-700 underline dark:text-gray-200"
-                >
-                  Log in
-                </button>
-                <LoginPopup
-                  v-if="popupTriggerLogin.buttonTrigger"
-                  :handlePopupLogin="() => handlePopupLogin"
-                >
-                </LoginPopup>
-              </p>
-            </div>
-          </form>
+            </p>
+          </div>
+          <!-- </form> -->
         </div>
       </main>
     </div>
@@ -173,41 +165,42 @@ import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { ref } from "vue";
 import LoginPopup from "@/components/authentication/LoginPopup.vue";
 
-// export default {
-//   name: "RegisterPopup",
-//   methods: { handlePopupRegister },
-// };
-
 // register
 const email = ref("");
 const password = ref("");
 const password2 = ref("");
 const errMsg = ref();
 
-if (password.value !== password2.value) {
-  errMsg.value = "Passwords is different";
-}
+const onOkClick = () => {
+  handlePopupRegister();
+  handlePopupLogin();
+};
 
 const register = () => {
-  createUserWithEmailAndPassword(getAuth(), email.value, password.value)
-    .then((_data) => {
-      console.log("Successfully registered !!! ");
-      alert("Successfully registered !!! ");
-    })
-    .catch((error) => {
-      const obj: Record<string, string> = {
-        "auth/invalid-email": "Invalid Email",
-        "auth/weak-password": "Password should be at least 6 characters",
-        "auth/email-already-in-use": "Email already in use",
-        "auth/internal-error": "Mettez un mot de passe ",
-      };
-      const message = obj[error.code];
-      if (!message) {
-        errMsg.value = error.message;
-      } else {
-        errMsg.value = message;
-      }
-    });
+  if (password.value !== password2.value) {
+    errMsg.value = "Passwords is different";
+  } else {
+    createUserWithEmailAndPassword(getAuth(), email.value, password.value)
+      .then((_data) => {
+        console.log("Successfully registered !!! ");
+
+        alert("Successfully registered !!! ");
+      })
+      .catch((error) => {
+        const obj: Record<string, string> = {
+          "auth/invalid-email": "Invalid Email",
+          "auth/weak-password": "Password should be at least 6 characters",
+          "auth/email-already-in-use": "Email already in use",
+          "auth/internal-error": "Mettez un mot de passe ",
+        };
+        const message = obj[error.code];
+        if (!message) {
+          errMsg.value = error.message;
+        } else {
+          errMsg.value = message;
+        }
+      });
+  }
 };
 </script>
 
