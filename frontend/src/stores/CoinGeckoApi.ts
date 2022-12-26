@@ -55,7 +55,7 @@ export namespace CoinGeckoApi {
    * @param currency the target currency of market data (eur,usd,jpy,...)
    * @returns Promise responce from the fetch
    */
-  export async function getCryptoMarket(currency: string): Promise<JSON> {
+  export async function getCryptoMarket(currency: string="usd"): Promise<Array<string>> {
     const URL =
       "https://api.coingecko.com/api/v3/coins/markets?vs_currency=" +
       currency +

@@ -2,6 +2,7 @@
 import Trend from "./components/TrendChoice.vue";
 import Search from "./components/SearchBox.vue";
 import Currency from "./components/CurrencySelector.vue";
+import CryptoList from './components/CryptoList.vue'
 </script>
 
 <template>
@@ -10,9 +11,7 @@ import Currency from "./components/CurrencySelector.vue";
   <header></header>
   <body>
     <div>
-      <Trend />
-      <Search />
-      <Currency />
+      <CryptoList />
     </div>
   </body>
 </div>
