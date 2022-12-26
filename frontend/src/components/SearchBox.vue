@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <div class="grid-cols-{2}" id="crypto">
-      <div class="flex justify-center border-2">
+  <div class="inline-block">
         <div class="mb-3 xl:w-96">
           <div
-            class="input-group relative flex flex-wrap items-stretch w-full mb-4"
+            class="input-group relative flex flex-wrap items-stretch  mb-4"
           >
             <input
               type="search"
               id="cryptoSearch"
               name="cryptoSearch"
-              class="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple-600 focus:outline-none"
+              class="form-control relative flex-auto min-w-0 block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple-600 focus:outline-none"
               placeholder="Search"
               aria-label="Search"
               aria-describedby="CoinSearch"
@@ -24,53 +22,28 @@
             </button>
           </div>
         </div>
-        <div id="filter"></div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
-import { CoinGeckoApi } from "../stores/CoinGeckoApi";
 
-function SearchCoin(query:string):HTMLDivElement{
-  let coinsGrid:HTMLDivElement = document.createElement("div");
-  //coinsGrid.setAttribute("class","grid-rows-{2}");
-  coinsGrid.setAttribute("class","container mx-auto overflow-scroll");
-  const data = CoinGeckoApi.Search(query);
-  data.then( (value:string) => {
-    value["coins"].forEach((element:any) => {
-      /*
-      element:
-        id: crypto id
-        name:
-        api_symbol: 
-        large: logo large
-        market_cap_rank:
-        symbol:
-        thumb:
-      */
-     
-        let coin:HTMLDivElement = document.createElement("div");
-        coin.setAttribute("class","container mx-auto");
-        coin.setAttribute("class","flex");
+function SearchCoin():void{
+  const input = document.getElementById("cryptoSearch") as HTMLInputElement;
+  const filter = input.value.toUpperCase();
+  const table:HTMLTableElement = document.getElementById("CryptoList");
+  const tr = table.getElementsByTagName("tr");
 
-        let name:HTMLParagraphElement = document.createElement("p");
-        name.innerHTML = element["name"];
-        let img:HTMLImageElement = document.createElement("img");
-        img.setAttribute("class","inline");
-        img.src = element["thumb"];
-        let rank:HTMLParagraphElement = document.createElement("p");
-        rank.innerHTML = "&nbsp&nbsp"+element["market_cap_rank"];
-
-        coin.appendChild(img);
-        coin.appendChild(name);
-        coin.appendChild(rank);
-
-        coinsGrid.appendChild(coin);
-    });
-  });
-  return coinsGrid;
+  for(let i:number=0;i < tr.length;i++){
+    let td = tr[i].getElementsByTagName("td")[0];
+    if(td){
+      let txtVal = td.textContent || td.innerText;
+      if (txtVal.toUpperCase().indexOf(filter) > -1){
+        tr[i].style.display = ""; 
+      } else {
+        tr[i].style.display = "none"; 
+      } 
+    }
+  }
 }
 
 export default   
@@ -79,12 +52,9 @@ export default
   mounted(){
     const button = document.getElementById("CoinSearch");
     button?.addEventListener('click',() => {
-      const input = document.getElementById("cryptoSearch") as HTMLInputElement;
-      const searchVal = input?.value;      
-      document.getElementById("crypto")?.appendChild(SearchCoin(searchVal));
+      SearchCoin();
     })
   } 
 }
 </script>
 
-<style scoped></style>

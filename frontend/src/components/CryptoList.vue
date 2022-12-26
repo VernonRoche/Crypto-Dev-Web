@@ -1,5 +1,5 @@
 <template>
-  <div id="body">
+  <div id="body" class="grid whitespace-nowrap">
       <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
         <table id="CryptoList" class="table-fixed overflow-x-auto text-sm text-left text-gray-500 dark:text-gray-400 whitespace-nowrap">
           <caption></caption>
@@ -122,11 +122,13 @@ function createCryptoList(currency:string="usd"):HTMLTableSectionElement{
       fav.setAttribute("class","py-4 px-6");
       let favIcon:HTMLImageElement = document.createElement("img");
       favIcon.setAttribute("alt","NotFav");
+      favIcon.setAttribute("class","FavIcon");
       favIcon.src = "/src/assets/starEmpty.png";
       fav.appendChild(favIcon);
       fav.addEventListener('click', () => {        
         if(favIcon.alt == "NotFav"){
           //addToFavorite(); //TODO
+          row.setAttribute("alt","fav");
           favIcon.setAttribute("alt","Fav");
           favIcon.src = "/src/assets/starFull.png";
         }else{
