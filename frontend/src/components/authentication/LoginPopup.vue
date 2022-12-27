@@ -72,6 +72,60 @@
             </p>
           </div>
 
+          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button
+              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+              @click="signInWithGoogle"
+            >
+              <img
+                src="@/assets/Google_ G _Logo.svg.png"
+                width="50"
+                height="50"
+                alt=""
+              />
+            </button>
+          </div>
+          <br />
+
+          <!-- <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button
+              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+              @click="signInWithMicrosoft"
+            >
+              <img
+                src="@/assets/Microsoft_logo.svg.png"
+                width="50"
+                height="50"
+                alt=""
+              />
+            </button>
+          </div>
+          <br /> -->
+
+          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button
+              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+              @click="signOnlyLinkEmail"
+            >
+              <img
+                src="@/assets/Mail_(Apple)_logo.png"
+                width="50"
+                height="50"
+                alt=""
+              />
+            </button>
+            <div id="myDiv2" class="hidden" v-if="linksent">
+              <p>
+                <input type="text" placeholder="Email" v-model="email2" />
+              </p>
+              <p>
+                <button @click="signInWithLinkEmail">
+                  Sign with link email
+                </button>
+              </p>
+            </div>
+          </div>
+
           <!-- <form  class="mt-8 grid grid-cols-6 gap-6"> -->
           <div class="col-span-6">
             <label
@@ -136,59 +190,7 @@
           </div>
           <br />
 
-          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-            <button
-              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-              @click="signInWithGoogle"
-            >
-              <img
-                src="@/assets/Google_ G _Logo.svg.png"
-                width="50"
-                height="50"
-                alt=""
-              />
-            </button>
-          </div>
-          <br />
-
-          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-            <button
-              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-              @click="signInWithMicrosoft"
-            >
-              <img
-                src="@/assets/Microsoft_logo.svg.png"
-                width="50"
-                height="50"
-                alt=""
-              />
-            </button>
-          </div>
-          <br />
-
-          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-            <button
-              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-              @click="signOnlyLinkEmail"
-            >
-              <img
-                src="@/assets/Mail_(Apple)_logo.png"
-                width="50"
-                height="50"
-                alt=""
-              />
-            </button>
-            <div id="myDiv2" class="hidden" v-if="linksent">
-              <p>
-                <input type="text" placeholder="Email" v-model="email2" />
-              </p>
-              <p>
-                <button @click="signInWithLinkEmail">
-                  Sign with link email
-                </button>
-              </p>
-            </div>
-          </div>
+          
           <!-- </form> -->
         </div>
       </main>

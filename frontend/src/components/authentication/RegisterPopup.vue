@@ -72,6 +72,39 @@
             </p>
           </div>
 
+          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button
+              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+              @click="signInWithGoogle"
+            >
+              <img
+                src="@/assets/Google_ G _Logo.svg.png"
+                width="50"
+                height="50"
+                alt=""
+              />
+            </button>
+          </div>
+          <br />
+
+          <!-- <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button
+              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+              @click="signInWithMicrosoft"
+            >
+              <img
+                src="@/assets/Microsoft_logo.svg.png"
+                width="50"
+                height="50"
+                alt=""
+              />
+            </button>
+          </div>
+          <br /> -->
+          
+
+          <br />
+
           <!-- <form  class="mt-8 grid grid-cols-6 gap-6"> -->
           <div class="col-span-6 text-white">
             <label
@@ -162,7 +195,7 @@ import {
   popupTriggerLogin,
   popupTriggerRegister,
 } from "@/types/popup";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, OAuthProvider, signInWithPopup } from "firebase/auth";
 import { ref } from "vue";
 import LoginPopup from "@/components/authentication/LoginPopup.vue";
 
@@ -202,6 +235,45 @@ const register = () => {
         }
       });
   }
+};
+
+const signInWithGoogle = () => {
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(getAuth(), provider)
+    .then((result) => {
+      console.log(result);
+
+      alert("Successfully signed in !!! ");
+    })
+    .catch((error) => {
+      console.log(error);
+      switch (error.code) {
+        case "auth/user-disabled":
+          errMsg.value = "User Disabled";
+          break;
+      }
+    });
+};
+
+//microsoft
+const signInWithMicrosoft = () => {
+  const provider = new OAuthProvider("microsoft.com");
+  signInWithPopup(getAuth(), provider)
+    .then((result) => {
+      const credential = OAuthProvider.credentialFromResult(result);
+      const accessToken = credential?.accessToken;
+      const idToken = credential?.idToken;
+      console.log(result);
+      alert("Successfully signed in !!! ");
+    })
+    .catch((error) => {
+      console.log(error);
+      switch (error.code) {
+        case "auth/user-disabled":
+          errMsg.value = "User Disabled";
+          break;
+      }
+    });
 };
 </script>
 
