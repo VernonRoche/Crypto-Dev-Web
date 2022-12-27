@@ -20,7 +20,7 @@ const router = createRouter({
     {
       path: '/crypto',
       name: 'crypto',
-      component: () => import('../views/Crypto.vue');
+      component: () => import('../views/Crypto.vue')
     } 
   ]
 })
