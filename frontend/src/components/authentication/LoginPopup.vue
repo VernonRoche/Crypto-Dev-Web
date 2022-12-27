@@ -76,49 +76,55 @@
           <div class="col-span-6">
             <label
               for="Email"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+              class="text-zinc-50 block text-sm font-medium text-gray-700 dark:text-gray-200"
             >
               Email
             </label>
-
-            <input
-              required
-              type="email"
-              id="Email"
-              name="email"
-              v-model="email"
-              class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-            />
+            <p>
+              <input
+                required
+                type="email"
+                id="Email"
+                name="email"
+                v-model="email"
+                class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+              />
+            </p>
           </div>
 
           <div class="col-span-6 sm:col-span-3">
             <label
               for="Password"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+              class="text-zinc-50 block text-sm font-medium text-gray-700 dark:text-gray-200"
             >
               Password
             </label>
-
-            <input
-              required
-              type="password"
-              id="Password"
-              name="password"
-              v-model="password"
-              class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-            />
+            <p>
+              <input
+                required
+                type="password"
+                id="Password"
+                name="password"
+                v-model="password"
+                class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+              />
+            </p>
           </div>
 
           <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
 
           <div class="col-span-6 sm:col-span-3" v-if="cpt >= 3">
-            <button @click="resetPassWord">Reinitialiser Mot De Passe</button>
+            <button class="text-zinc-50 btn btn-link" @click="resetPassWord">
+              Reinitialiser Mot De Passe
+            </button>
             <div v-if="isResetPassWord">
               <p>
                 <input type="text" placeholder="Email" v-model="email2" />
               </p>
             </div>
+            <br />
           </div>
+          <br />
 
           <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
             <button
@@ -128,6 +134,7 @@
               Sign-in
             </button>
           </div>
+          <br />
 
           <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
             <button
@@ -142,6 +149,7 @@
               />
             </button>
           </div>
+          <br />
 
           <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
             <button
@@ -156,6 +164,7 @@
               />
             </button>
           </div>
+          <br />
 
           <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
             <button

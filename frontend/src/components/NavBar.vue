@@ -3,9 +3,10 @@
     <nav>
       <router-link to="/about"> About </router-link> |
       <span v-if="isLoggedIn">
-        <button @click="handleSignOut">Logout</button> |
-        <!-- <router-link to="/account"> My Account </router-link> -->
-        <button @click="handlePopupAccount">Myaccount</button>
+        <button class="btn btn-primary" @click="handleSignOut">Logout</button> |
+        <button class="btn btn-primary" @click="handlePopupAccount">
+          Myaccount
+        </button>
         <PopupMyAccount
           v-if="popupTriggerAccount.buttonTriggerAccount"
           :handlePopupAccount="() => handlePopupAccount"
@@ -13,13 +14,14 @@
         </PopupMyAccount>
       </span>
       <span v-else>
-        <button @click="clickLogin">Login</button>
+        <button class="btn btn-primary" @click="clickLogin">Login</button>
+        <button class="btn btn-primary" @click="clickRegister">Register</button>
         <PopupLogin
           v-if="popupTriggerLogin.buttonTrigger"
           :handlePopupLogin="() => handlePopupLogin"
         >
         </PopupLogin>
-        <button class="btn btn-primary" @click="clickRegister">Register</button>
+
         <RegisterPopup
           v-if="popupTriggerRegister.buttonTriggerRegister"
           :handlePopupRegister="() => handlePopupRegister"

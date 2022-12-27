@@ -73,27 +73,26 @@
           </div>
 
           <!-- <form  class="mt-8 grid grid-cols-6 gap-6"> -->
-          <div class="col-span-6">
+          <div class="col-span-6 text-white">
             <label
               for="Email"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+              class="text-zinc-50 block text-sm font-medium text-gray-700 dark:text-gray-200"
             >
               Email
             </label>
-
             <input
               type="email"
               id="Email"
               name="email"
               v-model="email"
-              class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+              class="input-primary mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
             />
           </div>
-
+          <br />
           <div class="col-span-6 sm:col-span-3">
             <label
               for="Password"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+              class="text-zinc-50 block text-sm font-medium text-gray-700 dark:text-gray-200"
             >
               Password
             </label>
@@ -106,11 +105,11 @@
               class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
             />
           </div>
-
+          <br />
           <div class="col-span-6 sm:col-span-3">
             <label
               for="PasswordConfirmation"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-200"
+              class="text-zinc-50 block text-sm font-medium text-gray-700 dark:text-gray-200"
             >
               Password Confirmation
             </label>
@@ -133,7 +132,9 @@
             </button>
             <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
 
-            <p class="mt-4 text-sm text-gray-500 dark:text-gray-400 sm:mt-0">
+            <p
+              class="text-zinc-50 mt-4 text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
+            >
               Already have an account?
 
               <button
