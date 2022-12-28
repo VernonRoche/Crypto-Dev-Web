@@ -10,11 +10,14 @@ data.then((value: any) => {
 
 <template>
   <div>
-    <link rel="stylesheet" href="@/assets/style.css" />
-    <div>
-      <div class="bg-gradient-to-r from-red-500 ...">
-        Ceci est un exemple de gradient
+    <header>
+    </header>
+    <body>
+      <div>
+        <div id="trend">
+          
+        </div>
       </div>
-    </div>
+    </body>
   </div>
 </template>
