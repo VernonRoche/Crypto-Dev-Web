@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@types/tailwindcss": "^3.1.0",
-    "daisyui": "^2.45.0",
+    "daisyui": "^2.46.0",
     "mongodb": "^4.12.1",
     "pinia": "^2.0.23",
     "vue": "^3.2.41",

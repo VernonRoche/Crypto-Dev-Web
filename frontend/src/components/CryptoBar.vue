@@ -1,14 +1,3 @@
-<script  lang="ts">
-import SearchBox from "../components/SearchBox.vue";
-import CryptoList from '../components/CryptoList.vue'
-import Filter from '../components/Filter.vue'
-
-export default 
-{
-  name: "CryptoBar.vue",
-}
-</script>
-
 <template>
 <div>
     <div class="grid ">
@@ -20,3 +9,12 @@ export default
     </div>
 </div>
 </template>
+<script  lang="ts">
+import SearchBox from "@/components/SearchBox.vue";
+import CryptoList from '@/components/CryptoList.vue';
+import Filter from '@/components/Filter.vue';
+export default 
+{
+  name: "CryptoBar.vue",
+}
+</script>
