@@ -56,7 +56,7 @@
   </footer>
 </template>
 
-<script>
+<script lang="ts">
 import IconCryptohubLogo from "@/components/icons/IconCryptohubLogo.vue";
 
 export default {
