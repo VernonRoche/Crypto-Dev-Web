@@ -1,0 +1,56 @@
+<template>
+  <div>
+    <div class="container mx-auto border-2" id="trend"></div>
+  </div>
+</template>
+
+<script lang="ts">
+import { CoinGeckoApi } from "../stores/CoinGeckoApi";
+
+function CreateTrendElement(): HTMLDivElement{
+
+  const trendGrid:HTMLDivElement = document.createElement("div");
+  trendGrid.setAttribute("class","grid gap-4 grid-cols-{7} ")
+  const data = CoinGeckoApi.getTrend();
+  data.then((value: string) => {
+    value["coins"].forEach((element:any) => {
+
+      /*
+      element :
+        id: crypto id-name
+        coin_id: number representing crypto id
+        name: official name for the coin
+        large: logo in large scale
+        small: logo in small scale
+        price_btc: price in btc
+        market_cap_rank: number representing market cap rank
+        symbol: symbol
+        slug: short id
+        thumb:
+        score:
+      */
+      for (const key in element) {
+        let trend:HTMLDivElement = document.createElement("div");
+        trend.setAttribute("class","flex border-2");
+        let name:HTMLParagraphElement = document.createElement("p");
+        name.innerHTML = element[key]["name"];
+        let img:HTMLImageElement = document.createElement("img");
+        img.setAttribute("class","inline");
+        img.src = element[key]["thumb"];
+        trend.appendChild(img);
+        trend.appendChild(name);
+        trendGrid.appendChild(trend);
+      }
+    });
+  });
+  return trendGrid;
+}
+export default   
+{
+  name: "TrendChoice.vue",
+  mounted(){
+    document.getElementById("trend")?.appendChild(CreateTrendElement());
+  },
+}
+</script>
+<style scoped></style>
