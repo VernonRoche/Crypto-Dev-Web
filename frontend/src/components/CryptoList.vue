@@ -40,6 +40,8 @@
 </template>
 <script lang="ts">
 import { CoinGeckoApi } from "../stores/CoinGeckoApi";
+import { autoComplete } from "../stores/autoComplete"; 
+let CryptoName:Array<string> = []; 
 function createCryptoList(currency:string="usd"):HTMLTableSectionElement{
   let tbody:HTMLTableSectionElement = document.createElement("tbody");
   const data = CoinGeckoApi.getCryptoMarket();
@@ -77,6 +79,7 @@ function createCryptoList(currency:string="usd"):HTMLTableSectionElement{
         total_supply: total amount of coin/token currently in circulation
         total_volume: total amount of coin being traded across all exchanges in the world
       */
+      CryptoName.push(element["name"], element["symbol"]);
       let row:HTMLTableRowElement = document.createElement("tr");
       row.setAttribute("class","bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600");
 
@@ -167,7 +170,8 @@ export default
       const selectedCurrency:string= currencyDiv.options[currencyDiv.selectedIndex].text;
       document.getElementById("CryptoList")?.appendChild(createCryptoList(selectedCurrency));
     }
-}
+    autoComplete(document.getElementById("cryptoSearch"),CryptoName);
+  }
 }
 
 
