@@ -6,29 +6,38 @@
                   <th scope="col" class="py-3 px-6">
                     <div class="flex items-center">
                       Name
-                      <img src="@/assets/sort.png" alt="sort icon" class="object-scale-down h-4 w-4" />
+                      <div>
+                        <img id="asc" src="@/assets/caret-arrow-up.png" alt="0" class="cursor-pointer object-scale-down h-3 w-3" />
+                        <img id="desc" src="@/assets/caret-down.png" alt="0" class="cursor-pointer object-scale-down h-3 w-3" />
+                      </div>
                     </div>
                   </th>
                   <th scope="col" class="py-3 px-6">
                       <div class="flex items-center">
                           Price
-                      <img src="@/assets/sort.png" alt="sort icon" class="object-scale-down h-4 w-4" />
+                        <div>
+                          <img id="asc" src="@/assets/caret-arrow-up.png" alt="1" class="cursor-pointer object-scale-down h-3 w-3" />
+                          <img id="desc" src="@/assets/caret-down.png" alt="1" class="cursor-pointer object-scale-down h-3 w-3" />
+                        </div>
                       </div>
                   </th>
                   <th scope="col" class="py-3 px-6">
                       <div class="flex items-center">
                           Variation
-                      <img src="@/assets/sort.png" alt="sort icon" class="object-scale-down h-4 w-4" />
+                          <div>
+                            <img id="asc" src="@/assets/caret-arrow-up.png" alt="2" class="cursor-pointer object-scale-down h-3 w-3" />
+                            <img id="desc" src="@/assets/caret-down.png" alt="2" class="cursor-pointer object-scale-down h-3 w-3" />
+                          </div>
                       </div>
                   </th>
-                  <th scope="col" class="py-3 px-6">
+                  <th scope="col" class="py-3 px-15">
                       <div class="flex items-center">
                           Volume 24h
-                      <img src="@/assets/sort.png" alt="sort icon" class="object-scale-down h-4 w-4" />
+                          <div>
+                            <img id="asc" src="@/assets/caret-arrow-up.png" alt="3" class="cursor-pointer object-scale-down h-3 w-3" />
+                            <img id="desc" src="@/assets/caret-down.png" alt="3" class="cursor-pointer object-scale-down h-3 w-3" />
+                          </div>
                       </div>
-                  </th>
-                  <th scope="col" class="py-3 px-6">
-                      <span class="sr-only"></span>
                   </th>
               </tr>
           </thead>

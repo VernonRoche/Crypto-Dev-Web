@@ -9,8 +9,6 @@
 </template>
 <script lang="ts">
 function DisplayFav():void{
-    console.log("crypto "+ document.getElementById("CryptoList").style.display);
-    console.log("favori "+ document.getElementById("FavoriList").style.display);
     document.getElementById("CryptoList").style.display = "none";
     document.getElementById("FavoriList").style.display = "initial";
     //TODO ajouter les favories dans le tableau FavoriList
@@ -25,8 +23,6 @@ export default
     document.getElementById("Filterfav").addEventListener('click', ()  => {
         const favIcon:HTMLImageElement = document.getElementById("filterFavImg");
         if(favIcon.alt == "NotFav"){
-            console.log("AKOOEAZOAZOEJOZIAEHJOZAJEIO");
-            
             DisplayFav()
             favIcon.setAttribute("alt","Fav");
             favIcon.src = "/src/assets/starFull.png";

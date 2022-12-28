@@ -6,29 +6,38 @@
                   <th scope="col" class="py-3 px-6">
                     <div class="flex items-center">
                       Name
-                      <img src="@/assets/sort.png" alt="sort icon" class="object-scale-down h-4 w-4" />
+                      <div>
+                        <img id="asc" src="@/assets/caret-arrow-up.png" alt="0" class="cursor-pointer object-scale-down h-3 w-3" />
+                        <img id="desc" src="@/assets/caret-down.png" alt="0" class="cursor-pointer object-scale-down h-3 w-3" />
+                      </div>
                     </div>
                   </th>
                   <th scope="col" class="py-3 px-6">
                       <div class="flex items-center">
                           Price
-                      <img src="@/assets/sort.png" alt="sort icon" class="object-scale-down h-4 w-4" />
+                        <div>
+                          <img id="asc" src="@/assets/caret-arrow-up.png" alt="1" class="cursor-pointer object-scale-down h-3 w-3" />
+                          <img id="desc" src="@/assets/caret-down.png" alt="1" class="cursor-pointer object-scale-down h-3 w-3" />
+                        </div>
                       </div>
                   </th>
                   <th scope="col" class="py-3 px-6">
                       <div class="flex items-center">
                           Variation
-                      <img src="@/assets/sort.png" alt="sort icon" class="object-scale-down h-4 w-4" />
+                          <div>
+                            <img id="asc" src="@/assets/caret-arrow-up.png" alt="2" class="cursor-pointer object-scale-down h-3 w-3" />
+                            <img id="desc" src="@/assets/caret-down.png" alt="2" class="cursor-pointer object-scale-down h-3 w-3" />
+                          </div>
                       </div>
                   </th>
-                  <th scope="col" class="py-3 px-6">
+                  <th scope="col" class="py-3 px-15">
                       <div class="flex items-center">
                           Volume 24h
-                      <img src="@/assets/sort.png" alt="sort icon" class="object-scale-down h-4 w-4" />
+                          <div>
+                            <img id="asc" src="@/assets/caret-arrow-up.png" alt="3" class="cursor-pointer object-scale-down h-3 w-3" />
+                            <img id="desc" src="@/assets/caret-down.png" alt="3" class="cursor-pointer object-scale-down h-3 w-3" />
+                          </div>
                       </div>
-                  </th>
-                  <th scope="col" class="py-3 px-6">
-                      <span class="sr-only"></span>
                   </th>
               </tr>
           </thead>
@@ -153,7 +162,43 @@ function createCryptoList(currency:string="usd"):HTMLTableSectionElement{
   return tbody;
 }
 
+function sortTableByHeader(dir:string, nbHeader:number):void{
+  let tableName:string  = "CryptoList";
+  let fav:HTMLImageElement = document.getElementById("filterFavImg");
+  if(fav && fav.alt == "Fav"){
+    tableName = "FavoriList";
+  }
+  console.log(tableName);
+  let i:number;
+  let table:HTMLTableElement = document.getElementById(tableName);
+  let switching:boolean = true;
+  let shouldSwitch:boolean;
+  while(switching){
+    switching = false;
+    let rows:HTMLCollectionOf<HTMLTableRowElement> = table.rows;
+    for(i = 1 ;i < (rows.length-1);i++){
+      shouldSwitch = false;
+      let x = rows[i].getElementsByTagName("TD")[nbHeader];
+      let y = rows[i+1].getElementsByTagName("TD")[nbHeader];
 
+      if(dir == "asc"){
+        if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()){
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc"){
+          if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()){
+            shouldSwitch = true;
+            break;
+          }
+      }
+    }
+    if(shouldSwitch){
+      rows[i].parentNode.insertBefore(rows[i+1],rows[i]);
+      switching=true;
+    }
+  }
+}
 
 export default   
 {
@@ -167,6 +212,16 @@ export default
       document.getElementById("CryptoList")?.appendChild(createCryptoList(selectedCurrency));
     }
     autoComplete(document.getElementById("cryptoSearch"),CryptoName);
+    document.querySelectorAll('[id=asc]').forEach( (e:HTMLImageElement) => {
+      e.addEventListener("click",() => {
+        sortTableByHeader("asc",+e.alt);
+      });
+    });
+    document.querySelectorAll('[id=desc]').forEach( (e:HTMLImageElement) => {
+      e.addEventListener("click",() => {
+        sortTableByHeader("desc",+e.alt);
+      });
+    });
   }
 }
 
