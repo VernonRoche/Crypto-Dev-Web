@@ -1,7 +1,5 @@
 <template>
-  <div id="body" class="grid whitespace-nowrap">
-      <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <table id="CryptoList" class="table-fixed overflow-x-auto text-sm text-left text-gray-500 dark:text-gray-400 whitespace-nowrap">
+        <table id="CryptoList" class="overflow-y-auto table-fixed overflow-x-auto text-sm text-left text-gray-500 dark:text-gray-400 whitespace-nowrap">
           <caption></caption>
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -35,8 +33,6 @@
               </tr>
           </thead>
         </table>
-      </div>
-  </div>
 </template>
 <script lang="ts">
 import { CoinGeckoApi } from "../stores/CoinGeckoApi";

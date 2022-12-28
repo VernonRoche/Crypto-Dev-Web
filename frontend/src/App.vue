@@ -3,6 +3,7 @@ import CryptoBar from "./components/CryptoBar.vue";
 import SearchBox from "./components/SearchBox.vue";
 import CryptoList from './components/CryptoList.vue'
 import Filter from './components/Filter.vue'
+import FavoritesList from './components/FavoritesList.vue';
 </script>
 
 <template>
@@ -16,6 +17,7 @@ import Filter from './components/Filter.vue'
         <Filter />
       </div>
       <CryptoList />
+      <FavoritesList />
     </div>
   </body>
 </div>
