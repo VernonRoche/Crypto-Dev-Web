@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import NavbarHeader from "@/components/navbarAndFooter/NavbarHeader.vue";
 import FooterBar from "@/components/navbarAndFooter/FooterBar.vue";
+import SearchBar from "@/components/api/SearchBar.vue";
+import CryptoTrend from "@/components/api/CryptoTrend.vue";
 </script>
 
 <template>
@@ -9,9 +11,8 @@ import FooterBar from "@/components/navbarAndFooter/FooterBar.vue";
     <NavbarHeader />
   </header>
   <body>
-    <div class="bg-gradient-to-r from-red-500 ...">
-      Ceci est un exemple de gradient
-    </div>
+    <SearchBar />
+    <CryptoTrend />
   </body>
   <footer>
     <FooterBar />

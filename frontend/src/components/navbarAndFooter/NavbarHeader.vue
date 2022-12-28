@@ -1,15 +1,11 @@
 <template>
-  <header aria-label="Site Header" class="bg-white dark:bg-gray-900">
+  <header aria-label="Site Header" class="bg-gray-900">
     <div
       class="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8"
     >
       <a class="flex items-center text-purple-500" href="/">
         <span class="sr-only">Home</span>
-        <img
-          class="h-8 w-auto"
-          src="https://media.discordapp.net/attachments/1042336221948551168/1054513351763439727/imageedit_8_5179903478.png"
-          alt="Logo"
-        />
+        <IconCryptohubLogo />
       </a>
 
       <div
@@ -37,9 +33,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import IconCryptohubLogo from "@/components/icons/IconCryptohubLogo.vue";
 
 export default defineComponent({
   name: "NavbarHeader.vue",
+  components: { IconCryptohubLogo },
 });
 </script>
 
