@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { CoinGeckoApi } from "../stores/CoinGeckoApi";
+import { CoinGeckoApi } from "@/stores/CoinGeckoApi";
 const data = CoinGeckoApi.getTrend();
-data.then((value: string) => {
-  value["coins"].forEach((element) => {
+data.then((value: any) => {
+  value["coins"].forEach((element: any) => {
     console.log(element);
   });
 });

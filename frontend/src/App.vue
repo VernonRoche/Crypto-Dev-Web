@@ -1,24 +1,20 @@
 <script setup lang="ts">
-import CryptoBar from "./components/CryptoBar.vue";
-import SearchBox from "./components/SearchBox.vue";
-import CryptoList from './components/CryptoList.vue'
-import Filter from './components/Filter.vue'
-import FavoritesList from './components/FavoritesList.vue';
-</script>
 
+import NavbarHeader from "@/components/navbarAndFooter/NavbarHeader.vue";
+import FooterBar from "@/components/navbarAndFooter/FooterBar.vue";
+import SearchBar from "@/components/api/SearchBar.vue";
+import CryptoTrend from "@/components/api/CryptoTrend.vue";
+</script>
 <template>
-<div>
   <link rel="stylesheet" href="@/assets/style.css" />
-  <header></header>
+  <header>
+    <NavbarHeader />
+  </header>
   <body>
-        <div class="grid ">
-      <div class="content-center whitespace-nowrap space-x-10" >
-        <SearchBox />
-        <Filter />
-      </div>
-      <CryptoList />
-      <FavoritesList />
-    </div>
+    <SearchBar />
+    <CryptoTrend />
   </body>
-</div>
+  <footer>
+    <FooterBar />
+  </footer>
 </template>
