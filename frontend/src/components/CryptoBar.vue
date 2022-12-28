@@ -15,6 +15,6 @@ import CryptoList from '@/components/CryptoList.vue';
 import Filter from '@/components/Filter.vue';
 export default 
 {
-  name: "CryptoBar.vue",
+  name: "CryptoBar",
 }
 </script>

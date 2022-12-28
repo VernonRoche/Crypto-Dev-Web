@@ -47,7 +47,7 @@ function CreateTrendElement(): HTMLDivElement{
 }
 export default   
 {
-  name: "TrendChoice.vue",
+  name: "TrendChoice",
   mounted(){
     document.getElementById("trend")?.appendChild(CreateTrendElement());
   },

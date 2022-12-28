@@ -202,7 +202,7 @@ function sortTableByHeader(dir:string, nbHeader:number):void{
 
 export default   
 {
-  name: "CryptoList.vue",
+  name: "CryptoList",
   mounted(){
     const currencyDiv:HTMLSelectElement = document.getElementById("currency");
     if(currencyDiv == null){ 

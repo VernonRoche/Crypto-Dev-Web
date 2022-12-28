@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import NavbarHeader from "@/components/navbarAndFooter/NavbarHeader.vue";
 import FooterBar from "@/components/navbarAndFooter/FooterBar.vue";
 import CryptoTrend from "@/components/api/CryptoTrend.vue";
@@ -13,6 +12,7 @@ import CryptoChart from "@/components/CryptoChart.vue";
   </header>
   <body>
     <CryptoChart />
+    <CryptoBar />
   </body>
   <footer>
     <FooterBar />
