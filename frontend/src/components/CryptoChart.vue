@@ -26,12 +26,67 @@ import 'chart.js/auto';
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 function changeTimeUnit(unit:string='day'){
   if(this.chartData){
-    this.options.scales['x']['time']['unit'] = unit;
+    this.options = null;//.scales['x']['time']['unit'] = unit;
   }
+
+
 }
 function randomColor(){
   return "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0').toUpperCase(); 
-} 
+}
+async function changeData(id:string=null,currency:string=null,from:number=null,to:number=null){
+  if(id == null || currency == null || from == null || to==null   ){
+    this.loaded = false;
+    try {
+      await createCryptoData().then( (data) => {        
+        let datasetList:Array<Object> = []; 
+        for (const key in data[0]) {
+          datasetList.push(          
+          {
+            label: key,
+            data: data[0][key],
+            backgroundColor: randomColor(),
+            borderColor: randomColor(),
+            color: randomColor(),
+
+          });
+        }
+        this.chartData = {
+          labels: data[1]["prices"],
+          datasets: datasetList,  
+        }; 
+        this.loaded = true; 
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }else{
+    this.options.plugins["title"]["text"] = id + " chart";
+    this.loaded = false;
+    try {
+      await createCryptoData(id,currency,from,to).then( (data) => {
+        let datasetList:Array<Object> = []; 
+        for (const key in data[0]) {
+          datasetList.push(          
+          {
+            label: key,
+            data: data[0][key],
+            backgroundColor: randomColor(),
+            borderColor: randomColor(),
+            color: randomColor(),
+          });
+        }        
+        this.chartData = {
+          labels: data[1]["prices"],
+          datasets: datasetList,  
+        }; 
+        this.loaded = true; 
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
 export default{
   name: "CryptoChart",
   components: { Line },
@@ -41,7 +96,7 @@ export default{
     options: {
     plugins: {
         title: {
-            text: "Crypto Chart",
+            text: "Bitcoin Chart",
             display: true
         }
     },
@@ -70,31 +125,10 @@ export default{
   }),
   methods: {
     changeTimeUnit: changeTimeUnit,
+    changeData: changeData,
   },
   async mounted(){
-    this.loaded = false;
-    try {
-      await createCryptoData().then( (data) => {
-        let datasetList:Array<Object> = []; 
-        for (const key in data[0]) {
-          datasetList.push(          
-          {
-            label: key,
-            data: data[0][key],
-            backgroundColor: randomColor(),
-            borderColor: randomColor(),
-            color: randomColor(),
-          });
-        }        
-        this.chartData = {
-          labels: data[1]["prices"],
-          datasets: datasetList,  
-        }; 
-        this.loaded = true; 
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    this.changeData();
   }
 }
 </script>
