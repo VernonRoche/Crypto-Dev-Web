@@ -1,12 +1,10 @@
 <template>
   <table
     id="FavoriList"
-    class="hidden table-fixed overflow-x-auto text-sm text-left text-gray-500 dark:text-gray-400 whitespace-nowrap"
+    class="hidden table-fixed overflow-x-auto text-sm text-left text-gray-400 whitespace-nowrap"
   >
     <caption></caption>
-    <thead
-      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-    >
+    <thead class="text-xs uppercase bg-gray-700 text-gray-400">
       <tr>
         <th scope="col" class="py-3 px-6">
           <div class="flex items-center">

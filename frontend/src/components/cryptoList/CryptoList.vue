@@ -1,9 +1,7 @@
 <template>
   <div class="grid">
     <table id="CryptoList" class="table hover table-normal">
-      <thead
-        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-      >
+      <thead class="text-xs uppercase bg-gray-700 text-gray-400">
         <CryptoListFilterBar />
       </thead>
     </table>
