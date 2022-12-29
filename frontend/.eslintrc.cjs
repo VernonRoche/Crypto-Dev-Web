@@ -13,6 +13,7 @@ module.exports = {
     ecmaVersion: 'latest'
   },
   rules:{
-    "linebreak-style": 0   // <----------
+    "linebreak-style": 0 ,  // <----------
+      "no-undef": "off",
   }
 }

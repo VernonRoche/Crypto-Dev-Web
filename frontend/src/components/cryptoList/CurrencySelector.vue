@@ -14,28 +14,27 @@
 </template>
 
 <script lang="ts">
-import { CoinGeckoApi } from "../stores/CoinGeckoApi";
+import { CoinGeckoApi } from "@/stores/CoinGeckoApi";
 
-function CreateSupportedCurrency():HTMLOptGroupElement{
-  let options:HTMLOptGroupElement = document.createElement("optgroup");
+function CreateSupportedCurrency(): HTMLOptGroupElement {
+  let options: HTMLOptGroupElement = document.createElement("optgroup");
   const data = CoinGeckoApi.getSupportedCurrency();
-  data.then( (value:Array<string>) => {
-    value.forEach( (currency:string) => {
-      let option:HTMLOptGroupElement = document.createElement("option");
+  data.then((value: Array<string>) => {
+    value.forEach((currency: string) => {
+      let option: HTMLOptGroupElement = document.createElement("option");
       option.innerHTML = currency;
-      options.append(option)
+      options.append(option);
     });
   });
   return options;
-} 
+}
 
-export default   
-{
+export default {
   name: "CurrencySelector.vue",
-  mounted(){
+  mounted() {
     document.getElementById("currency")?.appendChild(CreateSupportedCurrency());
   },
-}
+};
 </script>
 
 <style scoped></style>
