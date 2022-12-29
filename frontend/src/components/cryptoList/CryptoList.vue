@@ -67,7 +67,7 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       let symbol: HTMLParagraphElement = document.createElement("p");
       symbol.setAttribute(
         "class",
-        "inline font-semibold text-gray-900 dark:text-white"
+        "hover:text-accent inline font-semibold text-white"
       );
       symbol.innerHTML = element["symbol"];
       logoDiv.appendChild(img);
@@ -76,23 +76,23 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       let name: HTMLTableCellElement = document.createElement(
         "td"
       ) as HTMLTableCellElement;
-      name.setAttribute("class", "py-4 px-6");
+      name.setAttribute("class", "hover:text-accent py-4 px-6");
       name.innerHTML = element["name"];
 
       let price: HTMLTableCellElement = document.createElement("td");
-      price.setAttribute("class", "content-center py-4 px-6");
+      price.setAttribute("class", "hover:text-accent content-center py-4 px-6");
       price.innerHTML = element["current_price"] + " " + currency;
 
       let variation: HTMLTableCellElement = document.createElement("td");
-      variation.setAttribute("class", "py-4 px-6");
+      variation.setAttribute("class", "hover:text-accent py-4 px-6");
       variation.innerHTML = element["price_change_percentage_24h"] + " %";
 
       let volume: HTMLTableCellElement = document.createElement("td");
-      volume.setAttribute("class", "py-4 px-6");
+      volume.setAttribute("class", "hover:text-accent py-4 px-6");
       volume.innerHTML = element["high_24h"];
 
       let fav = document.createElement("td");
-      fav.setAttribute("class", "py-4 px-6");
+      fav.setAttribute("class", "hover:text-accent py-4 px-6");
       let favIcon: HTMLImageElement = document.createElement("img");
       favIcon.setAttribute("alt", "NotFav");
       favIcon.setAttribute("class", "FavIcon");
