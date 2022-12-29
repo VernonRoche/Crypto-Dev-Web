@@ -50,7 +50,7 @@ let CryptoName:Array<string> = [];
 function createCryptoList(currency:string="usd"):HTMLTableSectionElement{
   let tbody:HTMLTableSectionElement = document.createElement("tbody");
   const data = CoinGeckoApi.getCryptoMarket();
-  data.then( (value:Array<string>) => {
+  data.then( (value:Array<string>) => {    
     value.forEach( (element:any) => {
       /*
       element:
