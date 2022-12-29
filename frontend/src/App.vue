@@ -2,7 +2,9 @@
 import NavbarHeader from "@/components/navbarAndFooter/NavbarHeader.vue";
 import FooterBar from "@/components/navbarAndFooter/FooterBar.vue";
 import CryptoTrend from "@/components/api/CryptoTrend.vue";
-import CryptoBar from "@/components/CryptoBar.vue";
+import SearchBox from "@/components/SearchBox.vue";
+import CryptoList from '@/components/CryptoList.vue';
+import Filter from '@/components/Filter.vue';
 import CryptoChart from "@/components/CryptoChart.vue";
 import BarChart from "@/components/Bar.vue";
 </script>
@@ -13,7 +15,13 @@ import BarChart from "@/components/Bar.vue";
   </header>
   <body>
     <CryptoChart />
-    <CryptoBar />
+    <div class="grid ">
+      <div class="content-center whitespace-nowrap space-x-10" >
+        <SearchBox />
+        <Filter />
+      </div>
+      <CryptoList />
+    </div>
   </body>
   <footer>
     <FooterBar />
