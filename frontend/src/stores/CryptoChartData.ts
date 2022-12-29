@@ -1,38 +1,69 @@
-export const CryptoChartData = {
-    type: "line",
-    data: {
-        labels: ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"],
-        datasets: [
-          {
-            label: "Number of Moons",
-            data: [0, 0, 1, 2, 79, 82, 27, 14],
-            backgroundColor: "rgba(54,73,93,.5)",
-            borderColor: "#36495d",
-            borderWidth: 3
-          },
-          {
-            label: "Planetary Mass (relative to the Sun x 10^-6)",
-            data: [0.166, 2.081, 3.003, 0.323, 954.792, 285.886, 43.662, 51.514],
-            backgroundColor: "rgba(71, 183,132,.5)",
-            borderColor: "#47b784",
-            borderWidth: 3
-          }
-        ]
-    },
-    options: {
-        responsive: true,
-        lineTension: 1,
-        scales: {
-            yAxes: [
-                {
-                    ticks: {
-                        beginAtZero: true,
-                        padding: 25,
+import { CoinGeckoApi }  from "../stores/CoinGeckoApi"
+import 'chartjs-adapter-luxon';
+
+export async function createCryptoData() {
+
+    let datasets:Array<object>  = [];
+    let labels:Array<string> = []; 
+    const data  =  CoinGeckoApi.getCryptoMarketChartRange("bitcoin","usd",1392577232,1422577232);
+    await data.then( (value:Array<string>) => {
+        for(const key in value){
+            let datas:Array<number> = [];
+            /*
+            key : 
+                prices
+                market_caps
+                total_volumes
+            */
+            value[key].forEach(element => {
+                datas.push(element[1]);
+                labels.push(new Date(element[0]));
+            });
+            datasets.push({
+                label: key,
+                backgroundColor:  "#f87979",
+                data: datas,
+                //borderColor: "rgba(0,0,0,.1)",
+                //color: "rgba(0,0,0,.1)"
+            });
+        }
+    });
+    let CryptoChartData = {
+        //type: "line",
+        labels: labels,
+        datasets: datasets,
+        /*
+        options: {
+            plugins: {
+                title: {
+                    text: "Crypto Chart",
+                    display: true
+                }
+            },
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        tooltipFormat: 'DD T'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    title: {
+                        display: false,
+                        text: 'value'
                     }
                 }
-            ]
+            },
+            responsive: true,
+            lineTension: 1,
         }
-    }
-};
+        */
+    };
+    return CryptoChartData;
+}
 
-export default CryptoChartData;
+export default createCryptoData;
