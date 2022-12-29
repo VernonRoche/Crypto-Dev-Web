@@ -1,96 +1,19 @@
 <template>
-  <table
-    id="CryptoList"
-    class="overflow-y-auto table-fixed overflow-x-auto text-sm text-left text-gray-500 dark:text-gray-400 whitespace-nowrap"
-  >
-    <caption></caption>
-    <thead
-      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-    >
-      <tr>
-        <th scope="col" class="py-3 px-6">
-          <div class="flex items-center">
-            Name
-            <div>
-              <img
-                id="asc"
-                src="@/assets/caret-arrow-up.png"
-                alt="0"
-                class="cursor-pointer object-scale-down h-3 w-3"
-              />
-              <img
-                id="desc"
-                src="@/assets/caret-down.png"
-                alt="0"
-                class="cursor-pointer object-scale-down h-3 w-3"
-              />
-            </div>
-          </div>
-        </th>
-        <th scope="col" class="py-3 px-6">
-          <div class="flex items-center">
-            Price
-            <div>
-              <img
-                id="asc"
-                src="@/assets/caret-arrow-up.png"
-                alt="1"
-                class="cursor-pointer object-scale-down h-3 w-3"
-              />
-              <img
-                id="desc"
-                src="@/assets/caret-down.png"
-                alt="1"
-                class="cursor-pointer object-scale-down h-3 w-3"
-              />
-            </div>
-          </div>
-        </th>
-        <th scope="col" class="py-3 px-6">
-          <div class="flex items-center">
-            Variation
-            <div>
-              <img
-                id="asc"
-                src="@/assets/caret-arrow-up.png"
-                alt="2"
-                class="cursor-pointer object-scale-down h-3 w-3"
-              />
-              <img
-                id="desc"
-                src="@/assets/caret-down.png"
-                alt="2"
-                class="cursor-pointer object-scale-down h-3 w-3"
-              />
-            </div>
-          </div>
-        </th>
-        <th scope="col" class="py-3 px-15">
-          <div class="flex items-center">
-            Volume 24h
-            <div>
-              <img
-                id="asc"
-                src="@/assets/caret-arrow-up.png"
-                alt="3"
-                class="cursor-pointer object-scale-down h-3 w-3"
-              />
-              <img
-                id="desc"
-                src="@/assets/caret-down.png"
-                alt="3"
-                class="cursor-pointer object-scale-down h-3 w-3"
-              />
-            </div>
-          </div>
-        </th>
-      </tr>
-    </thead>
-  </table>
+  <div class="grid">
+    <table id="CryptoList" class="table hover table-normal">
+      <thead
+        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+      >
+        <CryptoListFilterBar />
+      </thead>
+    </table>
+  </div>
 </template>
 <script lang="ts">
 import { CoinGeckoApi } from "@/stores/CoinGeckoApi";
 import { autoComplete } from "@/stores/autoComplete";
+import CryptoListFilterBar from "@/components/cryptoList/CryptoListFilterBar.vue";
+
 let CryptoName: Array<string> = [];
 function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
   let tbody: HTMLTableSectionElement = document.createElement("tbody");
@@ -131,32 +54,30 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       */
       CryptoName.push(element["name"], element["symbol"]);
       let row: HTMLTableRowElement = document.createElement("tr");
-      row.setAttribute(
-        "class",
-        "bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-      );
+      row.setAttribute("class", "hover");
 
-      let nameDiv: HTMLTableCellElement = document.createElement("td");
-      nameDiv.setAttribute("class", "space-x-5 py-4 px-6");
+      let logoDiv: HTMLTableCellElement = document.createElement("td");
+      logoDiv.setAttribute("class", "space-x-5 py-4 px-6");
       let img: HTMLImageElement = document.createElement("img");
       img.setAttribute("width", "20");
+      img.setAttribute("height", "20");
       img.setAttribute("class", "inline");
       img.setAttribute("alt", "icon");
       img.src = element["image"];
-      let name: HTMLParagraphElement = document.createElement(
-        "strong"
-      ) as HTMLParagraphElement;
-      name.setAttribute("class", "py-4 px-6");
-      name.innerHTML = element["name"];
       let symbol: HTMLParagraphElement = document.createElement("p");
       symbol.setAttribute(
         "class",
         "inline font-semibold text-gray-900 dark:text-white"
       );
       symbol.innerHTML = element["symbol"];
-      nameDiv.appendChild(img);
-      nameDiv.appendChild(symbol);
-      nameDiv.appendChild(name);
+      logoDiv.appendChild(img);
+      logoDiv.appendChild(symbol);
+
+      let name: HTMLTableCellElement = document.createElement(
+        "td"
+      ) as HTMLTableCellElement;
+      name.setAttribute("class", "py-4 px-6");
+      name.innerHTML = element["name"];
 
       let price: HTMLTableCellElement = document.createElement("td");
       price.setAttribute("class", "content-center py-4 px-6");
@@ -170,41 +91,38 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       volume.setAttribute("class", "py-4 px-6");
       volume.innerHTML = element["high_24h"];
 
-      let detail = document.createElement("td");
-      detail.setAttribute(
-        "class",
-        "cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline"
-      );
-      detail.innerHTML = "Details";
-      detail.addEventListener("click", () => {
-        //toDO
-      });
-
       let fav = document.createElement("td");
       fav.setAttribute("class", "py-4 px-6");
       let favIcon: HTMLImageElement = document.createElement("img");
       favIcon.setAttribute("alt", "NotFav");
       favIcon.setAttribute("class", "FavIcon");
-      favIcon.src = "/src/assets/starEmpty.png";
+      favIcon.setAttribute("width", "20");
+      favIcon.setAttribute("height", "20");
+      favIcon.setAttribute("min-width", "20");
+      favIcon.setAttribute("min-height", "20");
+      favIcon.src =
+        "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
       fav.appendChild(favIcon);
       fav.addEventListener("click", () => {
         if (favIcon.alt == "NotFav") {
           //addToFavorite(); //TODO
           row.setAttribute("alt", "fav");
           favIcon.setAttribute("alt", "Fav");
-          favIcon.src = "/src/assets/starFull.png";
+          favIcon.src =
+            "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919407673374/starFull.png";
         } else {
           //removeFromFavorite(); //TODO
           favIcon.setAttribute("alt", "NotFav");
-          favIcon.src = "/src/assets/starEmpty.png";
+          favIcon.src =
+            "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
         }
       });
 
-      row.appendChild(nameDiv);
+      row.appendChild(logoDiv);
+      row.appendChild(name);
       row.appendChild(price);
       row.appendChild(variation);
       row.appendChild(volume);
-      row.appendChild(detail);
       row.appendChild(fav);
       tbody.appendChild(row);
     });
@@ -219,7 +137,7 @@ function sortTableByHeader(dir: string, nbHeader: number): void {
     "filterFavImg"
   ) as HTMLImageElement;
   if (fav && fav.alt == "Fav") {
-    tableName = "FavoriList";
+    tableName = "FavoriteList";
   }
   console.log(tableName);
   let i: number;
@@ -257,6 +175,7 @@ function sortTableByHeader(dir: string, nbHeader: number): void {
 
 export default {
   name: "CryptoList.vue",
+  components: { CryptoListFilterBar },
   mounted() {
     const currencyDiv: HTMLSelectElement = document.getElementById(
       "currency"

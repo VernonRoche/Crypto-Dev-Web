@@ -6,17 +6,13 @@
           type="search"
           id="cryptoSearch"
           name="cryptoSearch"
-          class="form-control relative flex-auto min-w-0 block px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-purple-600 focus:outline-none"
+          class="input input-secondary input-bordered"
           placeholder="Search"
           aria-label="Search"
           aria-describedby="CoinSearch"
         />
-        <button
-          class="btn inline-block px-6 py-2.5 bg-purple-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-purple-700 hover:shadow-lg focus:bg-purple-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-purple-800 active:shadow-lg transition duration-150 ease-in-out flex items-center"
-          type="button"
-          id="CoinSearch"
-        >
-          <img src="@/assets/icons8-search-32.png" alt="search icon" />
+        <button class="btn btn-secondary" type="button" id="CoinSearch">
+          <IconSearch></IconSearch>
         </button>
       </div>
     </div>
@@ -24,6 +20,8 @@
 </template>
 
 <script lang="ts">
+import IconSearch from "@/components/icons/IconSearch.vue";
+
 function SearchCoin(): void {
   const input = document.getElementById("cryptoSearch") as HTMLInputElement;
   const filter = input.value.toUpperCase();
@@ -47,6 +45,7 @@ function SearchCoin(): void {
 
 export default {
   name: "SearchBox.vue",
+  components: { IconSearch },
   mounted() {
     const button = document.getElementById("CoinSearch");
     button?.addEventListener("click", () => {

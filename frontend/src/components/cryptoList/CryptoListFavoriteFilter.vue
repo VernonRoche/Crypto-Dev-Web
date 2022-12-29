@@ -2,18 +2,14 @@
   <div class="inline-block whitespace-nowrap">
     <div class="grid grid-cols-3">
       <div id="Filterfav">
-        <img
-          id="filterFavImg"
-          src="@/assets/starEmpty.png"
-          alt="notFav"
-          width="25"
-          height="25"
-        />
+        <IconStarEmpty />
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
+import IconStarEmpty from "@/components/icons/IconStarEmpty.vue";
+
 function DisplayFav(): void {
   document.getElementById("CryptoList")!.style.display = "none";
   document.getElementById("FavoriList")!.style.display = "initial";
@@ -24,7 +20,8 @@ function hideFav(): void {
   document.getElementById("FavoriList")!.style.display = "none";
 }
 export default {
-  name: "CryptoListFilter.vue",
+  name: "CryptoListFavoriteFilter.vue",
+  components: { IconStarEmpty },
   mounted() {
     document.getElementById("Filterfav")!.addEventListener("click", () => {
       const favIcon: HTMLImageElement = document.getElementById(

@@ -2,7 +2,7 @@
 import NavbarHeader from "@/components/navbarAndFooter/NavbarHeader.vue";
 import FooterBar from "@/components/navbarAndFooter/FooterBar.vue";
 import CryptoTrend from "@/components/api/CryptoTrend.vue";
-import CryptoBar from "@/components/cryptoList/CryptoBar.vue";
+import CryptoList from "@/components/cryptoList/CryptoList.vue";
 </script>
 <template>
   <link rel="stylesheet" href="@/assets/style.css" />
@@ -11,7 +11,7 @@ import CryptoBar from "@/components/cryptoList/CryptoBar.vue";
   </header>
   <body>
     <CryptoTrend />
-    <CryptoBar />
+    <CryptoList />
   </body>
   <footer>
     <FooterBar />
