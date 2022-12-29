@@ -29,7 +29,9 @@ function changeTimeUnit(unit:string='day'){
     this.options.scales['x']['time']['unit'] = unit;
   }
 }
-
+function randomColor(){
+  return "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0').toUpperCase(); 
+} 
 export default{
   name: "CryptoChart",
   components: { Line },
@@ -79,9 +81,9 @@ export default{
           {
             label: key,
             data: data[0][key],
-            backgroundColor: "#f87979",
-            borderColor: "#f87979",
-            color: "#f87979",
+            backgroundColor: randomColor(),
+            borderColor: randomColor(),
+            color: randomColor(),
           });
         }        
         this.chartData = {
