@@ -15,7 +15,7 @@
       <div class="col-span-6 text-white">
         <label
           for="Email"
-          class="text-zinc-50 block text-sm font-medium text-gray-200"
+          class="text-zinc-50 block text-sm font-medium text-gray-400"
         >
           Email
         </label>
@@ -25,14 +25,14 @@
           id="Email"
           name="email"
           v-model="email"
-          class="input-primary mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200"
+          class="input-primary mt-1 w-full rounded-md text-sm shadow-sm border-gray-800 bg-gray-800 text-gray-400	"
         />
       </div>
       <br />
       <div class="col-span-6 sm:col-span-3">
         <label
           for="Password"
-          class="text-zinc-50 block text-sm font-medium text-gray-200"
+          class="text-zinc-50 block text-sm font-medium text-gray-400"
         >
           Password
         </label>
@@ -50,7 +50,7 @@
       <div class="col-span-6 sm:col-span-3">
         <label
           for="PasswordConfirmation"
-          class="text-zinc-50 block text-sm font-medium text-gray-200"
+          class="text-zinc-50 block text-sm font-medium text-gray-400"
         >
           Password Confirmation
         </label>

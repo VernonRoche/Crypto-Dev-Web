@@ -5,7 +5,7 @@
   <div class="modal" id="my-modal-2">
     <div class="modal-box">
       <div class="col-span-6">
-        <label for="Hello" class="block text-lg font-medium text-gray-200">
+        <label for="Hello" class="block text-lg font-medium text-gray-400">
           Hello
           {{ user?.displayName || user?.phoneNumber || user?.email }}
         </label>

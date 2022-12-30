@@ -12,7 +12,7 @@
       </div>
       <br />
       <div class="col-span-6">
-        <label for="Email" class="block text-sm font-medium text-gray-200">
+        <label for="Email" class="block text-sm font-medium text-gray-400">
           Email
         </label>
         <p>
@@ -22,13 +22,13 @@
             id="Email"
             name="email"
             v-model="email"
-            class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200"
+            class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-400"
           />
         </p>
       </div>
 
       <div class="col-span-6 sm:col-span-3">
-        <label for="Password" class="block text-sm font-medium text-gray-200">
+        <label for="Password" class="block text-sm font-medium text-gray-400">
           Password
         </label>
         <p>
@@ -38,7 +38,7 @@
             id="Password"
             name="password"
             v-model="password"
-            class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200"
+            class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-400"
           />
         </p>
       </div>
