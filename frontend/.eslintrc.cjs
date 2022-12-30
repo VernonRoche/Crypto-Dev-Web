@@ -10,6 +10,10 @@ module.exports = {
     "@vue/eslint-config-prettier",
   ],
   parserOptions: {
-    ecmaVersion: "latest",
+    ecmaVersion: 'latest'
   },
-};
+  rules:{
+    "linebreak-style": 0 ,  // <----------
+      "no-undef": "off",
+  }
+}

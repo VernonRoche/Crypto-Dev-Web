@@ -8,7 +8,7 @@
       plugins: [require('@tailwindcss/forms')]
     -->
 
-  <div class="popup bg-gray-900">
+  <!-- <div class="popup bg-gray-900">
     <div class="popup-inner lg:grid lg:min-h-screen lg:grid-cols-12">
       <section
         class="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6"
@@ -85,7 +85,7 @@
               />
             </button>
           </div>
-          <br />
+          <br /> -->
 
           <!-- <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
             <button
@@ -102,7 +102,7 @@
           </div>
           <br /> -->
 
-          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+          <!-- <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
             <button
               class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
               @click="signOnlyLinkEmail"
@@ -126,7 +126,6 @@
             </div>
           </div>
 
-          <!-- <form  class="mt-8 grid grid-cols-6 gap-6"> -->
           <div class="col-span-6">
             <label
               for="Email"
@@ -191,14 +190,79 @@
           <br />
 
           
-          <!-- </form> -->
         </div>
       </main>
     </div>
   </div>
   <button class="popup-close btn btn-primary" @click="handlePopupLogin">
     close popup
-  </button>
+  </button> -->
+
+  <a  href="#my-modal-2" class="btn btn-default">Login</a>
+
+
+  <div class="modal" id="my-modal-2">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Connection</h3>
+    <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button
+              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+              @click="signInWithGoogle"
+            >
+              <img
+                src="@/assets/Google_ G _Logo.svg.png"
+                width="50"
+                height="50"
+                alt=""
+              />
+            </button>
+          </div>
+          <br />
+    <div class="col-span-6">
+            <label
+              for="Email"
+              class="text-black	 block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >
+              Email
+            </label>
+            <p>
+              <input
+                required
+                type="email"
+                id="Email"
+                name="email"
+                v-model="email"
+                class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+              />
+            </p>
+          </div>
+
+          <div class="col-span-6 sm:col-span-3">
+            <label
+              for="Password"
+              class="text-black	 block text-sm font-medium text-gray-700 dark:text-gray-200"
+            >
+              Password
+            </label>
+            <p>
+              <input
+                required
+                type="password"
+                id="Password"
+                name="password"
+                v-model="password"
+                class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
+              />
+            </p>
+          </div>
+
+          <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
+
+    <div class="modal-action">
+     <a href="#" class="btn">close</a>
+    </div>
+  </div>
+</div>
 </template>
 
 <script setup lang="ts">

@@ -1,5 +1,7 @@
 import { ref } from "vue";
 
+//ouvrir et fermer un modal 
+
 const popupTriggerLogin = ref({
   buttonTrigger: false,
 });
