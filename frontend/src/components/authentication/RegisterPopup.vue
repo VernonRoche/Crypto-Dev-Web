@@ -87,7 +87,7 @@
           </div>
           <br /> -->
 
-          <!-- <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+  <!-- <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
             <button
               class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
               @click="signInWithMicrosoft"
@@ -101,9 +101,8 @@
             </button>
           </div>
           <br /> -->
-          
 
-          <!-- <div class="col-span-6 text-white">
+  <!-- <div class="col-span-6 text-white">
             <label
               for="Email"
               class="text-zinc-50 block text-sm font-medium text-gray-700 dark:text-gray-200"
@@ -183,118 +182,108 @@
     close popup
   </button> -->
 
-
   <label for="my-modal" class="btn btn-primary">Register</label>
 
-
   <input type="checkbox" id="my-modal" class="modal-toggle" />
-<div class="modal" id="my-modal">
-  <div class="modal-box">
-    <h3 class="font-bold text-lg">Register</h3>
-    <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-            <button
-              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-              @click="signInWithGoogle"
-            >
-              <img
-                src="@/assets/Google_ G _Logo.svg.png"
-                width="50"
-                height="50"
-                alt=""
-              />
-            </button>
-          </div>
-          <br />
-          <div class="col-span-6 text-white">
-            <label
-              for="Email"
-              class="text-zinc-50 block text-sm font-medium text-gray-700 dark:text-gray-200"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="Email"
-              name="email"
-              v-model="email"
-              class="input-primary mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-            />
-          </div>
-          <br />
-          <div class="col-span-6 sm:col-span-3">
-            <label
-              for="Password"
-              class="text-zinc-50 block text-sm font-medium text-gray-700 dark:text-gray-200"
-            >
-              Password
-            </label>
+  <div class="modal" id="my-modal">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg">Register</h3>
+      <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+        <button
+          class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition focus:outline-none focus:ring active:text-blue-500 hover:bg-blue-700 hover:text-white"
+          @click="signInWithGoogle"
+        >
+          <img
+            src="@/assets/Google_ G _Logo.svg.png"
+            width="50"
+            height="50"
+            alt=""
+          />
+        </button>
+      </div>
+      <br />
+      <div class="col-span-6 text-white">
+        <label
+          for="Email"
+          class="text-zinc-50 block text-sm font-medium text-gray-200"
+        >
+          Email
+        </label>
+        <input
+          type="email"
+          id="Email"
+          name="email"
+          v-model="email"
+          class="input-primary mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200"
+        />
+      </div>
+      <br />
+      <div class="col-span-6 sm:col-span-3">
+        <label
+          for="Password"
+          class="text-zinc-50 block text-sm font-medium text-gray-200"
+        >
+          Password
+        </label>
 
-            <input
-              type="password"
-              id="Password"
-              name="password"
-              v-model="password"
-              class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-            />
-          </div>
-          <br />
-          <div class="col-span-6 sm:col-span-3">
-            <label
-              for="PasswordConfirmation"
-              class="text-zinc-50 block text-sm font-medium text-gray-700 dark:text-gray-200"
-            >
-              Password Confirmation
-            </label>
+        <input
+          type="password"
+          id="Password"
+          name="password"
+          v-model="password"
+          class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200"
+        />
+      </div>
+      <br />
+      <div class="col-span-6 sm:col-span-3">
+        <label
+          for="PasswordConfirmation"
+          class="text-zinc-50 block text-sm font-medium text-gray-200"
+        >
+          Password Confirmation
+        </label>
 
-            <input
-              type="password"
-              id="PasswordConfirmation"
-              name="password_confirmation"
-              v-model="password2"
-              class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-            />
-          </div>
+        <input
+          type="password"
+          id="PasswordConfirmation"
+          name="password_confirmation"
+          v-model="password2"
+          class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200"
+        />
+      </div>
 
-          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-            <button
-              @click="register"
-              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-            >
-              Create an account
-            </button>
-            <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
-            <p
-              class="text-zinc-50 mt-4 text-sm text-gray-500 dark:text-gray-400 sm:mt-0"
-            >
-              Already have an account?
+      <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+        <button
+          @click="register"
+          class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition focus:outline-none focus:ring active:text-blue-500 hover:bg-blue-700 hover:text-white"
+        >
+          Create an account
+        </button>
+        <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
+        <p class="text-zinc-50 mt-4 text-sm text-gray-400 sm:mt-0">
+          Already have an account?
 
-              <button
-                @click="onOkClick"
-                class="text-gray-700 underline dark:text-gray-200"
-              >
-                Log in
-              </button>
-            </p>
-
-          </div>
-    <div class="modal-action">
-      <label for="my-modal" class="btn">Close</label>
+          <button @click="onOkClick" class="underline text-gray-200">
+            Log in
+          </button>
+        </p>
+      </div>
+      <div class="modal-action">
+        <label for="my-modal" class="btn">Close</label>
+      </div>
     </div>
   </div>
-</div>
-
 </template>
 
 <script setup lang="ts">
 import {
-  handlePopupRegister,
-  handlePopupLogin,
-  popupTriggerLogin,
-  popupTriggerRegister,
-} from "@/types/popup";
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, OAuthProvider, signInWithPopup } from "firebase/auth";
+  createUserWithEmailAndPassword,
+  getAuth,
+  GoogleAuthProvider,
+  OAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { ref } from "vue";
-import LoginPopup from "@/components/authentication/LoginPopup.vue";
 
 // register
 const email = ref("");
@@ -302,9 +291,7 @@ const password = ref("");
 const password2 = ref("");
 const errMsg = ref();
 
-const onOkClick = () => {
-
-};
+const onOkClick = () => {};
 
 const register = () => {
   if (password.value !== password2.value) {

@@ -163,107 +163,101 @@
     close popup
   </button> -->
 
-
   <!-- The button to open modal -->
-<a href="#my-modal-2" class="btn">Myaccount</a>
-<!-- Put this part before </body> tag -->
-<div class="modal" id="my-modal-2">
-  <div class="modal-box">
-    <div class="col-span-6">
-            <label
-              for="Hello"
-              class="text-zinc-50 block text-sm font-medium text-gray-700 dark:text-gray-200"
-            >
-              Hello
-              {{ user?.displayName || user?.phoneNumber || user?.email }}
-            </label>
-          </div>
-          <br />
+  <a href="#my-modal-2" class="btn">Myaccount</a>
+  <!-- Put this part before </body> tag -->
+  <div class="modal" id="my-modal-2">
+    <div class="modal-box">
+      <div class="col-span-6">
+        <label for="Hello" class="block text-sm font-medium text-gray-200">
+          Hello
+          {{ user?.displayName || user?.phoneNumber || user?.email }}
+        </label>
+      </div>
+      <br />
 
-          <div class="text-zinc-50 col-span-6 sm:col-span-3">
-            <button
-              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-              @click="clickchangedMail"
-            >
-              Changer l'adresse mail
-            </button>
-            <div id="myDiv" class="hidden" v-if="ischangedMail">
-              <input
-                type="text"
-                placeholder="enter the new address"
-                class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-                v-model="email"
-              />
-              <br />
-              <button
-                class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-                @click="changeAdresseMail"
-              >
-                confirmer
-              </button>
-            </div>
-          </div>
+      <div class="text-zinc-50 col-span-6 sm:col-span-3">
+        <button
+          class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition focus:outline-none focus:ring active:text-blue-500 hover:bg-blue-700 hover:text-white"
+          @click="clickchangedMail"
+        >
+          Changer l'adresse mail
+        </button>
+        <div id="myDiv" class="hidden" v-if="ischangedMail">
+          <input
+            type="text"
+            placeholder="enter the new address"
+            class="mt-1 w-full rounded-md shadow-sm border-gray-700 bg-gray-800 text-gray-200"
+            v-model="email"
+          />
           <br />
-          <div class="text-zinc-50 col-span-6 sm:flex sm:items-center sm:gap-4">
-            <button
-              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-              @click="clickchangedPassWord"
-            >
-              Changer le mot de passe
-            </button>
+          <button
+            class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition focus:outline-none focus:ring active:text-blue-500 hover:bg-blue-700 hover:text-white"
+            @click="changeAdresseMail"
+          >
+            confirmer
+          </button>
+        </div>
+      </div>
+      <br />
+      <div class="text-zinc-50 col-span-6 sm:flex sm:items-center sm:gap-4">
+        <button
+          class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition focus:outline-none focus:ring active:text-blue-500 hover:bg-blue-700 hover:text-white"
+          @click="clickchangedPassWord"
+        >
+          Changer le mot de passe
+        </button>
 
-            <div id="myDiv2" class="hidden" v-if="ischangedPassword">
-              <p>
-                <input
-                  type="text"
-                  placeholder="enter the new PassWord"
-                  v-model="newPassword"
-                  class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
-                />
-              </p>
-              <p>
-                <button
-                  class="text-zinc-50 inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-                  @click="changepassWord"
-                >
-                  confirmer
-                </button>
-              </p>
-            </div>
-          </div>
-          <br />
-          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+        <div id="myDiv2" class="hidden" v-if="ischangedPassword">
+          <p>
+            <input
+              type="text"
+              placeholder="enter the new PassWord"
+              v-model="newPassword"
+              class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200"
+            />
+          </p>
+          <p>
             <button
-              @click="clickDeleteAccount"
-              class="text-zinc-50 inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+              class="text-zinc-50 inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition focus:outline-none focus:ring active:text-blue-500 hover:bg-blue-700 hover:text-white"
+              @click="changepassWord"
             >
-              Supprimer mon compte
+              confirmer
             </button>
-            <br />
-            <div id="myDiv3" class="hidden" v-if="isdelete">
-              <br />
-              <h1>confirmer</h1>
-              <button
-                @click="deleteAccount"
-                class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-              >
-                oui
-              </button>
-            </div>
-          </div>
-    <div class="modal-action">
-     <a href="#" class="btn">Close</a>
+          </p>
+        </div>
+      </div>
+      <br />
+      <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+        <button
+          @click="clickDeleteAccount"
+          class="text-zinc-50 inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition focus:outline-none focus:ring active:text-blue-500 hover:bg-blue-700 hover:text-white"
+        >
+          Supprimer mon compte
+        </button>
+        <br />
+        <div id="myDiv3" class="hidden" v-if="isdelete">
+          <br />
+          <h1>confirmer</h1>
+          <button
+            @click="deleteAccount"
+            class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition focus:outline-none focus:ring active:text-blue-500 hover:bg-blue-700 hover:text-white"
+          >
+            oui
+          </button>
+        </div>
+      </div>
+      <div class="modal-action">
+        <a href="#" class="btn">Close</a>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script setup lang="ts">
-import { handlePopupAccount } from "@/types/popup";
 import {
   getAuth,
   onAuthStateChanged,
-  updateProfile,
   updateEmail,
   sendEmailVerification,
   updatePassword,
