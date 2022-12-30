@@ -26,21 +26,20 @@
             <a class="btn btn-primary" href="/"> Register </a> -->
 
             <span v-if="isLoggedIn">
-        <button class="btn btn-primary" @click="handleSignOut">Logout</button> |
-        <!-- <button class="btn btn-primary" @click="handlePopupAccount">
+              <!-- <button class="btn btn-primary" @click="handlePopupAccount">
           Myaccount
         </button> -->
-        <PopupMyAccount>
-        </PopupMyAccount>
-      </span>
-      <span v-else>
-        <!-- <button class="btn btn-default" @click="clickLogin">Login</button> -->
-        <!-- <button class="btn btn-primary" @click="clickRegister">Register</button> -->
-        <PopupLogin>
-        </PopupLogin>
+              <PopupMyAccount> </PopupMyAccount>
+              |
+              <button class="btn" @click="handleSignOut">Logout</button>
+            </span>
+            <span v-else>
+              <!-- <button class="btn btn-default" @click="clickLogin">Login</button> -->
+              <!-- <button class="btn btn-primary" @click="clickRegister">Register</button> -->
+              <PopupLogin> </PopupLogin>
 
-        <RegisterPopup/>
-      </span>
+              <RegisterPopup />
+            </span>
           </div>
         </div>
       </div>
@@ -49,7 +48,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent } from "vue";
 import IconCryptohubLogo from "@/components/icons/IconCryptohubLogo.vue";
 
 // export default defineComponent({
@@ -61,9 +59,7 @@ import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "vue-router";
 import {
   popupTriggerLogin,
-  popupTriggerAccount,
   popupTriggerRegister,
-  handlePopupAccount,
   handlePopupLogin,
   handlePopupRegister,
 } from "@/types/popup";
@@ -102,8 +98,6 @@ const clickRegister = () => {
   handlePopupRegister();
   popupTriggerLogin.value.buttonTrigger = false;
 };
-
-
 </script>
 
 <style scoped></style>

@@ -112,7 +112,7 @@ const register = () => {
       .then((_data) => {
         console.log("Successfully registered !!! ");
 
-        alert("Successfully registered !!! ");
+        //alert("Successfully registered !!! ");
       })
       .catch((error) => {
         const obj: Record<string, string> = {
@@ -137,7 +137,7 @@ const signInWithGoogle = () => {
     .then((result) => {
       console.log(result);
 
-      alert("Successfully signed in !!! ");
+      //alert("Successfully signed in !!! ");
     })
     .catch((error) => {
       console.log(error);
@@ -158,7 +158,7 @@ const signInWithMicrosoft = () => {
       const accessToken = credential?.accessToken;
       const idToken = credential?.idToken;
       console.log(result);
-      alert("Successfully signed in !!! ");
+      //alert("Successfully signed in !!! ");
     })
     .catch((error) => {
       console.log(error);

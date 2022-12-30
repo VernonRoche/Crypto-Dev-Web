@@ -81,7 +81,7 @@ const sign = () => {
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((_data) => {
       console.log("Successfully signed in !!! ");
-      alert("Successfully signed in !!!");
+      //alert("Successfully signed in !!!");
       cpt = 0;
     })
     .catch((error) => {
@@ -172,7 +172,7 @@ const signInWithGoogle = () => {
     .then((result) => {
       console.log(result);
 
-      alert("Successfully signed in !!! ");
+      //alert("Successfully signed in !!! ");
     })
     .catch((error) => {
       console.log(error);
@@ -193,7 +193,7 @@ const signInWithMicrosoft = () => {
       const accessToken = credential?.accessToken;
       const idToken = credential?.idToken;
       console.log(result);
-      alert("Successfully signed in !!! ");
+      //alert("Successfully signed in !!! ");
     })
     .catch((error) => {
       console.log(error);
