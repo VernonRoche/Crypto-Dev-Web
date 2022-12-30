@@ -26,7 +26,35 @@ import 'chart.js/auto';
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 function changeTimeUnit(unit:string='day'){
   if(this.chartData){
-    this.options = null;//.scales['x']['time']['unit'] = unit;
+    this.options = {
+      plugins: {
+          title: {
+              text: "Bitcoin Chart",
+              display: true
+          }
+      },
+      scales: {
+          x: {
+              type: 'time',
+              time: {
+                  unit: unit
+              },
+              title: {
+                  display: true,
+                  text: 'Date'
+              }
+          },
+          y: {
+              title: {
+                  display: false,
+                  text: 'value'
+              }
+          }
+      },
+      responsive: true,
+      lineTension: 1,
+      maintainAspectRation: true,
+    };
   }
 
 
@@ -35,7 +63,8 @@ function randomColor(){
   return "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0').toUpperCase(); 
 }
 async function changeData(id:string=null,currency:string=null,from:number=null,to:number=null){
-  if(id == null || currency == null || from == null || to==null   ){
+  if(id == null || currency == null){
+    //initialisation de la page
     this.loaded = false;
     try {
       await createCryptoData().then( (data) => {        
@@ -61,6 +90,8 @@ async function changeData(id:string=null,currency:string=null,from:number=null,t
       console.error(error);
     }
   }else{
+    //demande d'affichage d'une crypto
+    console.log(id);
     this.options.plugins["title"]["text"] = id + " chart";
     this.loaded = false;
     try {
@@ -90,39 +121,50 @@ async function changeData(id:string=null,currency:string=null,from:number=null,t
 export default{
   name: "CryptoChart",
   components: { Line },
-  data: () => ({
-    loaded: false,
-    chartData: null,
-    options: {
-    plugins: {
-        title: {
-            text: "Bitcoin Chart",
-            display: true
-        }
+  //props: ['options'] ,
+  data(){
+    return {
+      loaded: false,
+      chartData: null,
+      options: {
+      plugins: {
+          title: {
+              text: "Bitcoin Chart",
+              display: true
+          }
+      },
+      scales: {
+          x: {
+              type: 'time',
+              time: {
+                  unit: 'day'
+              },
+              title: {
+                  display: true,
+                  text: 'Date'
+              }
+          },
+          y: {
+              title: {
+                  display: false,
+                  text: 'value'
+              }
+          }
+      },
+      responsive: true,
+      lineTension: 1,
+      maintainAspectRation: true,
     },
-    scales: {
-        x: {
-            type: 'time',
-            time: {
-                unit: 'day'
-            },
-            title: {
-                display: true,
-                text: 'Date'
-            }
-        },
-        y: {
-            title: {
-                display: false,
-                text: 'value'
-            }
-        }
-    },
-    responsive: true,
-    lineTension: 1,
-    maintainAspectRation: true,
-}, 
-  }),
+    }
+  },
+  /*
+  watch:{
+    options(newVal,oldVal){
+        console.log("old"+oldVal);
+        
+    }
+  },
+  */
   methods: {
     changeTimeUnit: changeTimeUnit,
     changeData: changeData,

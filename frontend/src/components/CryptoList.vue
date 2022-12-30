@@ -125,7 +125,8 @@ function createCryptoList(currency:string="usd"):HTMLTableSectionElement{
       detail.setAttribute("class","cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline");
       detail.innerHTML = "Details";
       detail.addEventListener("click", () => {
-        CryptoChart.methods.changeData();
+        //id:string=null,currency:string=null,from:number=null,to:number=null        
+        CryptoChart.methods.changeData(element["id"],currency);
       });
 
       let fav = document.createElement("td")
