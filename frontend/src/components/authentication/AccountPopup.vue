@@ -38,7 +38,7 @@
         <div id="myDiv2" class="hidden" v-if="ischangedPassword">
           <p>
             <input
-              type="text"
+              type="password"
               placeholder="Enter the new password"
               v-model="newPassword"
               class="mt-1 w-full rounded-md shadow-sm border-gray-700 bg-gray-800 text-gray-200"
