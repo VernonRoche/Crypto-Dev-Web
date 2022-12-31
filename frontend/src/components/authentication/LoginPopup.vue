@@ -45,6 +45,26 @@
 
       <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
 
+      <div class="col-span-6 sm:col-span-3" v-if="cpt >= 3">
+            <button class="text-zinc-50 btn btn-link" @click="resetPassWord">
+              Reinitialiser Mot De Passe
+            </button>
+            <div v-if="isResetPassWord">
+            </div>
+            <br />
+          </div>
+          <br />
+
+          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+            <button
+              @click="sign"
+              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
+            >
+              Sign-in
+            </button>
+          </div>
+          <br />
+
       <div class="modal-action">
         <a href="#" class="btn">close</a>
       </div>
@@ -68,7 +88,6 @@ import {
 import IconGoogle from "@/components/icons/IconGoogle.vue";
 
 const email = ref("");
-const email2 = ref("");
 const password = ref("");
 const errMsg = ref();
 
@@ -143,7 +162,7 @@ const signInWithLinkEmail = () => {
     url: "http://localhost:5173/about",
     handleCodeInApp: true,
   };
-  sendSignInLinkToEmail(auth, email2.value, actionCodeSettings)
+  sendSignInLinkToEmail(auth, email.value, actionCodeSettings)
     .then(() => {
       window.localStorage.setItem("emailForSignIn", email.value);
       alert("Email sent");

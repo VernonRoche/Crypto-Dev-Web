@@ -72,10 +72,14 @@
         <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
         <p class="text-zinc-50 mt-4 text-sm text-gray-400 sm:mt-0">
           Already have an account?
-
+<!-- fermer ce modal et ouvrir le modal loginPopup -->
+          <!-- <label @click="onClick" class="underline text-gray-200">
+            <login> login</login>         
+          </label> -->
           <button @click="onOkClick" class="underline text-gray-200">
-            Log in
+            <Login />
           </button>
+          
         </p>
       </div>
       <div class="modal-action">
@@ -95,6 +99,7 @@ import {
 } from "firebase/auth";
 import { ref } from "vue";
 import IconGoogle from "@/components/icons/IconGoogle.vue";
+import Login from "@/components/authentication/LoginPopup.vue";
 
 // register
 const email = ref("");
@@ -102,7 +107,12 @@ const password = ref("");
 const password2 = ref("");
 const errMsg = ref();
 
-const onOkClick = () => {};
+
+const onOkClick = () => {
+  const myModal = document.getElementById("my-modal");
+  myModal?.click();
+};
+
 
 const register = () => {
   if (password.value !== password2.value) {
