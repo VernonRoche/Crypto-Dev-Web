@@ -72,10 +72,7 @@
         <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
         <p class="text-zinc-50 mt-4 text-sm text-gray-400 sm:mt-0">
           Already have an account?
-<!-- fermer ce modal et ouvrir le modal loginPopup -->
-          <!-- <label @click="onClick" class="underline text-gray-200">
-            <login> login</login>         
-          </label> -->
+
           <button @click="onOkClick" class="underline text-gray-200">
             <Login />
           </button>

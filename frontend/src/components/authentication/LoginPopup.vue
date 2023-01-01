@@ -1,6 +1,8 @@
 <template>
-  <a href="#my-modal-2" class="btn btn-default">Login</a>
+  <!-- <a href="#my-modal-2" class="btn btn-default">Login</a> -->
+  <label for="my-modal-2" class="btn btn-default">Login</label>
 
+  <input type="checkbox" id="my-modal-2" class="modal-toggle" />
   <div class="modal" id="my-modal-2">
     <div class="modal-box">
       <h3 class="font-bold text-lg">Connection</h3>
@@ -55,18 +57,24 @@
           </div>
           <br />
 
-          <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
-            <button
-              @click="sign"
-              class="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:hover:bg-blue-700 dark:hover:text-white"
-            >
-              Sign-in
-            </button>
-          </div>
+          <div class="col-span-6 sm:flex sm:items-center sm:gap-4 mt-5">
+        <button @click="sign" class="btn btn-primary">
+          Sign in
+        </button>
+        <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
+        <p class="text-zinc-50 mt-4 text-sm text-gray-400 sm:mt-0">
+          Don't have an account?
+
+          <button @click="onOkClick" class="underline text-gray-200">
+            <!-- <RegisterPopup /> -->
+          </button>
+          
+        </p>
+      </div>
           <br />
 
       <div class="modal-action">
-        <a href="#" class="btn">close</a>
+        <label for="my-modal-2" class="btn">Close</label>
       </div>
     </div>
   </div>
@@ -86,6 +94,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import IconGoogle from "@/components/icons/IconGoogle.vue";
+import RegisterPopup from "@/components/authentication/RegisterPopup.vue";
 
 const email = ref("");
 const password = ref("");
@@ -94,6 +103,13 @@ const errMsg = ref();
 const user = getAuth().currentUser;
 
 let cpt = 0;
+
+
+const onOkClick = () => {
+  const myModal = document.getElementById("my-modal-2");
+  myModal?.click();
+};
+
 
 const sign = () => {
   console.log("cpt " + cpt);
