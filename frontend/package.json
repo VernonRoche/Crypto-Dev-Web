@@ -2,10 +2,13 @@
   "name": "frontend",
   "version": "0.0.0",
   "scripts": {
+    "clean": "rimraf js",
+    "compile": "npm run clean && tsc",
     "dev": "vite",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "test:unit": "vitest --environment jsdom --root src/",
+    "test": "npm run compile && nyc --reporter=text-summary --reporter=lcov mocha js/test --recursive --exit",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
@@ -15,6 +18,8 @@
     "daisyui": "^2.46.0",
     "mongodb": "^4.12.1",
     "pinia": "^2.0.23",
+    "sass": "^1.56.2",
+    "scss": "^0.2.4",
     "vue": "^3.2.41",
     "vue-router": "^4.1.5",
     "vue3-carousel": "^0.2.9"
@@ -32,6 +37,7 @@
     "autoprefixer": "^10.4.13",
     "eslint": "^8.22.0",
     "eslint-plugin-vue": "^9.3.0",
+    "firebase": "^9.14.0",
     "jsdom": "^20.0.1",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.20",
