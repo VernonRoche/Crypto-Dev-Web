@@ -74,7 +74,7 @@
           Already have an account?
 
           <button @click="onOkClick" class="underline text-gray-200">
-            <LoginButton />
+            <LoginButtonPurple />
           </button>
         </p>
       </div>
@@ -95,8 +95,8 @@ import {
 } from "firebase/auth";
 import { ref } from "vue";
 import IconGoogle from "@/components/icons/IconGoogle.vue";
-import LoginButton from "@/components/authentication/LoginButton.vue";
 import RegisterButton from "@/components/authentication/RegisterButton.vue";
+import LoginButtonPurple from "@/components/authentication/LoginButtonPurple.vue";
 
 // register
 const email = ref("");
