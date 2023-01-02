@@ -16,7 +16,7 @@
         <button class="btn btn-primary" @click="clickchangedMail">
           Change Email
         </button>
-        <div id="myDiv" class="hidden" v-if="ischangedMail">
+        <div id="myDiv"  v-if="ischangedMail">
           <input
             type="text"
             placeholder="Enter the new email address"
@@ -35,7 +35,7 @@
           Change Password
         </button>
 
-        <div id="myDiv2" class="hidden" v-if="ischangedPassword">
+        <div id="myDiv2" v-if="ischangedPassword">
           <p>
             <input
               type="password"
@@ -57,7 +57,7 @@
           Delete my account
         </button>
         <br />
-        <div id="myDiv3" class="hidden" v-if="isdelete">
+        <div id="myDiv3" v-if="isdelete">
           <br />
           <button @click="deleteAccount" class="btn btn-error btn-outline">
             Confirm
