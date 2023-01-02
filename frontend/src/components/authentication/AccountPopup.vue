@@ -1,6 +1,8 @@
 <template>
   <!-- The button to open modal -->
-  <a href="#my-modal-account" class="btn btn-primary">Myaccount</a>
+  <AccountButton />
+
+  <input type="checkbox" id="my-modal-account" class="modal-toggle" />
   <!-- Put this part before </body> tag -->
   <div class="modal" id="my-modal-account">
     <div class="modal-box">
@@ -57,7 +59,7 @@
           Delete my account
         </button>
         <br />
-        <div id="myDiv3" v-if="isdelete">
+        <div id="myDiv3"  v-if="isdelete">
           <br />
           <button @click="deleteAccount" class="btn btn-error btn-outline">
             Confirm
@@ -65,7 +67,7 @@
         </div>
       </div>
       <div class="modal-action">
-        <a href="#" class="btn">Close</a>
+        <label for="my-modal-account" class="btn">Close</label>
       </div>
     </div>
   </div>
@@ -82,6 +84,7 @@ import {
   deleteUser,
 } from "firebase/auth";
 import { ref } from "vue";
+import AccountButton from "@/components/authentication/AccountButton.vue";
 
 const auth = getAuth();
 const user = auth.currentUser;
