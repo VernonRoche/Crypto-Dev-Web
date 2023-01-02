@@ -1,8 +1,8 @@
 <template>
   <!-- The button to open modal -->
-  <a href="#my-modal-2" class="btn btn-primary">Myaccount</a>
+  <a href="#my-modal-account" class="btn btn-primary">Myaccount</a>
   <!-- Put this part before </body> tag -->
-  <div class="modal" id="my-modal-2">
+  <div class="modal" id="my-modal-account">
     <div class="modal-box">
       <div class="col-span-6">
         <label for="Hello" class="block text-lg font-medium text-gray-400">

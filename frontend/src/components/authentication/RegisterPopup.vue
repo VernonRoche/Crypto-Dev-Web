@@ -1,8 +1,8 @@
 <template>
-  <label for="my-modal" class="btn btn-primary">Register</label>
+  <RegisterButton />
 
-  <input type="checkbox" id="my-modal" class="modal-toggle" />
-  <div class="modal" id="my-modal">
+  <input type="checkbox" id="my-modal-register" class="modal-toggle" />
+  <div class="modal" id="my-modal-register">
     <div class="modal-box">
       <h3 class="font-bold text-lg">Register</h3>
       <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
@@ -25,7 +25,7 @@
           id="Email"
           name="email"
           v-model="email"
-          class="input-primary mt-1 w-full rounded-md text-sm shadow-sm border-gray-800 bg-gray-800 text-gray-400	"
+          class="input-primary mt-1 w-full rounded-md text-sm shadow-sm border-gray-800 bg-gray-800 text-gray-400"
         />
       </div>
       <br />
@@ -74,13 +74,12 @@
           Already have an account?
 
           <button @click="onOkClick" class="underline text-gray-200">
-            <Login />
+            <LoginButton />
           </button>
-          
         </p>
       </div>
       <div class="modal-action">
-        <label for="my-modal" class="btn">Close</label>
+        <label for="my-modal-register" class="btn">Close</label>
       </div>
     </div>
   </div>
@@ -96,7 +95,8 @@ import {
 } from "firebase/auth";
 import { ref } from "vue";
 import IconGoogle from "@/components/icons/IconGoogle.vue";
-import Login from "@/components/authentication/LoginPopup.vue";
+import LoginButton from "@/components/authentication/LoginButton.vue";
+import RegisterButton from "@/components/authentication/RegisterButton.vue";
 
 // register
 const email = ref("");
@@ -104,12 +104,10 @@ const password = ref("");
 const password2 = ref("");
 const errMsg = ref();
 
-
 const onOkClick = () => {
-  const myModal = document.getElementById("my-modal");
+  const myModal = document.getElementById("my-modal-register");
   myModal?.click();
 };
-
 
 const register = () => {
   if (password.value !== password2.value) {

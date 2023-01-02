@@ -1,9 +1,9 @@
 <template>
   <!-- <a href="#my-modal-2" class="btn btn-default">Login</a> -->
-  <label for="my-modal-2" class="btn btn-default">Login</label>
+  <LoginButton />
 
-  <input type="checkbox" id="my-modal-2" class="modal-toggle" />
-  <div class="modal" id="my-modal-2">
+  <input type="checkbox" id="my-modal-login" class="modal-toggle" />
+  <div class="modal" id="my-modal-login">
     <div class="modal-box">
       <h3 class="font-bold text-lg">Connection</h3>
       <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
@@ -48,33 +48,29 @@
       <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
 
       <div class="col-span-6 sm:col-span-3" v-if="cpt >= 3">
-            <button class="text-zinc-50 btn btn-link" @click="resetPassWord">
-              Reinitialiser Mot De Passe
-            </button>
-            <div v-if="isResetPassWord">
-            </div>
-            <br />
-          </div>
-          <br />
-
-          <div class="col-span-6 sm:flex sm:items-center sm:gap-4 mt-5">
-        <button @click="sign" class="btn btn-primary">
-          Sign in
+        <button class="text-zinc-50 btn btn-link" @click="resetPassWord">
+          Reinitialiser Mot De Passe
         </button>
+        <div v-if="isResetPassWord"></div>
+        <br />
+      </div>
+      <br />
+
+      <div class="col-span-6 sm:flex sm:items-center sm:gap-4 mt-5">
+        <button @click="sign" class="btn btn-primary">Sign in</button>
         <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
         <p class="text-zinc-50 mt-4 text-sm text-gray-400 sm:mt-0">
           Don't have an account?
 
           <button @click="onOkClick" class="underline text-gray-200">
-            <!-- <RegisterPopup /> -->
+            <RegisterButton />
           </button>
-          
         </p>
       </div>
-          <br />
+      <br />
 
       <div class="modal-action">
-        <label for="my-modal-2" class="btn">Close</label>
+        <label for="my-modal-login" class="btn">Close</label>
       </div>
     </div>
   </div>
@@ -94,7 +90,8 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import IconGoogle from "@/components/icons/IconGoogle.vue";
-import RegisterPopup from "@/components/authentication/RegisterPopup.vue";
+import LoginButton from "@/components/authentication/LoginButton.vue";
+import RegisterButton from "@/components/authentication/RegisterButton.vue";
 
 const email = ref("");
 const password = ref("");
@@ -104,12 +101,10 @@ const user = getAuth().currentUser;
 
 let cpt = 0;
 
-
 const onOkClick = () => {
-  const myModal = document.getElementById("my-modal-2");
+  const myModal = document.getElementById("my-modal-login");
   myModal?.click();
 };
-
 
 const sign = () => {
   console.log("cpt " + cpt);
