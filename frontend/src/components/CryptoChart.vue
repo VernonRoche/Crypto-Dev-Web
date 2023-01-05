@@ -5,22 +5,14 @@
       <div id="legendBox">
       </div>
     </div>
-      <div id="chartTimeUnit" class="inline-flex">
-        <button v-on:click="changeTimeUnit('day')" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded-l">
-          Jours
-        </button>
-        <button v-on:click="changeTimeUnit('week')" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded-r">
-          Semaines
-        </button>
-        <button v-on:click="changeTimeUnit('month')" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded-l">
-          Mois
-        </button>
-        <button v-on:click="changeTimeUnit('year')" class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded-l">
-          Années
-        </button>
-      </div>
-
-      </div>
+      <select v-model="selected" @change="changeTimeUnit(selected)"  >
+        <option disabled value="">Current Unit : {{ selected }} </option>
+        <option>Day</option>
+        <option>week</option>
+        <option>month</option>
+        <option>Year</option>
+      </select>
+    </div>
 </template>
 
 <script lang="ts">
@@ -70,6 +62,8 @@ function changeTime(range:number=1){
 }
 
 function changeTimeUnit(unit:string='day'){
+  console.log(unit);
+  
   if(this.chartData){    
     for (const key in ChartJS.instances) {
         if(ChartJS.instances[key].canvas.id == "CryptoChart"){
@@ -177,6 +171,7 @@ export default{
       loaded: false,
       chartData: null,
       options: option,
+      selected: 'day',
     }
   },
   /*
