@@ -1,15 +1,10 @@
-import { CoinGeckoApi }  from "../stores/CoinGeckoApi"
+import { CoinGeckoApi }  from "@/stores/CoinGeckoApi"
 import 'chartjs-adapter-luxon';
 
-export async function createCryptoData(id:string="bitcoin",currency:string="usd",from:any=null/*new Date().setHours(0,0,0,0).valueOf()*/,to:any=null) {
+export async function createCryptoData(id:string="bitcoin",currency:string="usd",nbDay:number=1) {
     let datasets:Array<object>  = [];
     let labels:Array<string> = [];
-    let data = null;
-    if(from == null || to ==null ){
-        data  =  CoinGeckoApi.getCryptoMarketChartRange(id,currency,1392577232,Date.now());
-    }else{
-         data  =  CoinGeckoApi.getCryptoMarketChartRange(id,currency,from,to);
-    } 
+    const data = CoinGeckoApi.getCryptoMarketChart(id,currency,nbDay);
     await data.then( (value:Array<string>) => {
         for(const key in value){
             let datas:Array<number> = [];
@@ -17,18 +12,15 @@ export async function createCryptoData(id:string="bitcoin",currency:string="usd"
             /*
             key : 
                 prices
-
                 market_caps
                 total_volumes
             */
-            
             value[key].forEach(element => {
                 datas.push(element[1]);
                 label.push(new Date(element[0]));
             });
-            labels[key] = label; 
-            datasets[key] = datas 
-         
+            labels[key] = label;
+            datasets[key] = datas;
         }
     });
     /*
@@ -36,6 +28,7 @@ export async function createCryptoData(id:string="bitcoin",currency:string="usd"
         return a.getTime() - b.getTime();
     });
     */
+   
     return [datasets,labels];
 }
 

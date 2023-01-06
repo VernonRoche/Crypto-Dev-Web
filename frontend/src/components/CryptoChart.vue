@@ -5,80 +5,63 @@
       <div id="legendBox">
       </div>
     </div>
-      <select v-model="selected" @change="changeTimeUnit(selected)"  >
-        <option disabled value="">Current Unit : {{ selected }} </option>
-        <option>Day</option>
-        <option>week</option>
-        <option>month</option>
-        <option>Year</option>
+      <select v-model="nbDataset" @change="changeDatasets(nbDataset)">
+        <option Value="0">Prices</option>
+        <option Value="1">Market Caps</option>
+        <option Value="2">Total Volumes</option>
+      </select>
+      <select v-model="TimeRange" @change="changeTimeRange(this.TimeRange)">
+        <option Value="1" >1 Day</option>
+        <option Value="5" >5 Day</option>
+        <option Value="30" >1 Month</option>
+        <option Value="365" > 1 Year</option>
+        <option Value="1825" > 5 Year</option>
       </select>
     </div>
 </template>
 
 <script lang="ts">
-import {createCryptoData}  from "@/stores/CryptoChartData";
+import {createCryptoData}  from "@/stores/ChartStores/CryptoChartData";
+import {Gradient} from "@/stores/ChartStores/Gradient.ts";
+import {crosshairLine} from "@/stores/ChartStores/chartCrossHairHandle.ts";
 import { Line } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 import 'chart.js/auto';
-import {option} from "@/stores/chartConfig.ts";
+import {option} from "@/stores/ChartStores/chartConfig.ts";
 import zoomPlugin from 'chartjs-plugin-zoom';
-import AboutView from '../views/AboutView.vue';
+import annotationPlugin from 'chartjs-plugin-annotation';
+
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 ChartJS.register(zoomPlugin);
-/*
-1Jour : 
-  let dateTest:Date = new Date();
-  let pastDate = new Date();
-  pastDate.setHours( dateTest.getHours() - 24);
-5 jour: 
-  let dateTest:Date = new Date();
-  let pastDate = new Date();
-  pastDate.setDate( dateTest.getDate() - 5 );
-1 mois : 
-  let dateTest:Date = new Date();
-  let pastDate = new Date();
-  pastDate.setMonth( dateTest.getMonth() - 1 );
-6 mois :
-  let dateTest:Date = new Date();
-  let pastDate = new Date();
-  pastDate.setMonth( dateTest.getMonth() - 6 );
-1 an :
-  let dateTest:Date = new Date();
-  let pastDate = new Date();
-  pastDate.setFullYear( dateTest.getFullYear() - 1 );
-5 ans : 
-  let dateTest:Date = new Date();
-  let pastDate = new Date();
-  pastDate.setFullYear( dateTest.getFullYear() - 5 );
-ALL
-*/
-function changeTime(range:number=1){
-  let dateTest:Date = new Date();
-  let pastDate = new Date();
-  pastDate.setFullYear( dateTest.getFullYear() - 1 );
-  console.log(dateTest);
-  
-  console.log(pastDate);
-}
+ChartJS.register(annotationPlugin);
 
-function changeTimeUnit(unit:string='day'){
-  console.log(unit);
-  
-  if(this.chartData){    
+function changeTimeRange(range:number=1,currency:string="usd"){
     for (const key in ChartJS.instances) {
         if(ChartJS.instances[key].canvas.id == "CryptoChart"){
-          ChartJS.instances[key].options.scales["x"]["time"]["unit"] = unit;
-          ChartJS.instances[key].update();
+          this.changeData(ChartJS.instances[key].data.datasets[0].id,currency,range);
         }
+    }  
+}
+
+function changeDatasets(nbDataset:number=0){  
+  for (const key in ChartJS.instances) {
+    if(ChartJS.instances[key].canvas.id == "CryptoChart"){
+       for (const id in ChartJS.instances[key].data.datasets) {
+        if(parseInt(id) == nbDataset){          
+          ChartJS.instances[key].data.datasets[id]["hidden"] = false;
+        }else{
+          ChartJS.instances[key].data.datasets[id]["hidden"] = true;
+        }        
+       }
+      ChartJS.instances[key].update();
     }
   }
 }
+
 function randomColor(){
   return "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0').toUpperCase(); 
 }
-
-async function changeData(id:string=null,currency:string=null,from:number=null,to:number=null){
-  if(id == null || currency == null){
+async function initData(){
     //initialisation de la page
     this.loaded = false;
     try {
@@ -86,41 +69,73 @@ async function changeData(id:string=null,currency:string=null,from:number=null,t
         let datasetList:Array<Object> = [];
         for (const key in data[0]) {
           
-          let id:number = datasetList.length;
+          //let nbButton:number = datasetList.length;
           let backgroundColor = randomColor();
-
+          let hid = true;
+          if(key === "prices"){
+            hid = false;
+          } 
             datasetList.push(          
             {
+              hidden: hid,
+              id: 'bitcoin',
               label: key,
               data: data[0][key],
               backgroundColor: backgroundColor,
-              borderColor: randomColor(),
-              color: randomColor(),
-              lineTension: 0,
-
+              fill: {
+                target: {
+                    value: data[0][key][0],
+                },
+                below: (context) => {
+                  const chart = context.chart;
+                  const {ctx, chartArea, data, scales} = chart;
+                  if(!chartArea){
+                    return null;
+                  }
+                  return Gradient.getBelowGradient(ctx, chartArea, data, scales);
+                  },
+                above: (context) => {
+                  const chart = context.chart;
+                  const {ctx, chartArea, data, scales} = chart;
+                  if(!chartArea){
+                    return null;
+                  }
+                  return Gradient.getAboveGradient(ctx, chartArea, data, scales);
+                  },
+              }, 
+              borderColor: (context) => {
+                const chart = context.chart;
+                const {ctx, chartArea, data, scales} = chart;
+                if(!chartArea){
+                  return null;
+                }
+                return Gradient.getGradient(ctx, chartArea, data, scales);
+              },
+              tension: 0,
+              pointRadius: 0,
+              pointHitRadius: 0,
+              pointHoverRadius: 1
             });
-          
-
+            /*
           let buttonLegend = document.createElement("button");
-          // id="CryptoChartPrice" v-on:click="toggleData(0)" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full hidden"
-          buttonLegend.setAttribute("v-on:click","toggleData(0)");
           buttonLegend.setAttribute("class"," hover:bgtext-white font-bold py-2 px-4 rounded-full");
           buttonLegend.innerHTML = key;
           buttonLegend.style.backgroundColor = backgroundColor;
           buttonLegend.addEventListener("click",  () => {
             for (const key in ChartJS.instances) {
               if(ChartJS.instances[key].canvas.id == "CryptoChart"){
-                const  isVisible:boolean =  ChartJS.instances[key].isDatasetVisible(id);
+                const  isVisible:boolean =  ChartJS.instances[key].isDatasetVisible(nbButton);
                 if(isVisible){
-                  ChartJS.instances[key].hide(id);
+                  ChartJS.instances[key].hide(nbButton);
                 }
                 if(!isVisible){
-                  ChartJS.instances[key].show(id);
+                  ChartJS.instances[key].show(nbButton);
                 } 
               }
             }
           });
           document.getElementById("legendBox").appendChild(buttonLegend);
+          */
         }
         this.chartData = {
           labels: data[1]["prices"],
@@ -131,23 +146,69 @@ async function changeData(id:string=null,currency:string=null,from:number=null,t
     } catch (error) {
       console.error(error);
     }
-  }else{    
+      for (const key in ChartJS.instances) {
+    if(ChartJS.instances[key].canvas.id == "CryptoChart"){
+      ChartJS.instances[key].canvas.addEventListener('mousemove',(e) =>{
+        crosshairLine(ChartJS.instances[key],e);
+      });
+    }
+  }
+  }
+
+async function changeData(id:string=null,currency:string="usd",nbDay:number=this.TimeRange){
     //demande d'affichage d'une crypto 
     for (const key in ChartJS.instances) {
-      if(ChartJS.instances[key].canvas.id == "CryptoChart"){        
+      if(ChartJS.instances[key].canvas.id == "CryptoChart"){   
           ChartJS.instances[key].options.plugins["title"]["text"] = id + " chart";
 
           try {
-            await createCryptoData(id,currency,from,to).then( (data) => {
+            await createCryptoData(id,currency,nbDay).then( (data) => {
               let datasetList:Array<any> = []; 
               for (const key in data[0]) {
+              let hid = true;
+              if(key === "prices"){
+                hid = false;
+              } 
                 datasetList.push(          
                 {
+                  hidden: hid,
+                  id: id,
                   label: key,
                   data: data[0][key],
                   backgroundColor: randomColor(),
-                  borderColor: randomColor(),
-                  color: randomColor(),
+                  fill: {
+                    target: {
+                        value: data[0][key][0],
+                    },
+                    below: (context) => {
+                      const chart = context.chart;
+                      const {ctx, chartArea, data, scales} = chart;
+                      if(!chartArea){
+                        return null;
+                      }
+                      return Gradient.getBelowGradient(ctx, chartArea, data, scales);
+                      },
+                    above: (context) => {
+                      const chart = context.chart;
+                      const {ctx, chartArea, data, scales} = chart;
+                      if(!chartArea){
+                        return null;
+                      }
+                      return Gradient.getAboveGradient(ctx, chartArea, data, scales);
+                      },
+                  }, 
+                  borderColor: (context) => {
+                    const chart = context.chart;
+                    const {ctx, chartArea, data, scales} = chart;
+                    if(!chartArea){
+                      return null;
+                    }
+                    return Gradient.getGradient(ctx, chartArea, data, scales);
+                  },
+                  tension: 0,
+                  pointRadius: 0,
+                  pointHitRadius: 0,
+                  pointHoverRadius: 1
                 });
               }
               ChartJS.instances[key].data.labels =  data[1]["prices"];
@@ -157,10 +218,10 @@ async function changeData(id:string=null,currency:string=null,from:number=null,t
             console.error(error);
           }
           ChartJS.instances[key].update();
-      }
     }
   }
 }
+
 export default{
   //extends: Line,
   name: "CryptoChart",
@@ -171,7 +232,9 @@ export default{
       loaded: false,
       chartData: null,
       options: option,
-      selected: 'day',
+      nbDataset: 0,
+      TimeRange: 1,
+      id: 'bitcoin',
     }
   },
   /*
@@ -183,18 +246,13 @@ export default{
   },
   */
   methods: {
-    changeTimeUnit: changeTimeUnit,
+    changeDatasets: changeDatasets,
     changeData: changeData,
-    changeTime: changeTime,
+    changeTimeRange: changeTimeRange,
+    initData: initData,
   },
-  async mounted(){    
-    this.changeData();
-    for (const key in ChartJS.instances) {
-      if(ChartJS.instances[key].canvas.id == "CryptoChart"){ 
-    //CryptoChartMarketCap
-    //CryptoChartTotalVolume
-      }
-    }  
+  async mounted(){
+    this.initData();
   },
 }
 </script>
