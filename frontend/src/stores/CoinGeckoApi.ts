@@ -63,6 +63,33 @@ export namespace CoinGeckoApi {
     const responce = await fetch(URL);
     return await responce.json();
   }
+  /**
+   * 
+   * @param id  id of the coins
+   * @param vs_currency the target currency of market data (eur,usd,jpy,...)
+   * @param from From date in UNIX Timestamp
+   * @param to TO date in UNIX Timestamp
+   * @returns Promise responce from the fetch
+   */
+  export async function getCryptoMarketChartRange(id:string, vs_currency:string="usd",from:number=new Date().getTime(), to:number=new Date().getTime()): Promise<Array<string>> {
+    const URL =
+    "https://api.coingecko.com/api/v3/coins/"+id+"/market_chart/range?vs_currency="+vs_currency+"&from="+from+"&to="+to;
+    const responce = await fetch(URL);
+    return await responce.json();
+  }
+  /**
+   * 
+   * @param id  id of the coins
+   * @param vs_currency the target currency of market data (eur,usd,jpy,...)
+   * @param nbDay day number of data
+   * @returns  Promise responce from the fetch
+   */
+  export async function getCryptoMarketChart(id:string, vs_currency:string="usd",nbDay:number=1): Promise<Array<string>> {
+    const URL =
+    "https://api.coingecko.com/api/v3/coins/"+id+"/market_chart?vs_currency="+vs_currency+"&days="+nbDay;
+    const responce = await fetch(URL);
+    return await responce.json();
+  }
 
   /**
    * get the current price of any cryptocurrencies

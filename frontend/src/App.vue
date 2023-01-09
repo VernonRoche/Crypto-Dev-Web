@@ -3,6 +3,7 @@ import NavbarHeader from "@/components/navbarAndFooter/NavbarHeader.vue";
 import FooterBar from "@/components/navbarAndFooter/FooterBar.vue";
 import CryptoList from "@/components/cryptoList/CryptoList.vue";
 import TrendCarousel from "@/components/TrendCarousel.vue";
+import CryptoChart from "@/components/chart/CryptoChart.vue";
 </script>
 <template>
   <link rel="stylesheet" href="@/assets/style.css" />
@@ -10,6 +11,7 @@ import TrendCarousel from "@/components/TrendCarousel.vue";
     <NavbarHeader />
   </header>
   <body>
+    <CryptoChart />
     <TrendCarousel />
     <CryptoList />
   </body>

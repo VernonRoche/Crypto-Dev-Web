@@ -43,9 +43,10 @@ function CreateTrendElement(): HTMLDivElement {
   });
   return trendGrid;
 }
-export default {
+export default   
+{
   name: "TrendChoice.vue",
-  mounted() {
+  mounted(){
     document.getElementById("trend")?.appendChild(CreateTrendElement());
   },
 };
