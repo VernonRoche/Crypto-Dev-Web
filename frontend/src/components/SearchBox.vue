@@ -48,7 +48,7 @@ function SearchCoin():void{
 
 export default   
 {
-  name: "SearchBox",
+  name: "SearchBox.vue",
   mounted(){
     const button = document.getElementById("CoinSearch");
     button?.addEventListener('click',() => {

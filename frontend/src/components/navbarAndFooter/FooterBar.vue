@@ -8,7 +8,7 @@
       >
         <a
           class="inline-block rounded-full p-2 shadow transition bg-gray-700 text-teal-300 hover:bg-gray-600 sm:p-3 lg:p-4"
-          href=""
+          href="#"
         >
           <span class="sr-only">Back to top</span>
 

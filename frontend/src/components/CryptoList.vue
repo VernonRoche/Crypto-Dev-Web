@@ -45,14 +45,12 @@
 </template>
 <script lang="ts">
 import { CoinGeckoApi } from "../stores/CoinGeckoApi";
-import { autoComplete } from "../stores/autoComplete";
-import CryptoChart from "../components/CryptoChart.vue";
-
+import { autoComplete } from "../stores/autoComplete"; 
 let CryptoName:Array<string> = []; 
 function createCryptoList(currency:string="usd"):HTMLTableSectionElement{
   let tbody:HTMLTableSectionElement = document.createElement("tbody");
   const data = CoinGeckoApi.getCryptoMarket();
-  data.then( (value:Array<string>) => {    
+  data.then( (value:Array<string>) => {
     value.forEach( (element:any) => {
       /*
       element:
@@ -125,8 +123,7 @@ function createCryptoList(currency:string="usd"):HTMLTableSectionElement{
       detail.setAttribute("class","cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline");
       detail.innerHTML = "Details";
       detail.addEventListener("click", () => {
-        //id:string=null,currency:string=null,from:number=null,to:number=null        
-        CryptoChart.methods.changeData(element["id"],currency);
+        //toDO
       });
 
       let fav = document.createElement("td")
@@ -205,7 +202,7 @@ function sortTableByHeader(dir:string, nbHeader:number):void{
 
 export default   
 {
-  name: "CryptoList",
+  name: "CryptoList.vue",
   mounted(){
     const currencyDiv:HTMLSelectElement = document.getElementById("currency");
     if(currencyDiv == null){ 

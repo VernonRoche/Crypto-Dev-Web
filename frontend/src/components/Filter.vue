@@ -18,7 +18,7 @@ function hideFav():void{
     document.getElementById("FavoriList").style.display = "none";} 
 export default
 {
-  name: "Filter",
+  name: "Filter.vue",
   mounted(){
     document.getElementById("Filterfav").addEventListener('click', ()  => {
         const favIcon:HTMLImageElement = document.getElementById("filterFavImg");

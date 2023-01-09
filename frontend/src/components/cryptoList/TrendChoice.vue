@@ -5,16 +5,14 @@
 </template>
 
 <script lang="ts">
-import { CoinGeckoApi } from "../stores/CoinGeckoApi";
+import { CoinGeckoApi } from "@/stores/CoinGeckoApi";
 
-function CreateTrendElement(): HTMLDivElement{
-
-  const trendGrid:HTMLDivElement = document.createElement("div");
-  trendGrid.setAttribute("class","grid gap-4 grid-cols-{7} ")
+function CreateTrendElement(): HTMLDivElement {
+  const trendGrid: HTMLDivElement = document.createElement("div");
+  trendGrid.setAttribute("class", "grid gap-4 grid-cols-{7} ");
   const data = CoinGeckoApi.getTrend();
-  data.then((value: string) => {
-    value["coins"].forEach((element:any) => {
-
+  data.then((value: any) => {
+    value["coins"].forEach((element: any) => {
       /*
       element :
         id: crypto id-name
@@ -30,12 +28,12 @@ function CreateTrendElement(): HTMLDivElement{
         score:
       */
       for (const key in element) {
-        let trend:HTMLDivElement = document.createElement("div");
-        trend.setAttribute("class","flex border-2");
-        let name:HTMLParagraphElement = document.createElement("p");
+        let trend: HTMLDivElement = document.createElement("div");
+        trend.setAttribute("class", "flex border-2");
+        let name: HTMLParagraphElement = document.createElement("p");
         name.innerHTML = element[key]["name"];
-        let img:HTMLImageElement = document.createElement("img");
-        img.setAttribute("class","inline");
+        let img: HTMLImageElement = document.createElement("img");
+        img.setAttribute("class", "inline");
         img.src = element[key]["thumb"];
         trend.appendChild(img);
         trend.appendChild(name);
@@ -47,10 +45,10 @@ function CreateTrendElement(): HTMLDivElement{
 }
 export default   
 {
-  name: "TrendChoice",
+  name: "TrendChoice.vue",
   mounted(){
     document.getElementById("trend")?.appendChild(CreateTrendElement());
   },
-}
+};
 </script>
 <style scoped></style>
