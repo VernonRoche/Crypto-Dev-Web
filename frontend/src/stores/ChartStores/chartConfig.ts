@@ -50,6 +50,7 @@ export const option = {
                     }*/
         },
         label1: {
+          color: "white",
           type: "label",
           xValue: (context) => {
             if (context.id === "label1") {
@@ -61,7 +62,6 @@ export const option = {
               return GetYCoords(context);
             }
           },
-          xAdjust: -70,
           backgroundColor: "rgba(102,102,102,0.25)",
           content: (context) => {
             if (context.id === "label1") {
