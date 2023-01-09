@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container m-auto">
     <div id="chart-container" class="container h-50 w-50">
       <Line
         id="CryptoChart"
