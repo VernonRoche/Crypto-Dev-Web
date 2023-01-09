@@ -25,6 +25,7 @@
         <option Value="2">Total Volumes</option>
       </select>
     </div>
+    <div class="divider divider-horizontal"></div>
     <div
       class="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center"
     >
