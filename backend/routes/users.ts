@@ -1,15 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req: any, res: { send: (arg0: string) => void; }, next: any) {
-  res.send('respond with a resource');
-});
 
 /* Get User by userid */
 router.get('/:getUser', function(req: { params: { userid: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
   res.send('respond with a resource');
 });
+
 
 /* Add User and paras are userid and email */
 router.post('/:addUser', function(req: { params: { userid: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
@@ -18,6 +15,10 @@ router.post('/:addUser', function(req: { params: { userid: any; }; }, res: { sen
 
 /* Delete User by userid */
 router.delete('/:deleteUser', function(req: { params: { userid: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
+  res.send('respond with a resource');
+});
+/* Get Favorite and params are userid and return a string[] */
+router.get('/:getFavorite', function(req: { params: { userid: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
   res.send('respond with a resource');
 });
 
@@ -41,6 +42,11 @@ router.post('/:addNotification', function(req: { params: { userid: any; }; }, re
   res.send('respond with a resource');
 });
 
+/* get notification and params are userid and return a notification_object[] */
+router.get('/:getNotification', function(req: { params: { userid: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
+  res.send('respond with a resource');
+});
+
 /* Remove Notification and params are userid cryptoname  */
 router.delete('/:removeNotification', function(req: { params: { userid: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
   res.send('respond with a resource');
@@ -50,5 +56,7 @@ router.delete('/:removeNotification', function(req: { params: { userid: any; }; 
 router.put('/:resetNotification', function(req: { params: { userid: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
   res.send('respond with a resource');
 });
+
+
 
 module.exports = router;
