@@ -11,6 +11,7 @@
 import { CoinGeckoApi } from "@/stores/CoinGeckoApi";
 import { autoComplete } from "@/stores/autoComplete";
 import CryptoListFilterBar from "@/components/cryptoList/CryptoListFilterBar.vue";
+import  CryptoChart  from "@/components/chart/CryptoChart.vue";
 
 let CryptoName: Array<string> = [];
 function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
@@ -52,7 +53,7 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       */
       CryptoName.push(element["name"], element["symbol"]);
       let row: HTMLTableRowElement = document.createElement("tr");
-      row.setAttribute("class", "hover");
+      row.setAttribute("class", "hover cursor-pointer");
 
       let logoDiv: HTMLTableCellElement = document.createElement("td");
       logoDiv.setAttribute("class", "space-x-5 py-4 px-6");
@@ -73,7 +74,7 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
 
       let name: HTMLTableCellElement = document.createElement(
         "td"
-      ) as HTMLTableCellElement;
+      );
       name.setAttribute("class", "hover:text-accent py-4 px-6");
       name.innerHTML = element["name"];
 
@@ -114,14 +115,16 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
           favIcon.src =
             "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
         }
-      });
-
+      });      
       row.appendChild(logoDiv);
       row.appendChild(name);
       row.appendChild(price);
       row.appendChild(variation);
       row.appendChild(volume);
       row.appendChild(fav);
+      row.addEventListener('click', function () {
+        CryptoChart.methods.changeData(element["id"],currency);
+      });
       tbody.appendChild(row);
     });
   });
