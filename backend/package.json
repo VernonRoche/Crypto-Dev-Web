@@ -5,14 +5,16 @@
   "scripts": {
     "start": "node ./bin/www",
     "build": "tsc --project ./",
-    "dev": "tsc --project ./ && node ./bin/www"
+    "dev": "tsc --project ./ && node ./bin/www",
+    "clean": "rimraf ./dist ./node_modules ./routes/*.js app.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "^4.18.2",
     "mongodb": "^4.12.1",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "rimraf": "^3.0.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.14",
