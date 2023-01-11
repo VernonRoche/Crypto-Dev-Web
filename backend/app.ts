@@ -18,7 +18,11 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 const port = 9666;
-
+app.use(
+    cors({
+        origin: "*",
+    })
+)
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,13 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 
 app.use('/cryptohub/api', usersRouter);
-//app.use(usersRouter);
 
-app.use(
-    cors({
-        origin: "*"//`http://localhost:${port}`  
-    })
-)
+
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
