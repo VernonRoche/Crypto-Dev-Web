@@ -22,7 +22,7 @@
         <input
           required
           type="email"
-          id="Email"
+          id="EmailRegister"
           name="email"
           v-model="email"
           class="input-primary mt-1 w-full rounded-md text-sm shadow-sm border-gray-800 bg-gray-800 text-gray-400"
@@ -40,7 +40,7 @@
         <input
           required
           type="password"
-          id="Password"
+          id="PasswordEmail"
           name="password"
           v-model="password"
           class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200"
@@ -97,12 +97,15 @@ import { ref } from "vue";
 import IconGoogle from "@/components/icons/IconGoogle.vue";
 import RegisterButton from "@/components/authentication/RegisterButton.vue";
 import LoginButtonPurple from "@/components/authentication/LoginButtonPurple.vue";
+import {CryptohubApi} from "@/components/api/CryptohubApi";
 
 // register
 const email = ref("");
 const password = ref("");
 const password2 = ref("");
 const errMsg = ref();
+
+const auth = getAuth();
 
 const onOkClick = () => {
   const myModal = document.getElementById("my-modal-register");
@@ -116,8 +119,11 @@ const register = () => {
     createUserWithEmailAndPassword(getAuth(), email.value, password.value)
       .then((_data) => {
         console.log("Successfully registered !!! ");
+        console.log(_data);
+        const user = auth.currentUser;
+        //CryptohubApi.addUser(user?.uid, email.value);
 
-        //alert("Successfully registered !!! ");
+        alert("Successfully registered !!!  uid "  + user?.uid + " email " + email.value);
       })
       .catch((error) => {
         const obj: Record<string, string> = {
@@ -133,6 +139,7 @@ const register = () => {
           errMsg.value = message;
         }
       });
+      return true;
   }
 };
 
@@ -141,8 +148,6 @@ const signInWithGoogle = () => {
   signInWithPopup(getAuth(), provider)
     .then((result) => {
       console.log(result);
-
-      //alert("Successfully signed in !!! ");
     })
     .catch((error) => {
       console.log(error);
@@ -152,7 +157,12 @@ const signInWithGoogle = () => {
           break;
       }
     });
+    return true;
 };
+
+if(register() || signInWithGoogle()){
+  //CryptohubApi.addUser(user?.uid, email.value);
+}
 
 //microsoft
 const signInWithMicrosoft = () => {

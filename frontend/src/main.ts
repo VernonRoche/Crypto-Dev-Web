@@ -3,7 +3,7 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 
-import "./assets/style.css";
+import "@/assets/style.css";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";

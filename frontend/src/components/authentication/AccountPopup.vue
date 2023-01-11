@@ -85,6 +85,7 @@ import {
 } from "firebase/auth";
 import { ref } from "vue";
 import AccountButton from "@/components/authentication/AccountButton.vue";
+import  {CryptohubApi}  from "@/stores/CryptohubApi";
 
 const auth = getAuth();
 const user = auth.currentUser;
@@ -98,27 +99,25 @@ if (user !== null) {
   const displayName = user.displayName;
   const emailUser = user.email;
   const photoURL = user.photoURL;
-  const emailVerified = user.emailVerified;
   const uid = user.uid;
-
-  user.providerData.forEach((profile) => {
-    console.log("Sign-in provider: " + profile.providerId);
-    console.log("  Provider-specific UID: " + profile.uid);
-    console.log("  Name: " + profile.displayName);
-    console.log("  Email: " + profile.email);
-    console.log("  Photo URL: " + profile.photoURL);
-  });
 } else {
-  console.log("user not found");
-}
-
-onAuthStateChanged(auth, (user: any) => {
+  onAuthStateChanged(auth, (user: any) => {
   if (user) {
-    const uid = user.uid;
+    console.log("Sign-in provider: " + user.providerData[0].providerId);
+    console.log("  Provider-specific UID: " + user.uid);
+    console.log("  Name: " + user.displayName);
+    console.log("  Email: " + user.email);
+    console.log("  Photo URL: " + user.photoURL);
+    
+    CryptohubApi.getUser(user.uid)
+    
   } else {
     console.log("user not found");
   }
 });
+}
+
+
 
 const clickchangedMail = () => {
   ischangedMail.value = true;
@@ -131,6 +130,7 @@ const changeAdresseMail = () => {
     .then(() => {
       sendEmailVerification(user as any).then(() => {
         console.log("Successfully signed in !!! ");
+        CryptohubApi.changeEmail(user!.uid, email.value);
         alert("Mail updated");
       });
     })
@@ -170,8 +170,10 @@ const deleteAccount = () => {
   deleteUser(user as any)
     .then(() => {
       console.log("account deleted");
-      alert("account deleted");
+      alert("account deleted + " + user?.uid);
+      CryptohubApi.deleteUser(user!.uid);
     })
     .catch((error) => {});
+    
 };
 </script>
