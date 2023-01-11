@@ -28,7 +28,6 @@ import "vue3-carousel/dist/carousel.css";
 const trendingCryptos = [];
 const data = CoinGeckoApi.getTrend();
 data.then((value: any) => {
-  console.log(data);
   value["coins"].forEach((element: any) => {
     /*
           element :

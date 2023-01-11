@@ -3,10 +3,11 @@ var router = express.Router();
 
 
 /* Get User by userid */
-router.get('/:getUser', function(req: { params: { userid: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
-  res.send('respond with a resource');
+router.get('/getUser', function(req: { query: { user_id: any; }; }, res: { send: (arg0: string ) => string; }, next: any) {
+  console.log("id : "+ req.query.user_id);
+  
+  res.send("Bien Jouer");
 });
-
 
 /* Add User and paras are userid and email */
 router.post('/:addUser', function(req: { params: { userid: any; }; }, res: { send: (arg0: string) => void; }, next: any) {

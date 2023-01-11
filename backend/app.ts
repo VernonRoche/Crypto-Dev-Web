@@ -2,8 +2,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-
+let cors = require('cors');
 
 // Load MongoDB
 
@@ -27,8 +26,15 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
+app.use('/cryptohub/api', usersRouter);
+//app.use(usersRouter);
+
+app.use(
+    cors({
+        origin: "*"//`http://localhost:${port}`  
+    })
+)
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);

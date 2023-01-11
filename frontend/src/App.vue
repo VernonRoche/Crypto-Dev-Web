@@ -4,6 +4,13 @@ import FooterBar from "@/components/navbarAndFooter/FooterBar.vue";
 import CryptoList from "@/components/cryptoList/CryptoList.vue";
 import TrendCarousel from "@/components/TrendCarousel.vue";
 import CryptoChart from "@/components/chart/CryptoChart.vue";
+async function testAPI() {
+    const URL =
+      "http://localhost:9666/cryptohub/api/getUser";
+    const responce = await fetch(URL);
+    console.log(responce);    
+}
+ testAPI();
 </script>
 <template>
   <link rel="stylesheet" href="@/assets/style.css" />
