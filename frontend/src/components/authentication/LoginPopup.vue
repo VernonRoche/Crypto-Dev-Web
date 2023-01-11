@@ -1,11 +1,12 @@
 <template>
-  <!-- <a href="#my-modal-2" class="btn btn-default">Login</a> -->
+  <!-- Button to open the modal -->
   <LoginButton />
 
   <input type="checkbox" id="my-modal-login" class="modal-toggle" />
   <div class="modal" id="my-modal-login">
     <div class="modal-box">
       <h3 class="font-bold text-lg">Connection</h3>
+      <!-- Connection with Google -->
       <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
         <button class="btn btn-primary gap-2" @click="signInWithGoogle">
           <IconGoogle> </IconGoogle>
@@ -13,6 +14,7 @@
         </button>
       </div>
       <br />
+      <!-- Connection form -->
       <div class="col-span-6">
         <label for="Email" class="block text-sm font-medium text-gray-400">
           Email
@@ -47,6 +49,7 @@
 
       <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
 
+      <!-- Reset password button if the user got this password wrong multiple times -->
       <div class="col-span-6 sm:col-span-3" v-if="cpt >= 3">
         <button class="text-zinc-50 btn btn-link" @click="resetPassWord">
           Reinitialiser Mot De Passe
@@ -56,6 +59,7 @@
       </div>
       <br />
 
+      <!-- Button to switch to register form -->
       <div class="col-span-6 sm:flex sm:items-center sm:gap-4 mt-5">
         <button @click="sign" class="btn btn-primary">Sign in</button>
         <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
@@ -69,6 +73,7 @@
       </div>
       <br />
 
+      <!-- Button to close the modal -->
       <div class="modal-action">
         <label for="my-modal-login" class="btn">Close</label>
       </div>
@@ -101,11 +106,13 @@ const user = getAuth().currentUser;
 
 let cpt = 0;
 
+// Close the modal when the user clicks on the "Close" button
 const onOkClick = () => {
   const myModal = document.getElementById("my-modal-login");
   myModal?.click();
 };
 
+// Send information to Firebase to verify if user input is correct and logs the user if correct
 const sign = () => {
   console.log("cpt " + cpt);
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
@@ -134,8 +141,6 @@ const sign = () => {
       console.log(error.code);
     });
 };
-
-//reset Pasword
 
 const isResetPassWord = ref(false);
 

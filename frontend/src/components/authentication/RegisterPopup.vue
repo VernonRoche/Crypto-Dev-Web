@@ -1,10 +1,12 @@
 <template>
+  <!-- Button to open modal -->
   <RegisterButton />
 
   <input type="checkbox" id="my-modal-register" class="modal-toggle" />
   <div class="modal" id="my-modal-register">
     <div class="modal-box">
       <h3 class="font-bold text-lg">Register</h3>
+      <!-- Register with Google -->
       <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
         <button class="btn btn-primary" @click="signInWithGoogle">
           <IconGoogle> </IconGoogle>
@@ -12,6 +14,7 @@
         </button>
       </div>
       <br />
+      <!-- Register form -->
       <div class="col-span-6 text-white">
         <label
           for="Email"
@@ -64,7 +67,7 @@
           class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200"
         />
       </div>
-
+      <!-- Button to create the account as well as button to switch to the login modal -->
       <div class="col-span-6 sm:flex sm:items-center sm:gap-4 mt-5">
         <button @click="register" class="btn btn-primary">
           Create an account
@@ -78,6 +81,7 @@
           </button>
         </p>
       </div>
+      <!-- Button to close modal -->
       <div class="modal-action">
         <label for="my-modal-register" class="btn">Close</label>
       </div>
@@ -104,11 +108,13 @@ const password = ref("");
 const password2 = ref("");
 const errMsg = ref();
 
+// Close the modal
 const onOkClick = () => {
   const myModal = document.getElementById("my-modal-register");
   myModal?.click();
 };
 
+// Send a request to firebase to create a user and wait possible error responses, else create the user
 const register = () => {
   if (password.value !== password2.value) {
     errMsg.value = "Passwords is different";

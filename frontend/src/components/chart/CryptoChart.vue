@@ -1,4 +1,5 @@
 <template>
+  <!-- The chart itself -->
   <div class="container m-auto">
     <div id="chart-container" class="container h-50 w-50">
       <Line
@@ -11,7 +12,9 @@
       <div id="legendBox"></div>
     </div>
   </div>
+  <!-- Data range selectors -->
   <div class="flex w-full">
+    <!-- Data type selector -->
     <div
       class="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center"
     >
@@ -26,6 +29,7 @@
       </select>
     </div>
     <div class="divider divider-horizontal"></div>
+    <!-- Data range selector -->
     <div
       class="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center"
     >
@@ -120,6 +124,8 @@ function randomColor() {
       .toUpperCase()
   );
 }
+
+// This is the main component of the chart, it initializes the data and displays it
 async function initData(this: {
   chartData: { labels: any; datasets: Object[] };
   loaded: boolean;
@@ -147,7 +153,7 @@ async function initData(this: {
   //initialisation de la page
   this.loaded = false;
   console.log(this);
-  
+
   try {
     await createCryptoData().then((data) => {
       let datasetList: Array<Object> = [];
@@ -215,6 +221,8 @@ async function initData(this: {
     }
   }
 }
+
+// Similarly to the initData function, this function is used to update the data of the chart instead
 
 async function changeData(
   this: {

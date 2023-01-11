@@ -11,8 +11,11 @@ import CryptoChart from "@/components/chart/CryptoChart.vue";
     <NavbarHeader />
   </header>
   <body>
+    <!-- Graphic showing the currently selected crypto's data -->
     <CryptoChart />
+    <!-- Trending cryptos -->
     <TrendCarousel />
+    <!-- Complete list of cryptos -->
     <CryptoList />
   </body>
   <footer>

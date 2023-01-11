@@ -11,9 +11,11 @@
 import { CoinGeckoApi } from "@/stores/CoinGeckoApi";
 import { autoComplete } from "@/stores/autoComplete";
 import CryptoListFilterBar from "@/components/cryptoList/CryptoListFilterBar.vue";
-import  CryptoChart  from "@/components/chart/CryptoChart.vue";
+import CryptoChart from "@/components/chart/CryptoChart.vue";
 
 let CryptoName: Array<string> = [];
+
+// Get the list of all cryptos, and builds up progressively the list by adding the cryptos one by one as HTML elements
 function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
   let tbody: HTMLTableSectionElement = document.createElement("tbody");
   const data = CoinGeckoApi.getCryptoMarket();
@@ -55,6 +57,7 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       let row: HTMLTableRowElement = document.createElement("tr");
       row.setAttribute("class", "hover cursor-pointer");
 
+      // Add the logo
       let logoDiv: HTMLTableCellElement = document.createElement("td");
       logoDiv.setAttribute("class", "space-x-5 py-4 px-6");
       let img: HTMLImageElement = document.createElement("img");
@@ -72,24 +75,27 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       logoDiv.appendChild(img);
       logoDiv.appendChild(symbol);
 
-      let name: HTMLTableCellElement = document.createElement(
-        "td"
-      );
+      // Add the name
+      let name: HTMLTableCellElement = document.createElement("td");
       name.setAttribute("class", "hover:text-accent py-4 px-6");
       name.innerHTML = element["name"];
 
+      // Add the price
       let price: HTMLTableCellElement = document.createElement("td");
       price.setAttribute("class", "hover:text-accent content-center py-4 px-6");
       price.innerHTML = element["current_price"] + " " + currency;
 
+      // Add the variation
       let variation: HTMLTableCellElement = document.createElement("td");
       variation.setAttribute("class", "hover:text-accent py-4 px-6");
       variation.innerHTML = element["price_change_percentage_24h"] + " %";
 
+      // Add the volume
       let volume: HTMLTableCellElement = document.createElement("td");
       volume.setAttribute("class", "hover:text-accent py-4 px-6");
       volume.innerHTML = element["high_24h"];
 
+      // Add the favourite icon
       let fav = document.createElement("td");
       fav.setAttribute("class", "hover:text-accent py-4 px-6");
       let favIcon: HTMLImageElement = document.createElement("img");
@@ -102,6 +108,7 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       favIcon.src =
         "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
       fav.appendChild(favIcon);
+      // Verify if the crypto is already in the favourite list
       fav.addEventListener("click", () => {
         if (favIcon.alt == "NotFav") {
           //addToFavorite(); //TODO
@@ -115,15 +122,16 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
           favIcon.src =
             "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
         }
-      });      
+      });
+      // Add the row to the table
       row.appendChild(logoDiv);
       row.appendChild(name);
       row.appendChild(price);
       row.appendChild(variation);
       row.appendChild(volume);
       row.appendChild(fav);
-      row.addEventListener('click', function () {
-        CryptoChart.methods.changeData(element["id"],currency);
+      row.addEventListener("click", function () {
+        CryptoChart.methods.changeData(element["id"], currency);
       });
       tbody.appendChild(row);
     });
