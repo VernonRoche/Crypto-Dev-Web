@@ -126,11 +126,14 @@ const clickchangedMail = () => {
 };
 
 const changeAdresseMail = () => {
-  updateEmail(user as any, email.value)
+  if (user == null){
+    return;
+  }
+  updateEmail(user, email.value)
     .then(() => {
-      sendEmailVerification(user as any).then(() => {
+      sendEmailVerification(user).then(() => {
         console.log("Successfully signed in !!! ");
-        CryptohubApi.changeEmail(user!.uid, email.value);
+        CryptohubApi.changeEmail(user.uid, email.value);
         alert("Mail updated");
       });
     })
@@ -175,8 +178,8 @@ const deleteAccount = () => {
     .then(() => {
       console.log("account deleted");
       alert("account deleted + " + user.uid);
-      CryptohubApi.deleteUser(user.uid);
     })
     .catch((error) => {});
+    CryptohubApi.deleteUser(user.uid);
 };
 </script>

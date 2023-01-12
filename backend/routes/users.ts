@@ -1,17 +1,31 @@
 var express = require('express');
 var router = express.Router();
 
+// Load MongoDB
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://astergiou:cryptohub@cryptohubcluster.lxmrqbv.mongodb.net/?retryWrites=true&w=majority";
+const mongoClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+
+
 /* Get User by user_id */
 router.get('/getUser', function(req: { query: { user_id: any; }; }, res: { send: (arg0: string ) => string; }, next: any) {
   console.log("id : "+ req.query.user_id);
-    
+  
   res.send("Bien Jouer");
 });
 
 /* Add User and paras are user_id and email */
 router.get('/addUser', function(req: { query: { user_id: any, mail:string };  }, res: { send: (arg0: string) => void; }, next: any) {
   console.log(req.query);
-  
+  mongoClient.connect(async (err: any) => {
+    if (err) throw err;
+    const collection = mongoClient.db("test").collection("UserPreferences");
+    // perform actions on the collection object
+    console.log("Connected to MongoDB!");
+    await collection.insertOne({user_id: req.query.user_id , favorite : ["Bitcoin", "Ethereum", "Litecoin"] , email: req.query.mail ,notification: [] });
+    mongoClient.close();
+    console.log("close  to MongoDB!");
+});
   res.send('respond with a resource');
 });
 
@@ -36,7 +50,7 @@ router.delete('/removeFavorite', function(req: { query: { user_id: any, cryptoNa
 });
 
 /* Change Email and query are user_id  and new email */
-router.put('/changeEmail', function(req: { query: { user_id: any, newMail:string }; }, res: { send: (arg0: string) => void; }, next: any) {
+router.get('/changeEmail', function(req: { query: { user_id: any, newMail:string }; }, res: { send: (arg0: string) => void; }, next: any) {
   res.send('respond with a resource');
 });
 
