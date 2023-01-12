@@ -167,13 +167,16 @@ const clickDeleteAccount = () => {
 };
 
 const deleteAccount = () => {
-  deleteUser(user as any)
+  if(user == null){
+    return;
+
+  }
+  deleteUser(user)
     .then(() => {
       console.log("account deleted");
-      alert("account deleted + " + user?.uid);
-      CryptohubApi.deleteUser(user!.uid);
+      alert("account deleted + " + user.uid);
+      CryptohubApi.deleteUser(user.uid);
     })
     .catch((error) => {});
-    
 };
 </script>

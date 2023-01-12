@@ -4,7 +4,7 @@ var router = express.Router();
 /* Get User by user_id */
 router.get('/getUser', function(req: { query: { user_id: any; }; }, res: { send: (arg0: string ) => string; }, next: any) {
   console.log("id : "+ req.query.user_id);
-  
+    
   res.send("Bien Jouer");
 });
 
@@ -17,6 +17,7 @@ router.get('/addUser', function(req: { query: { user_id: any, mail:string };  },
 
 /* Delete User by user_id */
 router.delete('/deleteUser', function(req: { query: { user_id: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
+  console.log(req.query);
   res.send('respond with a resource');
 });
 /* Get Favorite and query are user_id and return a string[] */

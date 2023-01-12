@@ -97,7 +97,7 @@ import { ref } from "vue";
 import IconGoogle from "@/components/icons/IconGoogle.vue";
 import RegisterButton from "@/components/authentication/RegisterButton.vue";
 import LoginButtonPurple from "@/components/authentication/LoginButtonPurple.vue";
-import {CryptohubApi} from "@/components/api/CryptohubApi";
+import {CryptohubApi} from "@/stores/CryptohubApi";
 
 // register
 const email = ref("");
@@ -121,7 +121,7 @@ const register = () => {
         console.log("Successfully registered !!! ");
         console.log(_data);
         const user = auth.currentUser;
-        //CryptohubApi.addUser(user?.uid, email.value);
+        CryptohubApi.addUser(user!.uid, email.value);
 
         alert("Successfully registered !!!  uid "  + user?.uid + " email " + email.value);
       })
@@ -139,7 +139,6 @@ const register = () => {
           errMsg.value = message;
         }
       });
-      return true;
   }
 };
 
@@ -148,6 +147,8 @@ const signInWithGoogle = () => {
   signInWithPopup(getAuth(), provider)
     .then((result) => {
       console.log(result);
+      const user = auth.currentUser;
+        CryptohubApi.addUser(user!.uid, user!.email);
     })
     .catch((error) => {
       console.log(error);
@@ -157,13 +158,7 @@ const signInWithGoogle = () => {
           break;
       }
     });
-    return true;
 };
-
-if(register() || signInWithGoogle()){
-  //CryptohubApi.addUser(user?.uid, email.value);
-}
-
 //microsoft
 const signInWithMicrosoft = () => {
   const provider = new OAuthProvider("microsoft.com");
