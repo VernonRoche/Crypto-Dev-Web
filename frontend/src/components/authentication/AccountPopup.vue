@@ -181,5 +181,6 @@ const deleteAccount = () => {
     })
     .catch((error) => {});
     CryptohubApi.deleteUser(user.uid);
+
 };
 </script>
