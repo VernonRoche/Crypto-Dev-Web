@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export namespace CryptohubApi {
     const API:string = "http://localhost:9666/cryptohub/api/";
 
@@ -20,8 +22,14 @@ export namespace CryptohubApi {
     * @returns status code resulting from the request
     */
    export async function addUser(id:number|string, mail:string|null, favorite:Array<string>, notification:Array<string>):Promise<number>{
-    const URL = API + "addUser?user_id="+id+"&mail="+mail+"&favorite="+favorite+"&notification="+notification;
-    const responce = await fetch(URL);
+    //const URL = API + "addUser?user_id="+id+"&mail="+mail+"&favorite="+favorite+"&notification="+notification;
+    const params  = {
+      user_id : id,
+      mail : mail,
+      favorite : favorite,
+      notification : notification
+    }
+    const responce = await axios.post(API + "addUser" , null ,{params});
     return responce.status;
    }
 

@@ -32,6 +32,9 @@ export namespace DBcommand {
         if(data === null){
             return false;
         }
+        if(User.user_id == null){
+            return false;
+        }
         return true;
     }
 
@@ -64,7 +67,7 @@ export namespace DBcommand {
         };
         await mongoClient.db(DBNAME).collection(COLLNAME).deleteOne(User, function(err:any,res:any){
             if (err) throw err;
-        }); 
+        });
     }
 
 

@@ -13,9 +13,10 @@ router.get('/getUser', async function(req: { query: { user_id: any; }; }, res:an
 });
 
 /* Add User and paras are user_id and email */
-router.get('/addUser', async function(req: { query: { user_id: any, mail:string, favorite:Array<string>, notification:Array<string> };  }, res:any , next: any) {
+router.post('/addUser', async function(req: { query: { user_id: string, mail:string, favorite:Array<string>, notification:Array<string> };  }, res:any , next: any) {
   try {
     await DBcommand.insertUser(req.query.user_id,req.query.mail,req.query.favorite,req.query.notification);
+    console.log(req.query.user_id);
     res.send("OK");
   } catch (error) {
     res.status(424).json({error});
