@@ -59,7 +59,7 @@ router.delete('/removeFavorite', async function(req: { query: { user_id: any, cr
 });
 
 /* Change Email and query are user_id  and new email */
-router.get('/changeEmail',async function(req: { query: { user_id: any, newMail:string }; }, res:any, next: any) {
+router.put('/changeEmail',async function(req: { query: { user_id: any, newMail:string }; }, res:any, next: any) {
   try {
     res.send(await DBcommand.changeEmail(req.query.user_id, req.query.newMail));
   } catch (error) {

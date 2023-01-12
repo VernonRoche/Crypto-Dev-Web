@@ -134,7 +134,7 @@ const changeAdresseMail = () => {
       sendEmailVerification(user).then(() => {
         console.log("Successfully signed in !!! ");
         CryptohubApi.changeEmail(user.uid, email.value);
-        alert("Mail updated");
+        alert("Mail updated : " + email.value);
       });
     })
     .catch((error) => {

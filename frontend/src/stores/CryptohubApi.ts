@@ -78,8 +78,13 @@ export namespace CryptohubApi {
     * @returns status code resulting from the request
     */
    export async function changeEmail(id:number|string, newMail:string):Promise<number>{
-    const URL = API + "changeEmail?id="+id+"&newMail="+newMail;
-    const responce = await fetch(URL);
+    // const URL = API + "changeEmail?id="+id+"&newMail="+newMail;
+    // const responce = await fetch(URL);
+    const params = {
+      id : id,
+      newMail : newMail
+    }
+    const responce = await axios.put(API + "changeEmail" ,{params});
     return responce.status;
    }
 
