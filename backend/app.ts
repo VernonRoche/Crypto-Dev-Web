@@ -31,13 +31,18 @@ app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
 
-// mongoClient.connect(async (err: any) => {
-//     if (err) throw err;
-//     const collection = mongoClient.db("test").collection("UserPreferences");
-//     // perform actions on the collection object
-//     console.log("Connected to MongoDB!");
-//     await collection.find({user_id: "1234567890"}).forEach(console.dir);
-//     mongoClient.close();
-// });
+/*
+mongoClient.connect(async (err: any,db:any) => {
+    if (err) throw err;
+    let CryptoDB:any = db.db("CryptohubDB");
+    /*
+    await CryptoDB.createCollection("Users",function(err:any,res:any) {
+        if (err) throw err;
+        console.log("Collection created ! ");
+        db.close();
+    });
+    
+});
+*/
 
 module.exports = app;

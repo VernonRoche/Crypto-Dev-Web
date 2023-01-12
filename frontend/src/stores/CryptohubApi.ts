@@ -6,10 +6,10 @@ export namespace CryptohubApi {
      * @param id An user ID
      * @returns Object representing the User
      */
-   export async function getUser(id:number|string):Promise<string>{
+   export async function getUser(id:number|string):Promise<JSON>{
     const URL = API + "getUser?user_id="+id;
     const responce = await fetch(URL);
-    return responce.text();
+    return responce.json();
    }
 
     
@@ -113,10 +113,10 @@ export namespace CryptohubApi {
     * @param id An user ID
     * @returns A String[] containing all the favorites 
     */
-   export async function getFavorites(id:number|string):Promise<string>{
+   export async function getFavorites(id:number|string):Promise<JSON>{
     const URL = API + "getFavorite?id="+id;
     const responce = await fetch(URL);
-    return responce.text();
+    return responce.json();
    }
 
    /**
@@ -124,10 +124,10 @@ export namespace CryptohubApi {
     * @param id An user ID
     * @returns A String[] containing all the notifications 
     */
-   export async function getNotifications(id:number|string):Promise<string>{
+   export async function getNotifications(id:number|string):Promise<JSON>{
     const URL = API + "getNotification?id="+id;
     const responce = await fetch(URL);
-    return responce.text();
+    return responce.json();
    }
 }
 

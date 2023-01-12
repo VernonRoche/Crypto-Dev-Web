@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+import { DBcommand } from "../DBcommand";
 
 // Load MongoDB
 const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -8,31 +9,32 @@ const mongoClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopo
 
 
 /* Get User by user_id */
-router.get('/getUser', function(req: { query: { user_id: any; }; }, res: { send: (arg0: string ) => string; }, next: any) {
-  console.log("id : "+ req.query.user_id);
-  
-  res.send("Bien Jouer");
+router.get('/getUser', async function(req: { query: { user_id: any; }; }, res:any, next: any) {
+  res.setHeader('Content-Type','application/json');
+  try {
+    res.send(await DBcommand.getUser(req.query.user_id));
+  }catch(error){
+    res.status(424).json({"error":error});
+  } 
 });
 
 /* Add User and paras are user_id and email */
-router.get('/addUser', function(req: { query: { user_id: any, mail:string };  }, res: { send: (arg0: string) => void; }, next: any) {
-  console.log(req.query);
-  mongoClient.connect(async (err: any) => {
-    if (err) throw err;
-    const collection = mongoClient.db("test").collection("UserPreferences");
-    // perform actions on the collection object
-    console.log("Connected to MongoDB!");
-    await collection.insertOne({user_id: req.query.user_id , favorite : ["Bitcoin", "Ethereum", "Litecoin"] , email: req.query.mail ,notification: [] });
-    mongoClient.close();
-    console.log("close  to MongoDB!");
-});
-  res.send('respond with a resource');
+router.get('/addUser', async function(req: { query: { user_id: any, mail:string, favorite:Array<string>, notification:Array<string> };  }, res:any , next: any) {
+  try {
+    await DBcommand.insertUser(req.query.user_id,req.query.mail,req.query.favorite,req.query.notification);
+    res.send("OK");
+  } catch (error) {
+    res.status(424).json({"error":error});
+  }
 });
 
 /* Delete User by user_id */
-router.delete('/deleteUser', function(req: { query: { user_id: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
-  console.log(req.query);
-  res.send('respond with a resource');
+router.delete('/deleteUser', async function(req: { query: { user_id: any; }; }, res:any, next: any) {
+  try {
+    await DBcommand.deleteUser(req.query.user_id);
+  } catch (error) {
+    res.status(424).json({"error":error});
+  }
 });
 /* Get Favorite and query are user_id and return a string[] */
 router.get('/getFavorite', function(req: { query: { user_id: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
