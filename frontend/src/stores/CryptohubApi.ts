@@ -19,8 +19,8 @@ export namespace CryptohubApi {
     * @param mail An e-mail address
     * @returns status code resulting from the request
     */
-   export async function addUser(id:number|string, mail:string|null):Promise<number>{
-    const URL = API + "addUser?user_id="+id+"&mail="+mail;
+   export async function addUser(id:number|string, mail:string|null, favorite:Array<string>, notification:Array<string>):Promise<number>{
+    const URL = API + "addUser?user_id="+id+"&mail="+mail+"&favorite="+favorite+"&notification="+notification;
     const responce = await fetch(URL);
     return responce.status;
    }

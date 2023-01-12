@@ -37,45 +37,75 @@ router.delete('/deleteUser', async function(req: { query: { user_id: any; }; }, 
   }
 });
 /* Get Favorite and query are user_id and return a string[] */
-router.get('/getFavorite', function(req: { query: { user_id: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
-  res.send('respond with a resource');
+router.get('/getFavorite', async function(req: { query: { user_id: any; }; }, res: any, next: any) {
+  try {
+    res.send(await DBcommand.getFavorite(req.query.user_id));
+  } catch (error) {
+    res.status(424).json({"error":error});
+  }
 });
 
 /* Add Favorite and query are user_id and cryptoname */
-router.get('/addFavorite', function(req: { query: { user_id: any, cryptoName:string }; }, res: { send: (arg0: string) => void; }, next: any) {
-  res.send('respond with a resource');
+router.get('/addFavorite', async function(req: { query: { user_id: any, cryptoName:string }; }, res:any, next: any) {
+  try {
+    res.send(await DBcommand.addFavorite(req.query.user_id, req.query.cryptoName));
+  } catch (error) {
+    res.status(424).json({"error":error});
+  }
 });
 
 /* Remove Favorite and query are user_id and cryptoname */
-router.delete('/removeFavorite', function(req: { query: { user_id: any, cryptoName:string }; }, res: { send: (arg0: string) => void; }, next: any) {
-  res.send('respond with a resource');
+router.delete('/removeFavorite', async function(req: { query: { user_id: any, cryptoName:string }; }, res: any, next: any) {
+  try {
+    res.send(await DBcommand.removeFavorite(req.query.user_id, req.query.cryptoName));
+  } catch (error) {
+    res.status(424).json({"error":error});
+  }
 });
 
 /* Change Email and query are user_id  and new email */
-router.get('/changeEmail', function(req: { query: { user_id: any, newMail:string }; }, res: { send: (arg0: string) => void; }, next: any) {
-  res.send('respond with a resource');
+router.get('/changeEmail',async function(req: { query: { user_id: any, newMail:string }; }, res:any, next: any) {
+  try {
+    res.send(await DBcommand.changeEmail(req.query.user_id, req.query.newMail));
+  } catch (error) {
+    res.status(424).json({"error":error});
+  }
 });
 
 /* Add Notification and query  are user_id cryptoname and targetValue */
-router.get('/addNotification', function(req: { query: { user_id: any, cryptoName:string, targeValue:string | number }; }, res: { send: (arg0: string) => void; }, next: any) {
-  res.send('respond with a resource');
+router.get('/addNotification', async function(req: { query: { user_id: any, cryptoName:string, targeValue:string | number }; }, res: any, next: any) {
+  try {
+    res.send(await DBcommand.addNotification(req.query.user_id, req.query.cryptoName, req.query.targeValue));
+  } catch (error) {
+    res.status(424).json({"error":error});
+  }
 });
 
 /* get notification and query are user_id and return a notification_object[] */
-router.get('/getNotification', function(req: { query: { user_id: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
-  res.send('respond with a resource');
+router.get('/getNotification', async function(req: { query: { user_id: any; }; }, res: any, next: any) {
+  try {
+    res.send(await DBcommand.getNotification(req.query.user_id));
+  } catch (error) {
+    res.status(424).json({"error":error});
+  }
 });
 
 /* Remove Notification and query are user_id cryptoname  */
-router.delete('/removeNotification', function(req: { query: { user_id: any, cryptoName:string }; }, res: { send: (arg0: string) => void; }, next: any) {
-  res.send('respond with a resource');
+router.delete('/removeNotification', async function(req: { query: { user_id: any, cryptoName:string }; }, res: any, next: any) {
+  try {
+    res.send(await DBcommand.removeNotification(req.query.user_id, req.query.cryptoName));
+  } catch (error) {
+    res.status(424).json({"error":error});
+  }
 });
 
 /* Reset notification and query is user_id */
-router.put('/resetNotification', function(req: { query: { user_id: any; }; }, res: { send: (arg0: string) => void; }, next: any) {
-  res.send('respond with a resource');
+router.put('/resetNotification', async function(req: { query: { user_id: any; }; }, res: any, next: any) {
+  try {
+    res.send(await DBcommand.resetNotification(req.query.user_id));
+  } catch (error) {
+    res.status(424).json({"error":error});
+  }
 });
-
-
 
 module.exports = router;
