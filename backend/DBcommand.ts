@@ -12,11 +12,7 @@ export namespace DBcommand {
         const User = {
             user_id : id,
         };
-        let data = await mongoClient.db(DBNAME).collection(COLLNAME).findOne(User,function(err:any,res:any){
-            if (err) throw err;            
-        }).toArray();
-        
-        return data;
+        return await mongoClient.db(DBNAME).collection(COLLNAME).findOne(User);
     }
 
     async function isInside(id:number | string ) : Promise<boolean>{
@@ -32,10 +28,8 @@ export namespace DBcommand {
         if(data === null){
             return false;
         }
-        if(User.user_id == null){
-            return false;
-        }
-        return true;
+        return User.user_id != null;
+
     }
 
     export async function insertUser(id:number | string, mail:string, favorite:Array<string>, notification:Array<string> ): Promise<void> {
@@ -81,10 +75,9 @@ export namespace DBcommand {
         const projection = {
             favorite: 1
         };
-        let fav = await mongoClient.db(DBNAME).collection(COLLNAME).find(User, function(err:any,res:any){
+        return await mongoClient.db(DBNAME).collection(COLLNAME).find(User, function (err: any, res: any) {
             if (err) throw err;
         }).project(projection);
-        return fav;
     }
 
     export async function addFavorite(id:number | string, cryptoName:string): Promise<void> {
@@ -121,15 +114,7 @@ export namespace DBcommand {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
-        const User = {
-            user_id : id,
-        };
-        const updateValue = {
-            $set: {  email: newMail  }
-        };
-        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,updateValue,function(err:any,res:any){
-            if (err) throw err;
-        });
+        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne({user_id: id},{ $set: {  email: newMail  }});
     }
 
     export async function addNotification(id:number | string, cryptoName:string, targeValue:string | number): Promise<void> {
@@ -164,10 +149,9 @@ export namespace DBcommand {
         const projection = {
             notification: 1
         };
-        let notifs = await mongoClient.db(DBNAME).collection(COLLNAME).find(User, function(err:any,res:any){
+        return await mongoClient.db(DBNAME).collection(COLLNAME).find(User, function (err: any, res: any) {
             if (err) throw err;
         }).project(projection);
-        return notifs;     
     }
 
 
