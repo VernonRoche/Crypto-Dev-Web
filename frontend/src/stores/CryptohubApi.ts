@@ -84,7 +84,7 @@ export namespace CryptohubApi {
       id : id,
       newMail : newMail
     }
-    const responce = await axios.put(API + "changeEmail" ,{params});
+    const responce = await axios.put(API + "changeEmail", null ,{params});
     return responce.status;
    }
 

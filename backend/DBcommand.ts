@@ -121,6 +121,7 @@ export namespace DBcommand {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
+        console.log("newMail  " + newMail);
         const User = {
             user_id : id,
         };
