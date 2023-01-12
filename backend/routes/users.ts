@@ -2,19 +2,13 @@ var express = require('express');
 var router = express.Router();
 import { DBcommand } from "../DBcommand";
 
-// Load MongoDB
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://astergiou:cryptohub@cryptohubcluster.lxmrqbv.mongodb.net/?retryWrites=true&w=majority";
-const mongoClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-
-
 /* Get User by user_id */
 router.get('/getUser', async function(req: { query: { user_id: any; }; }, res:any, next: any) {
   res.setHeader('Content-Type','application/json');
   try {
     res.send(await DBcommand.getUser(req.query.user_id));
   }catch(error){
-    res.status(424).json({"error":error});
+    res.status(424).json({error});
   } 
 });
 
@@ -24,7 +18,7 @@ router.get('/addUser', async function(req: { query: { user_id: any, mail:string,
     await DBcommand.insertUser(req.query.user_id,req.query.mail,req.query.favorite,req.query.notification);
     res.send("OK");
   } catch (error) {
-    res.status(424).json({"error":error});
+    res.status(424).json({error});
   }
 });
 
@@ -33,7 +27,7 @@ router.delete('/deleteUser', async function(req: { query: { user_id: any; }; }, 
   try {
     await DBcommand.deleteUser(req.query.user_id);
   } catch (error) {
-    res.status(424).json({"error":error});
+    res.status(424).json({error});
   }
 });
 /* Get Favorite and query are user_id and return a string[] */

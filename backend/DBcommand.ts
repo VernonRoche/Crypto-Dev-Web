@@ -44,8 +44,8 @@ export namespace DBcommand {
                 const newUser = {
                     user_id : id,
                     email: mail,
-                    favorite : favorite,
-                    notification: notification
+                    favorite : ["Bitcoin", "Ethereum", "Litecoin"],
+                    notification: [],
                 };
                 await mongoClient.db(DBNAME).collection(COLLNAME).insertOne(newUser, function(err:any,res:any){
                     if (err) throw err;
