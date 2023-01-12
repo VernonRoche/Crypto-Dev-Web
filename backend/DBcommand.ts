@@ -44,8 +44,8 @@ export namespace DBcommand {
                 const newUser = {
                     user_id : id,
                     email: mail,
-                    favorite : ["Bitcoin", "Ethereum", "Litecoin"],
-                    notification: [],
+                    favorite : favorite,
+                    notification: notification,
                 };
                 await mongoClient.db(DBNAME).collection(COLLNAME).insertOne(newUser, function(err:any,res:any){
                     if (err) throw err;
@@ -68,8 +68,20 @@ export namespace DBcommand {
     }
 
 
-    export async function getFavorite(id:number | string): Promise<void> {
-        let data = await getUser(id);
+    export async function getFavorite(id:number | string): Promise<JSON> {
+        await mongoClient.connect(async (err: any, db:any) => {
+            if (err) throw err;
+        });
+        const User = {
+            user_id : id,
+        };
+        const projection = {
+            favorite: 1
+        };
+        let fav = await mongoClient.db(DBNAME).collection(COLLNAME).find(User, function(err:any,res:any){
+            if (err) throw err;
+        }).project(projection);
+        return fav;
     }
 
     export async function addFavorite(id:number | string, cryptoName:string): Promise<void> {
@@ -140,7 +152,19 @@ export namespace DBcommand {
 
 
     export async function getNotification(id:number | string): Promise<void> {
-        let data = await getUser(id);        
+        await mongoClient.connect(async (err: any, db:any) => {
+            if (err) throw err;
+        });
+        const User = {
+            user_id : id,
+        };
+        const projection = {
+            notification: 1
+        };
+        let notifs = await mongoClient.db(DBNAME).collection(COLLNAME).find(User, function(err:any,res:any){
+            if (err) throw err;
+        }).project(projection);
+        return notifs;     
     }
 
 
