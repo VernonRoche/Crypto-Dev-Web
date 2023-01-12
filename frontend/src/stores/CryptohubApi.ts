@@ -22,7 +22,6 @@ export namespace CryptohubApi {
     * @returns status code resulting from the request
     */
    export async function addUser(id:number|string, mail:string|null, favorite:Array<string>, notification:Array<string>):Promise<number>{
-    //const URL = API + "addUser?user_id="+id+"&mail="+mail+"&favorite="+favorite+"&notification="+notification;
     const params  = {
       user_id : id,
       mail : mail,
@@ -39,8 +38,12 @@ export namespace CryptohubApi {
     * @returns status code resulting from the request
     */
    export async function deleteUser(id:number|string):Promise<number>{
-    const URL = API + "deleteUser?user_id="+id;
-    const responce = await fetch(URL);
+    //const URL = API + "deleteUser?user_id="+id;
+
+    const params = {
+      user_id : id
+    }
+    const responce = await axios.delete(API + "deleteUser",{params} );
     return responce.status;
    }
 
