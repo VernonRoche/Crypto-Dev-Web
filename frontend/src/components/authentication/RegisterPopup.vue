@@ -98,6 +98,7 @@ import IconGoogle from "@/components/icons/IconGoogle.vue";
 import RegisterButton from "@/components/authentication/RegisterButton.vue";
 import LoginButtonPurple from "@/components/authentication/LoginButtonPurple.vue";
 import {CryptohubApi} from "@/stores/CryptohubApi";
+import CryptoList from "../cryptoList/CryptoList.vue";
 
 // register
 const email = ref("");
@@ -121,8 +122,8 @@ const register = () => {
         console.log("Successfully registered !!! ");
         console.log(_data);
         const user = auth.currentUser;
-        CryptohubApi.addUser(user!.uid, email.value);
-
+        CryptohubApi.addUser(user!.uid, email.value,["Bitcoin", "Ethereum", "Litecoin"],[""]);
+        
         alert("Successfully registered !!!  uid "  + user?.uid + " email " + email.value);
       })
       .catch((error) => {
@@ -148,7 +149,7 @@ const signInWithGoogle = () => {
     .then((result) => {
       console.log(result);
       const user = auth.currentUser;
-        CryptohubApi.addUser(user!.uid, user!.email);
+      CryptohubApi.addUser(user!.uid, email.value,["Bitcoin", "Ethereum", "Litecoin"],[""]);
     })
     .catch((error) => {
       console.log(error);
