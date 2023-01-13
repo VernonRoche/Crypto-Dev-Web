@@ -1,6 +1,6 @@
 import firebase, { initializeApp } from "firebase/app";
 import "firebase/auth";
-import PopupLogin from "@/components/PopupLogin.vue";
+import PopupLogin from "@/components/authentication/LoginPopup.vue";
 import { expect, test } from "vitest";
 import {
   createUserWithEmailAndPassword,
