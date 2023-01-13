@@ -21,4 +21,5 @@ export namespace Favoris {
         decrement();
         //CryptohubApi.removeFavorite(user,CryptoName);
     }
+
 }

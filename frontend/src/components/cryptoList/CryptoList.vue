@@ -15,7 +15,9 @@ import {Favoris} from "@/stores/Favoris";
 
 let CryptoName: Array<string> = [];
 function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
+  let baseFav:Array<String> = ["Bitcoin", "Ethereum", "Litecoin"];
   let tbody: HTMLTableSectionElement = document.createElement("tbody");
+  tbody.setAttribute("id","CryptoRow");
   const data = CoinGeckoApi.getCryptoMarket();
   data.then((value: Array<string>) => {
     value.forEach((element: any) => {
@@ -54,6 +56,7 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       CryptoName.push(element["name"], element["symbol"]);
       let row: HTMLTableRowElement = document.createElement("tr");
       row.setAttribute("class", "hover");
+      row.setAttribute("id",element["name"]);
 
       let logoDiv: HTMLTableCellElement = document.createElement("td");
       logoDiv.setAttribute("class", "space-x-5 py-4 px-6");
@@ -74,7 +77,7 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
 
       let name: HTMLTableCellElement = document.createElement(
         "td"
-      ) as HTMLTableCellElement;
+      );
       name.setAttribute("class", "hover:text-accent py-4 px-6");
       name.innerHTML = element["name"];
 
@@ -92,16 +95,22 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
 
       let fav = document.createElement("td");
       fav.setAttribute("class", "hover:text-accent py-4 px-6");
+      
       let favIcon: HTMLImageElement = document.createElement("img");
-      favIcon.setAttribute("id", "filterFavImg");
-      favIcon.setAttribute("alt", "NotFav");
+      //favIcon.setAttribute("id", "filterFavImg");
       favIcon.setAttribute("class", "FavIcon");
       favIcon.setAttribute("width", "20");
       favIcon.setAttribute("height", "20");
       favIcon.setAttribute("min-width", "20");
       favIcon.setAttribute("min-height", "20");
-      favIcon.src =
-        "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
+      if(baseFav.includes(element["name"])){
+        favIcon.setAttribute("alt", "Fav");
+        favIcon.src ="https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starFull.png";
+      }else{
+        favIcon.setAttribute("alt", "NotFav");
+        favIcon.src =
+          "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
+      }
       fav.appendChild(favIcon);
       fav.addEventListener("click", async function() {
         if (favIcon.alt == "NotFav") {
@@ -137,13 +146,6 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
 
 function sortTableByHeader(dir: string, nbHeader: number): void {
   let tableName: string = "CryptoList";
-  let fav: HTMLImageElement = document.getElementById(
-    "filterFavImg"
-  ) as HTMLImageElement;
-  if (fav && fav.alt == "Fav") {
-    tableName = "FavoriteList";
-  }
-  console.log(tableName);
   let i: number;
   let table: HTMLTableElement = document.getElementById(
     tableName

@@ -80,7 +80,7 @@
       </div>
     </th>
     <th scope="col">
-      <IconStarEmpty />
+      <CryptoListFavoriteFilter />
     </th>
   </tr>
 </template>
@@ -88,11 +88,10 @@
 <script>
 import SearchBox from "@/components/cryptoList/SearchBox.vue";
 import CryptoListFavoriteFilter from "@/components/cryptoList/CryptoListFavoriteFilter.vue";
-import IconStarEmpty from "@/components/icons/IconStarEmpty.vue";
 
 export default {
   name: "CryptoListFilterBar",
-  components: { CryptoListFavoriteFilter, SearchBox, IconStarEmpty},
+  components: { CryptoListFavoriteFilter, SearchBox},
 };
 </script>
 
