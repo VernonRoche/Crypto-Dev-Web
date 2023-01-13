@@ -62,9 +62,15 @@ export namespace CryptohubApi {
     id: number | string,
     cryptoName: string
   ): Promise<number> {
+    
     const URL = API + "addFavorite?id=" + id + "&cryptoName=" + cryptoName;
-    const responce = await fetch(URL);
-    return responce.status;
+    const params = {
+      user_id: id,
+      cryptoName: cryptoName,
+    };
+    return await axios
+      .put(URL, params)
+      .then((res: any) => res.status);
   }
 
   /**
@@ -77,8 +83,12 @@ export namespace CryptohubApi {
     id: number | string,
     cryptoName: string
   ): Promise<number> {
-    const URL = API + "removeFavorite?" + id + "&cryptoName=" + cryptoName;
-    const responce = await fetch(URL);
+    const URL = API + "deleteUser";
+    const params = {
+      user_id: id,
+      cryptoName: cryptoName
+    };
+    const responce = await axios.delete(URL, { params });
     return responce.status;
   }
 
@@ -160,9 +170,10 @@ export namespace CryptohubApi {
    * @returns A String[] containing all the favorites
    */
   export async function getFavorites(id: number | string): Promise<JSON> {
-    const URL = API + "getFavorite?id=" + id;
-    const responce = await fetch(URL);
-    return responce.json();
+    const URL = API + "getFavorite?" + id ;
+    return await axios
+      .get(URL, { params: { user_id: id} })
+      .then((res: any) => res.data);
   }
 
   /**

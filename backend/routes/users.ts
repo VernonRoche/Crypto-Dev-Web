@@ -45,9 +45,10 @@ router.get('/getFavorite', async function(req: any, res: any) {
 });
 
 /* Add Favorite and query are user_id and cryptoname */
-router.get('/addFavorite', async function(req: any, res:any) {
+router.put('/addFavorite', async function(req: any, res:any) {
   try {
-    res.send(await DBcommand.addFavorite(req.query.user_id, req.query.cryptoName));
+    console.log("id : " + req.body.user_id);
+    res.send(await DBcommand.addFavorite(req.body.user_id, req.body.cryptoName));
   } catch (error) {
     console.error(error);
     await res.status(424).json({"error": error});

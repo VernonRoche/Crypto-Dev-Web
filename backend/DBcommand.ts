@@ -75,22 +75,14 @@ export namespace DBcommand {
         const projection = {
             favorite: 1
         };
-        return await mongoClient.db(DBNAME).collection(COLLNAME).find(User, function (err: any, res: any) {
-            if (err) throw err;
-        }).project(projection);
+        return await mongoClient.db(DBNAME).collection(COLLNAME).find(User).project(projection).toArray();        
     }
 
     export async function addFavorite(id:number | string, cryptoName:string): Promise<void> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
-        const User = {
-            user_id : id,
-        };
-        const newValue = {
-            $push: {  "favorite.$": cryptoName  }
-        };
-        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,newValue,function(err:any,res:any){
+        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne({ user_id : id },{ $push: {  favorite: cryptoName  }  },function(err:any,res:any){
             if (err) throw err;
         });
     }

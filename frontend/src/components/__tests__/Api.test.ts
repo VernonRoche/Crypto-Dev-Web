@@ -2,7 +2,9 @@ import { expect, test } from "vitest";
 import { assert } from "chai";
 import { CryptohubApi}  from "@/stores/CryptohubApi.ts";
 
-
+    const user = {
+        
+    } 
     /*
 /cryptohub/api/getUser	user_id	user_object (see DB diagram)
 /cryptohub/api/addUser	user_id, email	status code

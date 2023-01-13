@@ -11,6 +11,7 @@
 import { CoinGeckoApi } from "@/stores/CoinGeckoApi";
 import { autoComplete } from "@/stores/autoComplete";
 import CryptoListFilterBar from "@/components/cryptoList/CryptoListFilterBar.vue";
+import {Favoris} from "@/stores/Favoris";
 
 let CryptoName: Array<string> = [];
 function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
@@ -92,6 +93,7 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       let fav = document.createElement("td");
       fav.setAttribute("class", "hover:text-accent py-4 px-6");
       let favIcon: HTMLImageElement = document.createElement("img");
+      favIcon.setAttribute("id", "filterFavImg");
       favIcon.setAttribute("alt", "NotFav");
       favIcon.setAttribute("class", "FavIcon");
       favIcon.setAttribute("width", "20");
@@ -101,15 +103,19 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       favIcon.src =
         "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
       fav.appendChild(favIcon);
-      fav.addEventListener("click", () => {
+      fav.addEventListener("click", async function() {
         if (favIcon.alt == "NotFav") {
-          //addToFavorite(); //TODO
-          row.setAttribute("alt", "fav");
-          favIcon.setAttribute("alt", "Fav");
-          favIcon.src =
-            "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919407673374/starFull.png";
+          let isSucess = await Favoris.addFavoris(element["name"]);
+          if(!isSucess){
+            alert("Vous ne pouvez avoir que 3 favoris maximum");
+          }else{
+            row.setAttribute("alt", "fav");
+            favIcon.setAttribute("alt", "Fav");
+            favIcon.src =
+              "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919407673374/starFull.png";
+          }
         } else {
-          //removeFromFavorite(); //TODO
+          Favoris.RemoveFavorite(element["name"]);
           favIcon.setAttribute("alt", "NotFav");
           favIcon.src =
             "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
