@@ -40,6 +40,12 @@ export default {
               fav.appendChild(favName);
               fav.appendChild(Favoris.createFavIcon(element));
               favDiv.appendChild(fav);
+
+              let row:HTMLTableRowElement =  document.getElementById(element);
+              ;
+              let favImg:HTMLCollectionOf<HTMLImageElement> =row.getElementsByClassName("FavIcon cursor-pointer")
+              favImg.item(0).alt = "Fav";
+              favImg.item(0).src = "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919407673374/starFull.png";
           });
         document.getElementById("FavoriteList").appendChild(favDiv)
         }else{ 
@@ -48,7 +54,7 @@ export default {
             document.getElementById("FavoriteList").appendChild(emptyFav);
         }
     }
-    document.getElementById("Filterfav")!.style.display= "table-row";    
+    document.getElementById("Filterfav")!.style.display= "table-row";
   },
   beforeUnmount(){
     document.querySelectorAll("[id=Favrow]").forEach((e:HTMLTableRowElement) => {
