@@ -1,25 +1,40 @@
 {
   "name": "backend",
   "version": "0.0.0",
+  "main": "app.js",
   "private": true,
+  "license": "MIT",
   "scripts": {
+    "cleantest": "rimraf js",
+    "clean": "npm run cleantest && rimraf ./dist ./node_modules  .nyc_output coverage package-lock.json",
+    "compile": "npm run cleantest && tsc",
     "start": "node ./bin/www",
     "build": "tsc --project ./",
-    "dev": "tsc --project ./ && node ./bin/www",
-    "clean": "rimraf ./dist ./node_modules ./routes/*.js app.js"
+    "dev": "tsc --project ./ && node ./bin/www ",
+    "test": "npm run compile && nyc --reporter=text-summary --reporter=lcov mocha js/test --recursive --exit",
+    "format": "prettier --config .prettierrc \"src/**/*.ts\" --write",
+    "lint": "eslint . --ext .ts src/**/*.ts",
+    "lint:fix": "eslint --ext .ts src/**/*.ts --fix",
+    "fix": "npm run format && npm run lint:fix"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "^4.18.2",
-    "mongodb": "^4.12.1",
+    "mongodb": "^4.13.0",
+    "mongodb-memory-server": "^8.11.1",
     "morgan": "~1.9.1",
+    "nyc": "^15.1.0",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.4",
     "@types/express": "^4.17.14",
+    "@types/mocha": "^10.0.1",
     "@types/node": "^18.11.12",
+    "chai": "^4.3.7",
+    "expect": "^29.3.1",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4"
   }

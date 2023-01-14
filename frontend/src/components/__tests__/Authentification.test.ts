@@ -12,6 +12,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { assert } from "chai";
+import { CryptohubApi } from "@/stores/CryptohubApi";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCrazPzNJwg2Gx8JHO6X4p8aQ8hkcIbGgY",
@@ -27,11 +28,20 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = getAuth();
 
-// describe('Authentication', () => {
-// it('should login a user with email and password', async () => {
-test("Sign with password", async () => {
+test("create and Sign with password", async () => {
   const email = "test@cryptohub.fr";
   const password = "0123456";
+
+  const auth = getAuth();
+  await createUserWithEmailAndPassword(auth, email, password).then((_data) => {
+
+    const user = auth.currentUser;
+    CryptohubApi.addUser(user!.uid, email,["Bitcoin", "Ethereum", "Litecoin"],[""]);
+    
+  }).catch((error) => {
+    
+  });
+;
 
   await signInWithEmailAndPassword(auth, email, password);
 
@@ -39,7 +49,7 @@ test("Sign with password", async () => {
   expect(user).toBeTruthy();
   expect(user?.email).toEqual(email);
 });
-// })
+
 test("create An Account", async () => {
   const email = "test2@cryptohub.fr";
   const password = "0123456789";
@@ -71,7 +81,7 @@ test("sign in with link email", async () => {
   await createUserWithEmailAndPassword(auth, email, password);
 
   const actionCodeSettings = {
-    url: "http://localhost:5173/about",
+    url: "http://localhost:5173",
     handleCodeInApp: true,
   };
 
@@ -81,13 +91,21 @@ test("sign in with link email", async () => {
   expect(user?.email).toEqual(email);
 });
 
-//  test("connect with google",async () => {
-//   const provider = new GoogleAuthProvider();
-//   const auth = getAuth();
-//   const result = await signInWithPopup(auth, provider);
-//   assert.isTrue(result.user !== null);
+ test("connect with google",async () => {
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+  await signInWithPopup(auth, provider).then((result) => {
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential?.accessToken;
+    const user = result.user;
+  }).catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    const email = error.email;
+    const credential = GoogleAuthProvider.credentialFromError(error);
+  });
 
-//  })
+  })
 
 test("delete user", async () => {
   await signInWithEmailAndPassword(auth, "samsonvin@orange.fr", "0123456");

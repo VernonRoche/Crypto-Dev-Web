@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 let cors = require('cors');
 
-// Load routes
+// Load route
 
 var usersRouter = require('./routes/users');
 
