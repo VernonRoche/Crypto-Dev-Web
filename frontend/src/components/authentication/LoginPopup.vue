@@ -1,6 +1,9 @@
 <template>
-  <!-- <a href="#my-modal-2" class="btn btn-default">Login</a> -->
-  <LoginButton />
+  <div>
+
+  <!-- <LoginButton /> -->
+
+  <label for="my-modal-login" class="btn btn-default ">Login</label>
 
   <input type="checkbox" id="my-modal-login" class="modal-toggle" />
   <div class="modal" id="my-modal-login">
@@ -45,7 +48,7 @@
         </p>
       </div>
 
-      <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
+      <p class="text-red-500" v-if="errMsg">{{ errMsg  }}</p>
 
       <div class="col-span-6 sm:col-span-3" v-if="cpt >= 3">
         <button class="text-zinc-50 btn btn-link" @click="resetPassWord">
@@ -74,6 +77,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script setup lang="ts">
@@ -103,18 +107,21 @@ const user = getAuth().currentUser;
 
 let cpt = 0;
 
+/**
+ * Display modal for login
+ */
 const onOkClick = () => {
   const myModal = document.getElementById("my-modal-login");
   myModal?.click();
 };
 
+/**
+ * Sign in a user with email and password using firebase auth ,  we have a counter to possible errors 
+ */
 const sign = () => {
-  console.log("cpt " + cpt);
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((_data) => {
-      console.log("Successfully signed in !!! ");
       Login.changeStateLogin();
-      //alert("Successfully signed in !!!");
       cpt = 0;
     })
     .catch((error) => {
@@ -142,10 +149,18 @@ const sign = () => {
 
 const isResetPassWord = ref(false);
 
+/**
+ * confirm is user clicking on reset password button
+ */
 const isReset = () => {
   isResetPassWord.value = true;
 };
 
+/**
+ * reset password using firebase auth 
+ * when user have 3 errors in login form 
+ * a reset password button is displayed
+ */
 const resetPassWord = () => {
   const auth = getAuth();
   const emailAddress = email.value;
@@ -162,50 +177,16 @@ const resetPassWord = () => {
     });
 };
 
-// sign with link to email
-const linksent = ref(false);
-const signOnlyLinkEmail = () => {
-  linksent.value = true;
-  const div = document.querySelector("#myDiv2");
-  div?.classList.toggle("hidden");
-};
 
-const signInWithLinkEmail = () => {
-  const auth = getAuth();
-  const actionCodeSettings = {
-    url: "http://localhost:5173/about",
-    handleCodeInApp: true,
-  };
-  sendSignInLinkToEmail(auth, email.value, actionCodeSettings)
-    .then(() => {
-      window.localStorage.setItem("emailForSignIn", email.value);
-      alert("Email sent");
-    })
-    .catch((error) => {
-      const obj: Record<string, string> = {
-        "auth/invalid-email": "Invalid Email",
-        "auth/user-not-found": "User Not Found",
-        "auth/wrong-password": "Wrong Password",
-        "auth/user-disabled": "User Disabled",
-      };
-      const message = obj[error.code];
-      if (!message) {
-        errMsg.value = "Email or password was incorrect";
-      } else {
-        errMsg.value = message;
-      }
-      console.log(error.code);
-    });
-};
-
-//google
+/**
+ * Sign in a user with google using firebase auth
+ */
 const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider)
     .then((result) => {
-      console.log(result);
+     
 
-      //alert("Successfully signed in !!! ");
     })
     .catch((error) => {
       console.log(error);
@@ -217,7 +198,9 @@ const signInWithGoogle = () => {
     });
 };
 
-//microsoft
+/**
+ * Sign in a user with microsoft using firebase auth
+ */
 const signInWithMicrosoft = () => {
   const provider = new OAuthProvider("microsoft.com");
   signInWithPopup(getAuth(), provider)
@@ -238,8 +221,11 @@ const signInWithMicrosoft = () => {
     });
 };
 
-// sign with phone number
-
+/**
+ * Sign in a user with phone using firebase auth
+ * user receive a code by sms and password is not required
+ * we use recaptcha verifier to verify user is not a robot
+ */
 const isSignInWithPhone = ref(false);
 const signInWithPhone = () => {
   isSignInWithPhone.value = true;
@@ -256,6 +242,9 @@ const auth = getAuth();
 const phoneNumber = ref("");
 const code = ref("");
 
+/**
+ * init recaptcha verifier
+ */
 const initRecaptchatVerifier = () => {
   window.recaptchaVerifier = new RecaptchaVerifier(
     "recaptcha-container",
@@ -268,6 +257,9 @@ const initRecaptchatVerifier = () => {
   );
 };
 
+/**
+ * Create 
+ */
 const signInWithPhoneCodeSend = () => {
   initRecaptchatVerifier();
   signInWithPhoneCode();

@@ -1,5 +1,8 @@
 <template>
-  <RegisterButton />
+  <div>
+  <!-- <RegisterButton /> -->
+
+  <label for="my-modal-register" class="btn btn-primary " >Register</label>
 
   <input type="checkbox" id="my-modal-register" class="modal-toggle" />
   <div class="modal" id="my-modal-register">
@@ -7,9 +10,26 @@
       <h3 class="font-bold text-lg">Register</h3>
       <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
         <button class="btn btn-primary" @click="signInWithGoogle">
-          <IconGoogle> </IconGoogle>
+          <IconGoogle/> 
           Sign in with Google
         </button>
+      </div>
+      <br />
+      <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+        <label
+          for="Name"
+          class="text-zinc-50 block text-sm font-medium text-gray-400"
+        >
+          Name
+        </label>
+        <input
+          required
+          type="name"
+          id="NameRegister"
+          name="Name"
+          v-model="name"
+          class="input-primary mt-1 w-full rounded-md text-sm shadow-sm border-gray-800 bg-gray-800 text-gray-400"
+        />
       </div>
       <br />
       <div class="col-span-6 text-white">
@@ -83,6 +103,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script setup lang="ts">
@@ -92,6 +113,8 @@ import {
   GoogleAuthProvider,
   OAuthProvider,
   signInWithPopup,
+  updateProfile,
+  UserCredential,
 } from "firebase/auth";
 import { ref } from "vue";
 import IconGoogle from "@/components/icons/IconGoogle.vue";
@@ -106,14 +129,21 @@ const email = ref("");
 const password = ref("");
 const password2 = ref("");
 const errMsg = ref();
+let name :string | null = null;
 
 const auth = getAuth();
 
+/**
+ * display modal
+ */
 const onOkClick = () => {
   const myModal = document.getElementById("my-modal-register");
   myModal?.click();
 };
 
+/**
+ * register a new user with name, email and password with Firebase authentication and add a new user to the database
+ */
 const register = () => {
   if (password.value !== password2.value) {
     errMsg.value = "Passwords is different";
@@ -124,8 +154,15 @@ const register = () => {
         console.log(_data);
         const user = auth.currentUser;
         CryptohubApi.addUser(user!.uid, email.value,["Bitcoin", "Ethereum", "Litecoin"],[""]);
+        
+        updateProfile(user!, {
+          displayName: name,
+        });
+
+        console.log("name : " + name);
+        
         Login.changeStateLogin();
-        alert("Successfully registered !!!  uid "  + user?.uid + " email " + email.value);
+        alert("Successfully registered !!!");
 
       })
       .catch((error) => {
@@ -145,6 +182,9 @@ const register = () => {
   }
 };
 
+/**
+ * sign in with google account and add user to database
+ */
 const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider)
@@ -163,16 +203,18 @@ const signInWithGoogle = () => {
       }
     });
 };
-//microsoft
+
+/**
+ * Sign in with Microsoft
+ */
 const signInWithMicrosoft = () => {
   const provider = new OAuthProvider("microsoft.com");
   signInWithPopup(getAuth(), provider)
-    .then((result) => {
+    .then((result: UserCredential) => {
       const credential = OAuthProvider.credentialFromResult(result);
       const accessToken = credential?.accessToken;
       const idToken = credential?.idToken;
       console.log(result);
-      //alert("Successfully signed in !!! ");
     })
     .catch((error) => {
       console.log(error);
@@ -184,5 +226,3 @@ const signInWithMicrosoft = () => {
     });
 };
 </script>
-
-<style scoped></style>

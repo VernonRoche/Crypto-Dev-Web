@@ -21,23 +21,15 @@
 
         <div class="flex items-center gap-4">
           <div class="sm:flex sm:gap-4">
-            <!-- <a class="btn btn-default" href="/"> Login </a>
-
-            <a class="btn btn-primary" href="/"> Register </a> -->
 
             <span v-if="isLoggedIn">
-              <!-- <button class="btn btn-primary" @click="handlePopupAccount">
-          Myaccount
-        </button> -->
-              <PopupMyAccount> </PopupMyAccount>
+
+              <PopupMyAccount/>
               |
               <button class="btn" @click="handleSignOut">Logout</button>
             </span>
             <span v-else>
-              <!-- <button class="btn btn-default" @click="clickLogin">Login</button> -->
-              <!-- <button class="btn btn-primary" @click="clickRegister">Register</button> -->
-              <PopupLogin> </PopupLogin>
-
+              <PopupLogin/>
               <RegisterPopup />
             </span>
           </div>
@@ -51,19 +43,10 @@
 import IconCryptohubLogo from "@/components/icons/IconCryptohubLogo.vue";
 import { Login } from "@/stores/login";
 
-// export default defineComponent({
-//   name: "NavbarHeader.vue",
-//   components: { IconCryptohubLogo },
-// });
+
 import { ref } from "vue";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "vue-router";
-import {
-  popupTriggerLogin,
-  popupTriggerRegister,
-  handlePopupLogin,
-  handlePopupRegister,
-} from "@/types/popup";
 import PopupMyAccount from "@/components/authentication/AccountPopup.vue";
 // import PopupMyAccount from "../components/PopupAccount.vue";
 import RegisterPopup from "@/components/authentication/RegisterPopup.vue";
@@ -83,22 +66,10 @@ onAuthStateChanged(auth, (user: any) => {
 const handleSignOut = () => {
   signOut(auth)
     .then(() => {
-      Login.changeStateLogin();
-      router.push("/");
-    })
+      Login.changeStateLogin();    })
     .catch((error) => {
       console.log(error);
     });
-};
-
-const clickLogin = () => {
-  handlePopupLogin();
-  popupTriggerRegister.value.buttonTriggerRegister = false;
-};
-
-const clickRegister = () => {
-  handlePopupRegister();
-  popupTriggerLogin.value.buttonTrigger = false;
 };
 </script>
 

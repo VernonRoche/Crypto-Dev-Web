@@ -1,4 +1,5 @@
 <template>
+  <div>
   <!-- The button to open modal -->
   <AccountButton />
 
@@ -9,7 +10,7 @@
       <div class="col-span-6">
         <label for="Hello" class="block text-lg font-medium text-gray-400">
           Hello
-          {{ user?.displayName || user?.phoneNumber || user?.email }}
+          {{ user?.displayName }}
         </label>
       </div>
       <br />
@@ -71,6 +72,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script setup lang="ts">
@@ -95,6 +97,9 @@ const ischangedMail = ref(false);
 const ischangedPassword = ref(false);
 const isdelete = ref(false);
 
+/**
+ * information about the current user
+ */
 if (user !== null) {
   const displayName = user.displayName;
   const emailUser = user.email;
@@ -118,13 +123,18 @@ if (user !== null) {
 }
 
 
-
+/**
+ * confirm user clicked on change email button and display input field for new email
+ */
 const clickchangedMail = () => {
   ischangedMail.value = true;
   const div = document.querySelector("#myDiv");
   div?.classList.toggle("hidden");
 };
 
+/**
+ * change the email address of the user and send a verification email to the new address and change the new email in the database
+ */
 const changeAdresseMail = () => {
   if (user == null){
     return;
@@ -132,9 +142,8 @@ const changeAdresseMail = () => {
   updateEmail(user, email.value)
     .then(() => {
       sendEmailVerification(user).then(() => {
-        console.log("Successfully signed in !!! ");
         CryptohubApi.changeEmail(user.uid, email.value);
-        alert("Mail updated : " + email.value);
+        alert("Mail sent to verify new email address");
       });
     })
     .catch((error) => {
@@ -143,16 +152,24 @@ const changeAdresseMail = () => {
     });
 };
 
+/**
+ * confirm user clicked on change password button and display input field for new password
+ */
 const clickchangedPassWord = () => {
   ischangedPassword.value = true;
   const div = document.querySelector("#myDiv2");
   div?.classList.toggle("hidden");
 };
 
+/**
+ * change the password of the user and send a reset password email .
+ */
 const changepassWord = () => {
-  updatePassword(user as any, newPassword.value)
+  if(user == null) {
+    return;
+  }
+  updatePassword(user, newPassword.value)
     .then(() => {
-      console.log("Successfully updated password");
       alert("Successfully updated password");
       sendPasswordResetEmail(auth, email.value).then(() => {
         alert("Mail reset password end");
@@ -163,12 +180,19 @@ const changepassWord = () => {
       const errorMessage = error.message;
     });
 };
+
+/**
+ * confirm user clicked on delete account button and display confirmation button
+ */
 const clickDeleteAccount = () => {
   isdelete.value = true;
   const div = document.querySelector("#myDiv3");
   div?.classList.toggle("hidden");
 };
 
+/**
+ * delete the user account and return to the Home page and delete the user in the database
+ */
 const deleteAccount = () => {
   if(user == null){
     return;
@@ -178,7 +202,6 @@ const deleteAccount = () => {
     .then(() => {
       console.log("account deleted");
       Login.changeStateLogin()
-      alert("account deleted + " + user.uid);
     })
     .catch((error) => {});
     CryptohubApi.deleteUser(user.uid);
