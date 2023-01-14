@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.0.0",
   "scripts": {
-    "clean": "rimraf .nyc_output  ./node_modules ./coverage ",
+    "clean": "rimraf .nyc_output  ./node_modules ./coverage package-lock.json" ,
     "cleantest": "rimraf js",
     "compile": "npm run cleantest && tsc",
     "dev": "vite",
@@ -26,7 +26,7 @@
     "rimraf": "^3.0.2",
     "sass": "^1.56.2",
     "scss": "^0.2.4",
-    "vue": "^3.2.41",
+    "vue": "^3.2.45",
     "vue-router": "^4.1.5",
     "vue3-carousel": "^0.2.9"
   },

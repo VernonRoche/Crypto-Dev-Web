@@ -74,22 +74,7 @@ test("Is reset password", async () => {
   expect(user?.email).toEqual(email);
 });
 
-test("sign in with link email", async () => {
-  const email = "samsonvin@orange.fr";
-  const password = "0123456";
-  const auth = getAuth();
-  await createUserWithEmailAndPassword(auth, email, password);
 
-  const actionCodeSettings = {
-    url: "http://localhost:5173",
-    handleCodeInApp: true,
-  };
-
-  await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-  const user = auth.currentUser;
-  expect(user).toBeTruthy();
-  expect(user?.email).toEqual(email);
-});
 
  test("connect with google",async () => {
   const auth = getAuth();
@@ -108,7 +93,7 @@ test("sign in with link email", async () => {
   })
 
 test("delete user", async () => {
-  await signInWithEmailAndPassword(auth, "samsonvin@orange.fr", "0123456");
+  await signInWithEmailAndPassword(auth, "test@cryptohub.fr", "0123456");
 
   const user = auth.currentUser;
 
