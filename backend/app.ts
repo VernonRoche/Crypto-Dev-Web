@@ -3,6 +3,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 let cors = require('cors');
+import swaggerJsDoc from 'swagger-jsdoc';
+import { serve, setup } from 'swagger-ui-express';
+
 
 // Load route
 
@@ -31,18 +34,29 @@ app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
 
-/*
-mongoClient.connect(async (err: any,db:any) => {
-    if (err) throw err;
-    let CryptoDB:any = db.db("CryptohubDB");
-    /*
-    await CryptoDB.createCollection("Users",function(err:any,res:any) {
-        if (err) throw err;
-        console.log("Collection created ! ");
-        db.close();
-    });
-    
-});
-*/
+
+/**
+ * openApi
+ */
+const options = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Contact REST API',
+            description: "A REST API built with Express and MongoDB.",
+            version: '0.1',
+        },
+        servers: [
+            {
+                url: 'http://localhost:9666/api',
+                description: 'Development server',
+            },
+        ],
+    },
+    apis: ["./js/routes/users.js"],
+}
+
+const openapiSpecification = swaggerJsDoc(options);
+app.use('/docs', serve, setup(openapiSpecification));
 
 module.exports = app;
