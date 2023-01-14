@@ -1,9 +1,7 @@
 <template>
-  <div>
 
-  <!-- <LoginButton /> -->
+  <LoginButton /> 
 
-  <label for="my-modal-login" class="btn btn-default ">Login</label>
 
   <input type="checkbox" id="my-modal-login" class="modal-toggle" />
   <div class="modal" id="my-modal-login">
@@ -76,7 +74,6 @@
         <label for="my-modal-login" class="btn">Close</label>
       </div>
     </div>
-  </div>
 </div>
 </template>
 

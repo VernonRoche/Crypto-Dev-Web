@@ -1,8 +1,7 @@
 <template>
-  <div>
-  <!-- <RegisterButton /> -->
 
-  <label for="my-modal-register" class="btn btn-primary " >Register</label>
+  <RegisterButton /> 
+
 
   <input type="checkbox" id="my-modal-register" class="modal-toggle" />
   <div class="modal" id="my-modal-register">
@@ -102,7 +101,6 @@
         <label for="my-modal-register" class="btn">Close</label>
       </div>
     </div>
-  </div>
 </div>
 </template>
 

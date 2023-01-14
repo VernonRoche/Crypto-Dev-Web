@@ -1,5 +1,4 @@
 <template>
-  <div>
   <!-- The button to open modal -->
   <AccountButton />
 
@@ -71,7 +70,6 @@
         <label for="my-modal-account" class="btn">Close</label>
       </div>
     </div>
-  </div>
 </div>
 </template>
 
