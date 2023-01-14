@@ -49,6 +49,7 @@
 
 <script setup lang="ts">
 import IconCryptohubLogo from "@/components/icons/IconCryptohubLogo.vue";
+import { Login } from "@/stores/login";
 
 // export default defineComponent({
 //   name: "NavbarHeader.vue",
@@ -82,6 +83,7 @@ onAuthStateChanged(auth, (user: any) => {
 const handleSignOut = () => {
   signOut(auth)
     .then(() => {
+      Login.changeStateLogin();
       router.push("/");
     })
     .catch((error) => {

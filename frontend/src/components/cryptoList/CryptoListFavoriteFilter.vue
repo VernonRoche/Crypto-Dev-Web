@@ -1,4 +1,4 @@
-<template>
+<template v-if="Login.isLog">
   <div class="inline-block whitespace-nowrap">
     <div class="grid grid-cols-3">
       <div id="Filterfav" class="cursor-pointer">
@@ -11,6 +11,7 @@
 import IconStarEmpty from "@/components/icons/IconStarEmpty.vue";
 import {CryptohubApi} from "@/stores/CryptohubApi";
 import {getAuth} from "firebase/auth";
+import { Login } from "@/stores/login";
 
 async function DisplayFav(): Promise<void> {
   const auth = getAuth();
@@ -33,7 +34,7 @@ function hideFav(): void {
     let rows: HTMLCollectionOf<HTMLTableRowElement> = table.rows;
     let i: number;
     for (i = 1; i < rows.length - 1; i++) {
-      rows[i].style.display = "initial"; 
+      rows[i].style.display = "table-row"; 
     }
 }
 
@@ -54,6 +55,9 @@ export default {
         favIcon.src = "/src/assets/starEmpty.png";
       }
     });
+    if(!Login.isLog){
+      fav.style.display = "none";
+    }
   },
 };
 </script>

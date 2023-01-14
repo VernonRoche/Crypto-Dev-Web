@@ -1,8 +1,6 @@
-<template>
-  <div>
+<template v-if="Login.isLog">
+  <div class="inline">
     <div id="FavoriteList" class="container mx-auto aspect-auto">
-
-
     </div>
   </div>
 </template>
@@ -10,35 +8,54 @@
 <script lang="ts">
 import {CryptohubApi} from "@/stores/CryptohubApi";
 import {getAuth} from "firebase/auth";
- function createFavIcon(){
-        let favIcon: HTMLImageElement = document.createElement("img");
-        favIcon.setAttribute("class", "FavIcon");
-        favIcon.setAttribute("width", "20");
-        favIcon.setAttribute("height", "20");
-        favIcon.setAttribute("min-width", "20");
-        favIcon.setAttribute("min-height", "20");
-        favIcon.setAttribute("alt", "Fav");
-        favIcon.src ="https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starFull.png";
-        return favIcon;
- } 
+import { Login } from "@/stores/login";
+import {Favoris} from "@/stores/Favoris";
+
+
+
 export default {
-  name: "CurrencySelector.vue",
-  async mounted() {
+  name: "Fav.vue",
+  async mounted(){    
+    document.querySelectorAll("[id=Favrow]").forEach((e:HTMLTableRowElement) => {
+      e.style.display = "table-row"
+    });
     const auth = getAuth();
     const user = auth.currentUser!.uid;
     if(user){
         let favorites = await CryptohubApi.getFavorites(user);
-        favorites[0].favorite.forEach(element => {
-            let favDiv:HTMLDivElement = document.createElement("div");
-            
-            let fav:HTMLDivElement = document.createElement("div");
+        if(favorites.length > 0){
+          let favDiv:HTMLDivElement = document.createElement("div");
+          favDiv.setAttribute("class","grid-cols-"+favorites[0].favorite.length);
+          favDiv.setAttribute("id","FavDivList");
+          favorites[0].favorite.forEach(element => {
 
-            let favIconDiv = document.createElement("div");
-            favIconDiv.setAttribute("class", "hover:text-accent py-4 px-6");
-            favIconDiv.appendChild(createFavIcon());
-        });
-    } 
+              let fav:HTMLDivElement = document.createElement("div");
+              fav.setAttribute("class","space-x-5");
+              fav.setAttribute("id","FavIcon - "+element);
+
+              let favName:HTMLParagraphElement = document.createElement("p");
+              favName.setAttribute("class","hover:text-accent inline font-semibold text-white");
+              favName.innerHTML = element;
+
+              fav.appendChild(favName);
+              fav.appendChild(Favoris.createFavIcon(element));
+              favDiv.appendChild(fav);
+          });
+        document.getElementById("FavoriteList").appendChild(favDiv)
+        }else{ 
+            let emptyFav = document.createElement("div");
+            emptyFav.innerHTML = "Veuillez Ajouté des Favoris";
+            document.getElementById("FavoriteList").appendChild(emptyFav);
+        }
+    }
+    document.getElementById("Filterfav")!.style.display= "table-row";    
   },
+  beforeUnmount(){
+    document.querySelectorAll("[id=Favrow]").forEach((e:HTMLTableRowElement) => {
+      e.style.display = "none"
+    });
+    document.getElementById("Filterfav")!.style.display= "none";    
+  } 
 };
 </script>
 

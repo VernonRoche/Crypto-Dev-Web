@@ -12,15 +12,15 @@ import { CoinGeckoApi } from "@/stores/CoinGeckoApi";
 import { autoComplete } from "@/stores/autoComplete";
 import CryptoListFilterBar from "@/components/cryptoList/CryptoListFilterBar.vue";
 import {Favoris} from "@/stores/Favoris";
+import { Login } from "@/stores/login";
 
 let CryptoName: Array<string> = [];
 function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
-  let baseFav:Array<String> = ["Bitcoin", "Ethereum", "Litecoin"];
   let tbody: HTMLTableSectionElement = document.createElement("tbody");
   tbody.setAttribute("id","CryptoRow");
   const data = CoinGeckoApi.getCryptoMarket();
-  data.then((value: Array<string>) => {
-    value.forEach((element: any) => {
+  data.then(async (value: Array<string>) => {
+    value.forEach(async (element: any) => {
       /*
       element:
         ath: all time high (the highest registered value for this coin)
@@ -95,41 +95,56 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
 
       let fav = document.createElement("td");
       fav.setAttribute("class", "hover:text-accent py-4 px-6");
-      
+      fav.setAttribute("id", "Favrow");
+
       let favIcon: HTMLImageElement = document.createElement("img");
-      //favIcon.setAttribute("id", "filterFavImg");
-      favIcon.setAttribute("class", "FavIcon");
+      favIcon.setAttribute("class", "FavIcon cursor-pointer");
       favIcon.setAttribute("width", "20");
       favIcon.setAttribute("height", "20");
       favIcon.setAttribute("min-width", "20");
       favIcon.setAttribute("min-height", "20");
-      if(baseFav.includes(element["name"])){
-        favIcon.setAttribute("alt", "Fav");
-        favIcon.src ="https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starFull.png";
-      }else{
-        favIcon.setAttribute("alt", "NotFav");
-        favIcon.src =
+      favIcon.setAttribute("alt", "NotFav");
+      favIcon.src =
           "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
-      }
       fav.appendChild(favIcon);
       fav.addEventListener("click", async function() {
-        if (favIcon.alt == "NotFav") {
-          let isSucess = await Favoris.addFavoris(element["name"]);
-          if(!isSucess){
-            alert("Vous ne pouvez avoir que 3 favoris maximum");
-          }else{
-            row.setAttribute("alt", "fav");
-            favIcon.setAttribute("alt", "Fav");
+        if(Login.isLog){
+          if (favIcon.alt == "NotFav") {
+            let isSucess = await Favoris.addFavoris(element["name"]);
+            if(!isSucess){
+              alert("Vous ne pouvez avoir que 3 favoris maximum");
+            }else{
+              row.setAttribute("alt", "fav");
+              favIcon.setAttribute("alt", "Fav");
+              favIcon.src =
+                "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919407673374/starFull.png";
+              //ajouter le nouveau fav dans la liste a gauche du graph
+              let newfav:HTMLDivElement = document.createElement("div");
+              newfav.setAttribute("class","space-x-5");
+              newfav.setAttribute("id","FavIcon - "+element["name"]);
+
+              let favName:HTMLParagraphElement = document.createElement("p");
+              favName.setAttribute("class","hover:text-accent inline font-semibold text-white");
+              favName.innerHTML = element["name"];
+
+              newfav.appendChild(favName);
+              newfav.appendChild(Favoris.createFavIcon(element["name"]));
+              
+              document.getElementById("FavDivList").appendChild(newfav);
+            }
+          } else { 
+            Favoris.RemoveFavorite(element["name"]);
+            favIcon.setAttribute("alt", "NotFav");
             favIcon.src =
-              "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919407673374/starFull.png";
+              "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
           }
-        } else {
-          Favoris.RemoveFavorite(element["name"]);
-          favIcon.setAttribute("alt", "NotFav");
-          favIcon.src =
-            "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
+        }else{
+          alert("Vous devez etre connecté pour pouvoir ajouté des favoris");
         }
       });
+      if(!Login.isLog){
+        fav.style.display = "none";
+      }
 
       row.appendChild(logoDiv);
       row.appendChild(name);
@@ -182,7 +197,7 @@ function sortTableByHeader(dir: string, nbHeader: number): void {
 export default {
   name: "CryptoList.vue",
   components: { CryptoListFilterBar },
-  mounted() {
+  async mounted() {
     const currencyDiv: HTMLSelectElement = document.getElementById(
       "currency"
     ) as HTMLSelectElement;

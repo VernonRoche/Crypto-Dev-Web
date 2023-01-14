@@ -46,7 +46,6 @@ export namespace DBcommand {
                 };
                 await mongoClient.db(DBNAME).collection(COLLNAME).insertOne(newUser, function(err:any,res:any){
                     if (err) throw err;
-                    console.log(res);
                 }); 
             }
         }));
@@ -95,10 +94,11 @@ export namespace DBcommand {
             user_id : id,
         };
         const ValuetoRemove = {
-            $pull: {  favorite: {cryptoName} }
+            $pull: {  favorite: cryptoName }
         };
+        
         await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,ValuetoRemove,function(err:any,res:any){
-            if (err) throw err;
+            if (err) throw err;            
         });
     }
 

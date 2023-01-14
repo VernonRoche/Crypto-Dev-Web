@@ -17,7 +17,6 @@ router.get('/getUser', async function(req: any, res:any) {
 router.post('/addUser', async function(req: any, res:any) {
   try {
     await DBcommand.insertUser(req.query.user_id,req.query.mail,req.query.favorite,req.query.notification);
-    console.log(req.query.user_id);
     res.send("OK");
   } catch (error) {
     console.error(error);
@@ -27,7 +26,7 @@ router.post('/addUser', async function(req: any, res:any) {
 
 /* Delete User by user_id */
 router.delete('/deleteUser', async function(req:any, res:any) {
-  try {
+  try {    
     await DBcommand.deleteUser(req.query.user_id);
   } catch (error) {
     console.error(error);
@@ -47,7 +46,6 @@ router.get('/getFavorite', async function(req: any, res: any) {
 /* Add Favorite and query are user_id and cryptoname */
 router.put('/addFavorite', async function(req: any, res:any) {
   try {
-    console.log("id : " + req.body.user_id);
     res.send(await DBcommand.addFavorite(req.body.user_id, req.body.cryptoName));
   } catch (error) {
     console.error(error);
@@ -57,8 +55,8 @@ router.put('/addFavorite', async function(req: any, res:any) {
 
 /* Remove Favorite and query are user_id and cryptoname */
 router.delete('/removeFavorite', async function(req: any, res: any) {
-  try {
-    res.send(await DBcommand.removeFavorite(req.query.user_id, req.query.cryptoName));
+  try {    
+    await DBcommand.removeFavorite(req.query.user_id, req.query.cryptoName);
   } catch (error) {
     console.error(error);
     await res.status(424).json({"error": error});

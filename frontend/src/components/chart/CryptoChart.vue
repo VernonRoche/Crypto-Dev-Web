@@ -1,4 +1,5 @@
 <template>
+<div class="inline">
   <div class="container m-auto">
     <div id="chart-container" class="container h-50 w-50">
       <Line
@@ -42,6 +43,7 @@
       </select>
     </div>
   </div>
+</div>
 </template>
 
 <script lang="ts">

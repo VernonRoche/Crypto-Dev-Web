@@ -83,12 +83,17 @@ export namespace CryptohubApi {
     id: number | string,
     cryptoName: string
   ): Promise<number> {
-    const URL = API + "deleteUser";
+    const URL = API + "removeFavorite";
     const params = {
       user_id: id,
       cryptoName: cryptoName
     };
+    
+
     const responce = await axios.delete(URL, { params });
+    console.log("RESPONCE : ");
+
+    console.log(responce);
     return responce.status;
   }
 

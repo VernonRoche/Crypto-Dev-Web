@@ -7,9 +7,13 @@ import { defineStore } from "pinia";
   count.value = 3
   export function increment() {
     count.value++;
+    console.log("Count new value : "+ count.value);
+    
   }
   export function decrement(){
     count.value--;
+    console.log("Count new value : "+ count.value);
+
   } 
 export default { count, increment, decrement };
 

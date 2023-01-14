@@ -86,7 +86,7 @@ import {
 import { ref } from "vue";
 import AccountButton from "@/components/authentication/AccountButton.vue";
 import  {CryptohubApi}  from "@/stores/CryptohubApi";
-
+import { Login } from "@/stores/login";
 const auth = getAuth();
 const user = auth.currentUser;
 const email = ref("");
@@ -177,6 +177,7 @@ const deleteAccount = () => {
   deleteUser(user)
     .then(() => {
       console.log("account deleted");
+      Login.changeStateLogin()
       alert("account deleted + " + user.uid);
     })
     .catch((error) => {});

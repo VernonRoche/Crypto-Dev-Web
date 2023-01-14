@@ -4,6 +4,9 @@ import FooterBar from "@/components/navbarAndFooter/FooterBar.vue";
 import CryptoList from "@/components/cryptoList/CryptoList.vue";
 import TrendCarousel from "@/components/TrendCarousel.vue";
 import CryptoChart from "@/components/chart/CryptoChart.vue";
+import Fav from "@/components/Fav.vue";
+import { Login } from "@/stores/login";
+
 </script>
 <template>
   <link rel="stylesheet" href="@/assets/style.css" />
@@ -11,7 +14,10 @@ import CryptoChart from "@/components/chart/CryptoChart.vue";
     <NavbarHeader />
   </header>
   <body>
-    <CryptoChart />
+    <div class="grid-rows-2 grid-cols-1">
+      <Fav v-if="Login.isLog"/>
+      <CryptoChart />
+    </div>
     <TrendCarousel />
     <CryptoList />
   </body>

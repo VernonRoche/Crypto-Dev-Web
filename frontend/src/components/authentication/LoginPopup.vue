@@ -92,6 +92,8 @@ import {
 import IconGoogle from "@/components/icons/IconGoogle.vue";
 import LoginButton from "@/components/authentication/LoginButton.vue";
 import RegisterButton from "@/components/authentication/RegisterButton.vue";
+import { Login } from "@/stores/login";
+
 
 const email = ref("");
 const password = ref("");
@@ -111,6 +113,7 @@ const sign = () => {
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((_data) => {
       console.log("Successfully signed in !!! ");
+      Login.changeStateLogin();
       //alert("Successfully signed in !!!");
       cpt = 0;
     })
