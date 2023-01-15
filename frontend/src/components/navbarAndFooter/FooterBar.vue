@@ -3,6 +3,7 @@
     <div
       class="relative mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 lg:pt-24"
     >
+      <!-- Button to go at the top of the page -->
       <div
         class="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8"
       >
@@ -27,6 +28,7 @@
         </a>
       </div>
 
+      <!-- Logo and some text about the site -->
       <IconCryptohubLogo />
       <div class="lg:flex lg:items-end lg:justify-between">
         <div>
@@ -47,6 +49,7 @@
         </nav>
       </div>
 
+      <!-- Copyright -->
       <p class="mt-12 text-center text-sm text-gray-400 lg:text-right">
         &copy;2022 Cryptohub. All rights reserved. <br />
         Cryptohub and their respective logos are property of Hichem Chouchane,

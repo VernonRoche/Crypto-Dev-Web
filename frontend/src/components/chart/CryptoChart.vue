@@ -12,7 +12,9 @@
       <div id="legendBox"></div>
     </div>
   </div>
+  <!-- Data range selectors -->
   <div class="flex w-full">
+    <!-- Data type selector -->
     <div
       class="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center"
     >
@@ -27,6 +29,7 @@
       </select>
     </div>
     <div class="divider divider-horizontal"></div>
+    <!-- Data range selector -->
     <div
       class="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center"
     >
@@ -122,6 +125,8 @@ function randomColor() {
       .toUpperCase()
   );
 }
+
+// This is the main component of the chart, it initializes the data and displays it
 async function initData(this: {
   chartData: { labels: any; datasets: Object[] };
   loaded: boolean;
@@ -148,11 +153,12 @@ async function initData(this: {
 }) {
   //initialisation de la page
   this.loaded = false;
+  console.log(this);
+
   try {
     await createCryptoData().then((data) => {
       let datasetList: Array<Object> = [];
       for (const key in data[0]) {
-        //let nbButton:number = datasetList.length;
         let backgroundColor = randomColor();
         let hid = true;
         if (key === "prices") {
@@ -198,26 +204,6 @@ async function initData(this: {
           pointHitRadius: 0,
           pointHoverRadius: 1,
         });
-        /*
-          let buttonLegend = document.createElement("button");
-          buttonLegend.setAttribute("class"," hover:bgtext-white font-bold py-2 px-4 rounded-full");
-          buttonLegend.innerHTML = key;
-          buttonLegend.style.backgroundColor = backgroundColor;
-          buttonLegend.addEventListener("click",  () => {
-            for (const key in ChartJS.instances) {
-              if(ChartJS.instances[key].canvas.id == "CryptoChart"){
-                const  isVisible:boolean =  ChartJS.instances[key].isDatasetVisible(nbButton);
-                if(isVisible){
-                  ChartJS.instances[key].hide(nbButton);
-                }
-                if(!isVisible){
-                  ChartJS.instances[key].show(nbButton);
-                } 
-              }
-            }
-          });
-          document.getElementById("legendBox").appendChild(buttonLegend);
-          */
       }
       this.chartData = {
         labels: data[1]["prices"],
@@ -236,6 +222,8 @@ async function initData(this: {
     }
   }
 }
+
+// Similarly to the initData function, this function is used to update the data of the chart instead
 
 async function changeData(
   this: {
@@ -372,7 +360,6 @@ async function changeData(
 }
 
 export default {
-  //extends: Line,
   name: "CryptoChart",
   components: { Line },
   props: ["data"],
@@ -386,14 +373,6 @@ export default {
       id: "bitcoin",
     };
   },
-  /*
-  watch:{
-    options(newVal,oldVal){
-        console.log("old"+oldVal);
-        
-    }
-  },
-  */
   methods: {
     changeDatasets: changeDatasets,
     changeData: changeData,

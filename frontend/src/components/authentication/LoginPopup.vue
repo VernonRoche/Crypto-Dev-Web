@@ -1,12 +1,13 @@
 <template>
 
-  <LoginButton /> 
+  <LoginButton />
 
 
   <input type="checkbox" id="my-modal-login" class="modal-toggle" />
   <div class="modal" id="my-modal-login">
     <div class="modal-box">
       <h3 class="font-bold text-lg">Connection</h3>
+      <!-- Connection with Google -->
       <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
         <button class="btn btn-primary gap-2" @click="signInWithGoogle">
           <IconGoogle> </IconGoogle>
@@ -14,6 +15,7 @@
         </button>
       </div>
       <br />
+      <!-- Connection form -->
       <div class="col-span-6">
         <label for="Email" class="block text-sm font-medium text-gray-400">
           Email
@@ -48,6 +50,7 @@
 
       <p class="text-red-500" v-if="errMsg">{{ errMsg  }}</p>
 
+      <!-- Reset password button if the user got this password wrong multiple times -->
       <div class="col-span-6 sm:col-span-3" v-if="cpt >= 3">
         <button class="text-zinc-50 btn btn-link" @click="resetPassWord">
           Reinitialiser Mot De Passe
@@ -57,6 +60,7 @@
       </div>
       <br />
 
+      <!-- Button to switch to register form -->
       <div class="col-span-6 sm:flex sm:items-center sm:gap-4 mt-5">
         <button @click="sign" class="btn btn-primary">Sign in</button>
         <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
@@ -70,6 +74,7 @@
       </div>
       <br />
 
+      <!-- Button to close the modal -->
       <div class="modal-action">
         <label for="my-modal-login" class="btn">Close</label>
       </div>
@@ -114,7 +119,7 @@ const onOkClick = () => {
 };
 
 /**
- * Sign in a user with email and password using firebase auth ,  we have a counter to possible errors 
+ * Sign in a user with email and password using firebase auth ,  we have a counter to possible errors
  */
 const sign = () => {
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
@@ -143,8 +148,6 @@ const sign = () => {
     });
 };
 
-//reset Pasword
-
 const isResetPassWord = ref(false);
 
 /**
@@ -155,8 +158,8 @@ const isReset = () => {
 };
 
 /**
- * reset password using firebase auth 
- * when user have 3 errors in login form 
+ * reset password using firebase auth
+ * when user have 3 errors in login form
  * a reset password button is displayed
  */
 const resetPassWord = () => {
@@ -184,7 +187,7 @@ const signInWithGoogle = () => {
   signInWithPopup(getAuth(), provider)
     .then((result) => {
       Login.changeStateLogin();
-     
+
 
     })
     .catch((error) => {
@@ -263,7 +266,7 @@ const initRecaptchatVerifier = () => {
 };
 
 /**
- * Create 
+ * Create
  */
 const signInWithPhoneCodeSend = () => {
   initRecaptchatVerifier();

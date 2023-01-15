@@ -1,5 +1,5 @@
 <template>
-
+  <!-- Button to open modal -->
   <RegisterButton />
 
 
@@ -7,6 +7,7 @@
   <div class="modal" id="my-modal-register">
     <div class="modal-box">
       <h3 class="font-bold text-lg">Register</h3>
+      <!-- Register with Google -->
       <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
         <button class="btn btn-primary" @click="signInWithGoogle">
           <IconGoogle />
@@ -22,6 +23,7 @@
           class="input-primary mt-1 w-full rounded-md text-sm shadow-sm border-gray-800 bg-gray-800 text-gray-400" />
       </div>
       <br />
+      <!-- Register form -->
       <div class="col-span-6 text-white">
         <label for="Email" class="text-zinc-50 block text-sm font-medium text-gray-400">
           Email
@@ -47,7 +49,7 @@
         <input required type="password" id="PasswordConfirmation" name="password_confirmation" v-model="password2"
           class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200" />
       </div>
-
+      <!-- Button to create the account as well as button to switch to the login modal -->
       <div class="col-span-6 sm:flex sm:items-center sm:gap-4 mt-5">
         <button @click="register" class="btn btn-primary">
           Create an account
@@ -61,6 +63,7 @@
           </button>
         </p>
       </div>
+      <!-- Button to close modal -->
       <div class="modal-action">
         <label for="my-modal-register" class="btn">Close</label>
       </div>
@@ -133,7 +136,7 @@ const register = (): void => {
 
         Login.changeStateLogin();
         alert("Successfully registered !!!");
-        
+
       })
       .catch((error: any) => {
         const obj: Record<string, string> = {
@@ -182,7 +185,7 @@ const signInWithGoogle = (): void => {
   } else {
     errMsg.value = "You are already connected with Google ";
   }
-  
+
 };
 
 /**

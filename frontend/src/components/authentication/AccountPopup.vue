@@ -3,7 +3,6 @@
   <AccountButton />
 
   <input type="checkbox" id="my-modal-account" class="modal-toggle" />
-  <!-- Put this part before </body> tag -->
   <div class="modal" id="my-modal-account">
     <div class="modal-box">
       <div class="col-span-6">
@@ -14,11 +13,12 @@
       </div>
       <br />
 
+      <!-- Buttons to change user information, clicking on one brings up an input and a confirmation button -->
       <div class="text-zinc-50 col-span-6 sm:col-span-3">
         <button class="btn btn-primary" @click="clickchangedMail">
           Change Email
         </button>
-        <div id="myDiv"  v-if="ischangedMail">
+        <div id="myDiv" v-if="ischangedMail">
           <input
             type="text"
             placeholder="Enter the new email address"
@@ -59,13 +59,14 @@
           Delete my account
         </button>
         <br />
-        <div id="myDiv3"  v-if="isdelete">
+        <div id="myDiv3" v-if="isdelete">
           <br />
           <button @click="deleteAccount" class="btn btn-error btn-outline">
             Confirm
           </button>
         </div>
       </div>
+      <!-- Button to close modal -->
       <div class="modal-action">
         <label for="my-modal-account" class="btn">Close</label>
       </div>
@@ -90,6 +91,7 @@ import { Login } from "@/stores/login";
 import {countsignGoogle, decrementGoogle, isconnectedwithgoogle} from "@/stores/counter";
 
 
+//Initialize user variables
 const auth = getAuth();
 const user = auth.currentUser;
 const email = ref<string>("");
@@ -117,9 +119,9 @@ if (user !== null) {
     console.log("  Name: " + user.displayName);
     console.log("  Email: " + user.email);
     console.log("  Photo URL: " + user.photoURL);
-    
+
     CryptohubApi.getUser(user.uid)
-    
+
   }
 });
 }

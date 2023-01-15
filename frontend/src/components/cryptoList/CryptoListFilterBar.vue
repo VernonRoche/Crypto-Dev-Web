@@ -9,13 +9,13 @@
         <div>
           <img
             id="asc"
-            src="@/assets/caret-arrow-up.png"
+            src="https://media.discordapp.net/attachments/1042336221948551168/1058041917746708530/caret-arrow-up.png"
             alt="0"
             class="cursor-pointer object-scale-down h-3 w-3"
           />
           <img
             id="desc"
-            src="@/assets/caret-down.png"
+            src="https://media.discordapp.net/attachments/1042336221948551168/1058041918082273421/caret-down.png"
             alt="0"
             class="cursor-pointer object-scale-down h-3 w-3"
           />
@@ -28,13 +28,13 @@
         <div>
           <img
             id="asc"
-            src="@/assets/caret-arrow-up.png"
+            src="https://media.discordapp.net/attachments/1042336221948551168/1058041917746708530/caret-arrow-up.png"
             alt="1"
             class="cursor-pointer object-scale-down h-3 w-3"
           />
           <img
             id="desc"
-            src="@/assets/caret-down.png"
+            src="https://media.discordapp.net/attachments/1042336221948551168/1058041918082273421/caret-down.png"
             alt="1"
             class="cursor-pointer object-scale-down h-3 w-3"
           />
@@ -47,13 +47,13 @@
         <div>
           <img
             id="asc"
-            src="@/assets/caret-arrow-up.png"
+            src="https://media.discordapp.net/attachments/1042336221948551168/1058041917746708530/caret-arrow-up.png"
             alt="2"
             class="cursor-pointer object-scale-down h-3 w-3"
           />
           <img
             id="desc"
-            src="@/assets/caret-down.png"
+            src="https://media.discordapp.net/attachments/1042336221948551168/1058041918082273421/caret-down.png"
             alt="2"
             class="cursor-pointer object-scale-down h-3 w-3"
           />
@@ -66,13 +66,13 @@
         <div>
           <img
             id="asc"
-            src="@/assets/caret-arrow-up.png"
+            src="https://media.discordapp.net/attachments/1042336221948551168/1058041917746708530/caret-arrow-up.png"
             alt="3"
             class="cursor-pointer object-scale-down h-3 w-3"
           />
           <img
             id="desc"
-            src="@/assets/caret-down.png"
+            src="https://media.discordapp.net/attachments/1042336221948551168/1058041918082273421/caret-down.png"
             alt="3"
             class="cursor-pointer object-scale-down h-3 w-3"
           />

@@ -3,6 +3,7 @@
     <div
       class="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8"
     >
+      <!-- Logo and site name -->
       <a class="flex items-center text-purple-500" href="/">
         <span class="sr-only">Home</span>
         <IconCryptohubLogo />
@@ -16,6 +17,7 @@
         </h1>
       </div>
 
+      <!-- Login and Register sections -->
       <div class="flex flex-1 items-center justify-end md:justify-between">
         <nav aria-label="Site Nav" class="hidden md:block"></nav>
 
@@ -48,10 +50,8 @@ import { ref } from "vue";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import { useRouter } from "vue-router";
 import PopupMyAccount from "@/components/authentication/AccountPopup.vue";
-// import PopupMyAccount from "../components/PopupAccount.vue";
 import RegisterPopup from "@/components/authentication/RegisterPopup.vue";
 import PopupLogin from "@/components/authentication/LoginPopup.vue";
-//import PopupLogin from "../components/PopupLogin.vue";
 
 const isLoggedIn = ref(true);
 
@@ -72,5 +72,3 @@ const handleSignOut = () => {
     });
 };
 </script>
-
-<style scoped></style>

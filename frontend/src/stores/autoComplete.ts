@@ -1,3 +1,4 @@
+// Used in the search bar to autocomplete results depending on user input
 function autoComplete(
   input: HTMLInputElement,
   completeValue: Array<string>
@@ -16,6 +17,7 @@ function autoComplete(
 
     this.parentNode!.appendChild(listDiv);
 
+    // Display intermediary results
     completeValue.forEach((elem: string) => {
       if (elem.substring(0, val.length).toUpperCase() == val.toUpperCase()) {
         const itemDiv: HTMLDivElement = document.createElement("div");
