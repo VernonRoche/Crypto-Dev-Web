@@ -18,7 +18,7 @@ import NotificationBar from "@/components/notifications/NotificationBar.vue";
       <Fav v-if="Login.isLog" />
       <CryptoChart />
     </div>
-    <NotificationBar />
+    <NotificationBar v-if="Login.isLog" />
     <TrendCarousel />
     <!-- Complete list of cryptos -->
     <CryptoList />
