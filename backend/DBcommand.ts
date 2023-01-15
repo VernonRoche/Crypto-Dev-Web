@@ -2,13 +2,24 @@ export namespace DBcommand {
     const { MongoClient, ServerApiVersion } = require('mongodb');
     const uri = "mongodb+srv://astergiou:cryptohub@cryptohubcluster.lxmrqbv.mongodb.net/?retryWrites=true&w=majority";
     const mongoClient = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-    const DBNAME = "CryptohubDB";
+    let DBNAME = "";
     const COLLNAME = "UserPreferences";
 
-    export async function getUser(id:number | string): Promise<JSON> {
+    export function option(optiontest: number): string {
+        if (optiontest == 1) {
+            DBNAME = "CryptohubDB";
+        }
+        else if (optiontest == 2) {
+            DBNAME = "test";
+        }
+        return DBNAME;
+    }
+
+    export async function getUser(id:number | string, optiontest: number): Promise<JSON> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
+        option(optiontest);
         const User = {
             user_id : id,
         };
@@ -32,10 +43,11 @@ export namespace DBcommand {
 
     }
 
-    export async function insertUser(id:number | string, mail:string, favorite:Array<string>, notification:Array<string> ): Promise<void> {
+    export async function insertUser(id:number | string, mail:string, favorite:Array<string>, notification:Array<string> ,optiontest: number): Promise<void> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
+        option(optiontest);
         await isInside(id).then((async function(val:boolean){
             if(val){                
                 const newUser = {
@@ -51,10 +63,11 @@ export namespace DBcommand {
         }));
     }
 
-    export async function deleteUser(id:number | string): Promise<void> {
+    export async function deleteUser(id:number | string , optiontest: number): Promise<void> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
+        option(optiontest);
         const User = {
             user_id : id,
         };
@@ -64,10 +77,11 @@ export namespace DBcommand {
     }
 
 
-    export async function getFavorite(id:number | string): Promise<JSON> {
+    export async function getFavorite(id:number | string , optiontest: number): Promise<JSON> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
+        option(optiontest);
         const User = {
             user_id : id,
         };
@@ -77,19 +91,21 @@ export namespace DBcommand {
         return await mongoClient.db(DBNAME).collection(COLLNAME).find(User).project(projection).toArray();        
     }
 
-    export async function addFavorite(id:number | string, cryptoName:string): Promise<void> {
+    export async function addFavorite(id:number | string, cryptoName:string , optiontest: number): Promise<void> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
+        option(optiontest);
         await mongoClient.db(DBNAME).collection(COLLNAME).updateOne({ user_id : id },{ $push: {  favorite: cryptoName  }  },function(err:any,res:any){
             if (err) throw err;            
         });
     }
 
-    export async function removeFavorite(id:number | string, cryptoName:any): Promise<void> {
+    export async function removeFavorite(id:number | string, cryptoName:any , optiontest: number): Promise<void> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
+        option(optiontest);
         const User = {
             user_id : id,
         };
@@ -103,17 +119,19 @@ export namespace DBcommand {
         });
     }
 
-    export async function changeEmail(id:number | string, newMail:string): Promise<void> {
+    export async function changeEmail(id:number | string, newMail:string, optiontest: number): Promise<void> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
+        option(optiontest);
         await mongoClient.db(DBNAME).collection(COLLNAME).updateOne({user_id: id},{ $set: {  email: newMail  }});
     }
 
-    export async function addNotification(id:number | string, cryptoName:string, targeValue:string | number): Promise<void> {
+    export async function addNotification(id:number | string, cryptoName:string, targeValue:string | number , optiontest: number): Promise<void> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
+        option(optiontest);
         const User = {
             user_id : id,
         };
@@ -129,10 +147,11 @@ export namespace DBcommand {
     }
 
 
-    export async function getNotification(id:number | string): Promise<void> {
+    export async function getNotification(id:number | string , optiontest: number): Promise<void> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
+        option(optiontest);
         const User = {
             user_id : id,
         };
@@ -145,10 +164,11 @@ export namespace DBcommand {
     }
 
 
-    export async function removeNotification(id:number | string, cryptoName:string): Promise<void> {
+    export async function removeNotification(id:number | string, cryptoName:string ,optiontest: number): Promise<void> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
+        option(optiontest);
         const User = {
             user_id : id,
         };
@@ -161,10 +181,11 @@ export namespace DBcommand {
         await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,ValueToRemove);
     }
 
-    export async function resetNotification(id:number | string): Promise<void> {
+    export async function resetNotification(id:number | string , optiontest: number): Promise<void> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
+        option(optiontest);
         const User = {
             user_id : id,
         };
