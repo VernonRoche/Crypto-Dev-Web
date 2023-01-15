@@ -20,7 +20,8 @@
             GO
           </button>
           <input
-            ref="increaseNotificationValue"
+            name="increaseNotificationValue"
+            v-model="increaseNotificationValue"
             type="text"
             placeholder="3"
             class="input input-bordered input-accent"
@@ -43,7 +44,8 @@
             GO
           </button>
           <input
-            ref="decreaseNotificationValue"
+            name="decreaseNotificationValue"
+            v-model="decreaseNotificationValue"
             type="text"
             placeholder="3"
             class="input input-bordered input-accent"
@@ -66,7 +68,8 @@
             GO
           </button>
           <input
-            ref="fixedNotificationValue"
+            name="fixedNotificationValue"
+            v-model="fixedNotificationValue"
             type="text"
             placeholder="100"
             class="input input-bordered input-accent"
@@ -78,37 +81,53 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { CryptohubApi } from "@/stores/CryptohubApi";
 import { getAuth } from "firebase/auth";
 import CryptoChart from "@/components/chart/CryptoChart.vue";
 import CryptoList from "@/components/cryptoList/CryptoList.vue";
+import { ref } from "vue";
 
 const auth = getAuth();
-const userId = auth.currentUser.uid;
+const userId = auth.currentUser!.uid;
+const increaseNotificationValue = ref<number>("");
+const decreaseNotificationValue = ref<number>("");
+const fixedNotificationValue = ref<number>("");
 function addIncreaseNotification() {
   const currentCurrency = CryptoChart.data().currentCurrency;
-  const currentValue = CryptoList.data().cryptoPrices[currentCurrency];
-  const percentage = this.$refs.increaseNotificationValue.value;
-  const notificationValue = currentValue + (currentValue * percentage) / 100;
-
-  CryptohubApi.addNotification(userId, currentCurrency, notificationValue);
+  const cryptoPrices = CryptoList.data().cryptoPrices;
+  for (const cryptoPrice of cryptoPrices) {
+    if (cryptoPrice.name === currentCurrency) {
+      const currentPrice = cryptoPrice.price;
+      const percentage = increaseNotificationValue.value;
+      const notificationValue =
+        currentPrice + (currentPrice * percentage) / 100;
+      CryptohubApi.addNotification(userId, currentCurrency, notificationValue);
+      return;
+    }
+  }
 }
 
 function addDecreaseNotification() {
   const currentCurrency = CryptoChart.data().currentCurrency;
-  const currentValue = CryptoList.data().cryptoPrices[currentCurrency];
-  const percentage = this.$refs.increaseNotificationValue.value;
-  const notificationValue = currentValue - (currentValue * percentage) / 100;
-
-  CryptohubApi.addNotification(userId, currentCurrency, notificationValue);
+  const cryptoPrices = CryptoList.data().cryptoPrices;
+  for (const cryptoPrice of cryptoPrices) {
+    if (cryptoPrice.name === currentCurrency) {
+      const currentPrice = cryptoPrice.price;
+      const percentage = increaseNotificationValue.value;
+      const notificationValue =
+        currentPrice - (currentPrice * percentage) / 100;
+      CryptohubApi.addNotification(userId, currentCurrency, notificationValue);
+      return;
+    }
+  }
 }
 
 function addValueNotification() {
   CryptohubApi.addNotification(
     userId,
     CryptoChart.data().currentCurrency,
-    this.$refs.fixedNotificationValue.value
+    fixedNotificationValue.value
   );
 }
 </script>

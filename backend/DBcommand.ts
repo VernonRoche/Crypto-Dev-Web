@@ -110,21 +110,21 @@ export namespace DBcommand {
     }
 
     export async function addNotification(id:number | string, cryptoName:string, targeValue:string | number): Promise<void> {
-        await mongoClient.connect(async (err: any, db:any) => {
-            if (err) throw err;
-        });
+        await mongoClient.connect();
         const User = {
             user_id : id,
         };
         const newValue = {
-            $push: {  
+            $push: {
                 "notification.$": {
                     name : cryptoName,
-                    targetvalue: targeValue
+                    targetValue: targeValue
                 },
             }
         };
-        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,newValue);
+        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,newValue ,function(err:any,res:any){
+            if (err) console.error(err);
+        });
     }
 
 

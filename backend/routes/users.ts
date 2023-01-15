@@ -150,8 +150,8 @@ router.post("/addNotification", async function (req: any, res: any) {
     res.send(
       await DBcommand.addNotification(
         req.query.user_id,
-        req.query.cryptoName,
-        req.query.targeValue
+        req.query.crypto_name,
+        req.query.target_value
       )
     );
   } catch (error) {
