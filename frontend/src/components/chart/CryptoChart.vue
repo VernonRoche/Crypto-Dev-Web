@@ -359,12 +359,18 @@ async function changeData(
   }
 }
 
+let currentCurrency: string = "Bitcoin";
+function changeCurrentCurrency(name: string) {
+  currentCurrency = name;
+}
+
 export default {
   name: "CryptoChart",
   components: { Line },
   props: ["data"],
   data() {
     return {
+      currentCurrency,
       loaded: false,
       chartData: null,
       options: option,
@@ -378,6 +384,7 @@ export default {
     changeData: changeData,
     changeTimeRange: changeTimeRange,
     initData: initData,
+    changeCurrentCurrency,
   },
   async mounted() {
     await this.initData();
