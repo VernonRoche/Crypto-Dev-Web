@@ -36,7 +36,7 @@ export namespace Favoris {
         favIcon.setAttribute("min-width", "20");
         favIcon.setAttribute("min-height", "20");
         favIcon.setAttribute("alt", "Fav");
-        favIcon.src ="https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starFull.png";
+        favIcon.src ="https://cdn.discordapp.com/attachments/1042336221948551168/1058041919407673374/starFull.png";
         favIcon.addEventListener('click', async () =>{
           
           await RemoveFavorite(name);
