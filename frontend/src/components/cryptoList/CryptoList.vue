@@ -145,6 +145,14 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
             favIcon.setAttribute("alt", "NotFav");
             favIcon.src =
               "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
+            // suprimer le Fav de la liste a gauche du graph
+            document.getElementById("FavDivList").childNodes.forEach((child:HTMLDivElement) => {
+              if(child.attributes[1].value === ("FavIcon - "+element["name"])){
+                console.log("SUPPRESION DE LA CRYPTO");
+                child.innerHTML = "";
+              } 
+              
+            });
           }
         }else{
           alert("Vous devez etre connecté pour pouvoir ajouté des favoris");

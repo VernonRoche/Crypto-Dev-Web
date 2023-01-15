@@ -19,7 +19,6 @@ import { Login } from "@/stores/login";
       <CryptoChart />
     </div>
     <TrendCarousel />
-    <!-- Complete list of cryptos -->
     <CryptoList />
   </body>
   <footer>
