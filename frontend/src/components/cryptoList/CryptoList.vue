@@ -16,6 +16,7 @@ import { Login } from "@/stores/login";
 import CryptoChart from "@/components/chart/CryptoChart.vue";
 
 let CryptoName: Array<string> = [];
+let cryptoPrices: { name: string; price: number }[] = [];
 
 // Get the list of all cryptos, and builds up progressively the list by adding the cryptos one by one as HTML elements
 function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
@@ -56,6 +57,16 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
         total_supply: total amount of coin/token currently in circulation
         total_volume: total amount of coin being traded across all exchanges in the world
       */
+
+      // Get the price of the crypto in the selected currency
+      const elementPrice = element["current_price"];
+      const elementName = element["name"];
+      const currentCryptoPrice = {
+        name: elementName,
+        price: elementPrice,
+      };
+      cryptoPrices.push(currentCryptoPrice);
+
       CryptoName.push(element["name"], element["symbol"]);
       let row: HTMLTableRowElement = document.createElement("tr");
       row.setAttribute("class", "hover cursor-pointer");
@@ -163,6 +174,7 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       row.appendChild(volume);
       row.appendChild(fav);
       row.addEventListener("click", function () {
+        CryptoChart.methods.changeCurrentCurrency(element["name"]);
         CryptoChart.methods.changeData(element["id"], currency);
         window.scrollTo(0, 0);
       });
@@ -211,6 +223,11 @@ function sortTableByHeader(dir: string, nbHeader: number): void {
 export default {
   name: "CryptoList.vue",
   components: { CryptoListFilterBar },
+  data() {
+    return {
+      cryptoPrices,
+    };
+  },
   async mounted() {
     const currencyDiv: HTMLSelectElement = document.getElementById(
       "currency"
