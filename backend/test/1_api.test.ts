@@ -12,7 +12,7 @@ describe('DBcommand', function() {
     // test la fonction insertUser
     describe('insertUser', function() {
         it('should insert a user', async function() {
-            await DBcommand.insertUser(2, "test@crypto.fr",["test"],[""]);
+            await DBcommand.insertUser("0123456789", "test@crypto.fr",["test"],[""]);
             const user = await DBcommand.getUser("0123456789");
             assert.equal(user, "0123456789");
         });
