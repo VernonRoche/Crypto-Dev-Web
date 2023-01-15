@@ -48,11 +48,11 @@ export default {
       if (favIcon.alt == "NotFav") {
         DisplayFav();
         favIcon.setAttribute("alt", "Fav");
-        favIcon.src = "/src/assets/starFull.png";
+        favIcon.src = "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919407673374/starFull.png";
       } else {
         hideFav();
         favIcon.setAttribute("alt", "NotFav");
-        favIcon.src = "/src/assets/starEmpty.png";
+        favIcon.src = "https://cdn.discordapp.com/attachments/1042336221948551168/1058041919042748436/starEmpty.png";
       }
     });
     if(!Login.isLog){

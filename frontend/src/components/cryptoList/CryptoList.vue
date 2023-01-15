@@ -176,7 +176,7 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       row.addEventListener("click", function () {
         CryptoChart.methods.changeCurrentCurrency(element["name"]);
         CryptoChart.methods.changeData(element["id"], currency);
-        console.log(CryptoChart.data().currentCurrency);
+        window.scrollTo(0, 0);
       });
       tbody.appendChild(row);
     }
