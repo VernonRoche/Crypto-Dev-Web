@@ -34,6 +34,14 @@ app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
 
+// Every notificationPeriod time, fetch the data from the API and send the notifications
+/*
+const notificationPeriod = 1000 * 60 * 60; // 1 hour
+
+setInterval(() => {
+
+}, notificationPeriod);
+*/
 
 /**
  * openApi

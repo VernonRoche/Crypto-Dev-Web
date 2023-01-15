@@ -28,7 +28,7 @@ import { DBcommand } from "../DBcommand";
 router.get("/getUser", async function (req: any, res: any) {
   res.setHeader("Content-Type", "application/json");
   try {
-    res.send(await DBcommand.getUser(req.query.user_id));
+    res.send(await DBcommand.getUser(req.query.user_id , 1));
   } catch (error) {
     console.error(error);
     await res.status(424).json({ error });
@@ -89,7 +89,8 @@ router.post("/addUser", async function (req: any, res: any) {
       req.body.user_id,
       req.body.mail,
       req.body.favorite,
-      req.body.notification
+      req.body.notification,
+      1
     );
     res.send("User Successfully Added");
   } catch (error) {
@@ -118,7 +119,7 @@ router.post("/addUser", async function (req: any, res: any) {
  */
 router.delete("/deleteUser", async function (req: any, res: any) {
   try {    
-    await DBcommand.deleteUser(req.query.user_id);
+    await DBcommand.deleteUser(req.query.user_id,1);
     res.send("User Successfully Deleted");
   } catch (error) {
     console.error(error);
@@ -151,7 +152,7 @@ router.delete("/deleteUser", async function (req: any, res: any) {
 */
 router.get("/getFavorite", async function (req: any, res: any) {
   try {
-    res.send(await DBcommand.getFavorite(req.query.user_id));
+    res.send(await DBcommand.getFavorite(req.query.user_id , 1));
   } catch (error) {
     console.error(error);
     await res.status(424).json({ error: error });
@@ -198,7 +199,7 @@ router.get("/getFavorite", async function (req: any, res: any) {
 */
 router.put("/addFavorite", async function (req: any, res: any) {
   try {
-    await DBcommand.addFavorite(req.body.user_id, req.body.cryptoName);
+    await DBcommand.addFavorite(req.body.user_id, req.body.cryptoName,1);
     res.send("Favorite Successfully Added");
   } catch (error) {
     console.error(error);
@@ -243,7 +244,7 @@ router.put("/addFavorite", async function (req: any, res: any) {
  */
 router.delete("/removeFavorite", async function (req: any, res: any) {
   try {
-    await DBcommand.removeFavorite(req.query.user_id, req.query.cryptoName);
+    await DBcommand.removeFavorite(req.query.user_id, req.query.cryptoName,1);
     res.send("Favorite Successfully Deleted");
   } catch (error) {
     console.error(error);
@@ -288,7 +289,7 @@ router.delete("/removeFavorite", async function (req: any, res: any) {
 router.put("/changeEmail", async function (req: any, res: any) {
   if (req.body.user_id && req.body.newMail) {
     try {
-      await DBcommand.changeEmail(req.body.user_id, req.body.newMail);
+      await DBcommand.changeEmail(req.body.user_id, req.body.newMail,1);
       res.send("Mail Successfully Changed");
     } catch (error) {
       console.error(error);
@@ -340,7 +341,8 @@ router.post("/addNotification", async function (req: any, res: any) {
     await DBcommand.addNotification(
       req.query.user_id,
       req.query.cryptoName,
-      req.query.targeValue
+      req.query.targeValue,
+      1
     );
     res.send("Notification Successfully Added");
   } catch (error) {
@@ -374,7 +376,7 @@ router.post("/addNotification", async function (req: any, res: any) {
  */
 router.get("/getNotification", async function (req: any, res: any) {
   try {
-    res.send(await DBcommand.getNotification(req.query.user_id));
+    res.send(await DBcommand.getNotification(req.query.user_id, 1));
   } catch (error) {
     await res.status(424).json({ error: error });
   }
@@ -419,7 +421,8 @@ router.delete("/removeNotification", async function (req: any, res: any) {
   try {
     await DBcommand.removeNotification(
       req.query.user_id,
-      req.query.cryptoName
+      req.query.cryptoName,
+      1
     );
     res.send("Favorite Successfully Deleted");
   } catch (error) {
@@ -460,7 +463,7 @@ router.delete("/removeNotification", async function (req: any, res: any) {
  */
 router.put("/resetNotification", async function (req: any, res: any) {
   try {
-    await DBcommand.resetNotification(req.body.user_id);
+    await DBcommand.resetNotification(req.body.user_id, 1);
     res.send("Notification Successfully Reset");
   } catch (error) {
     console.error(error);
