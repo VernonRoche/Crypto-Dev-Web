@@ -139,9 +139,7 @@ export namespace DBcommand {
         const projection = {
             notification: 1
         };
-        return mongoClient.db(DBNAME).collection(COLLNAME).find(User, function (err: any, res: any) {
-            if (err) throw err;
-        }).project(projection);
+        return mongoClient.db(DBNAME).collection(COLLNAME).find(User).project(projection).toArray();
     }
 
 

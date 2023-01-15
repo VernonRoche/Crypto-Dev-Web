@@ -42,14 +42,14 @@ const options = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Contact REST API',
+            title: 'CryptoHub API',
             description: "A REST API built with Express and MongoDB.",
-            version: '0.1',
+            version: '1',
         },
         servers: [
             {
-                url: 'http://localhost:9666/api',
-                description: 'Development server',
+                url: 'http://localhost:9666/cryptohub/api',
+                description: 'Backend server',
             },
         ],
     },
