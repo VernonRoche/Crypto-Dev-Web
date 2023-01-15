@@ -145,7 +145,7 @@ router.put("/changeEmail", async function (req: any, res: any) {
 });
 
 /* Add Notification and query  are user_id cryptoname and targetValue */
-router.get("/addNotification", async function (req: any, res: any) {
+router.post("/addNotification", async function (req: any, res: any) {
   try {
     res.send(
       await DBcommand.addNotification(
@@ -185,10 +185,10 @@ router.delete("/removeNotification", async function (req: any, res: any) {
   }
 });
 
-/* Reset notification and query is user_id */
+/* Reset notification and body is user_id */
 router.put("/resetNotification", async function (req: any, res: any) {
   try {
-    res.send(await DBcommand.resetNotification(req.query.user_id));
+    res.send(await DBcommand.resetNotification(req.body.user_id));
   } catch (error) {
     console.error(error);
     await res.status(424).json({ error: error });

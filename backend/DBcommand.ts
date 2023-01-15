@@ -23,7 +23,7 @@ export namespace DBcommand {
             user_id : id,
         };
         let data = await mongoClient.db("CryptohubDB").collection(COLLNAME).findOne(User,function(err:any,res:any){
-            if (err) throw err;            
+            if (err) throw err;
         });
         if(data === null){
             return false;
@@ -46,7 +46,7 @@ export namespace DBcommand {
                 };
                 await mongoClient.db(DBNAME).collection(COLLNAME).insertOne(newUser, function(err:any,res:any){
                     if (err) throw err;
-                }); 
+                });
             }
         }));
     }
@@ -98,7 +98,7 @@ export namespace DBcommand {
         };
         
         await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,ValuetoRemove,function(err:any,res:any){
-            if (err) throw err;            
+            if (err) throw err;
         });
     }
 
@@ -120,14 +120,11 @@ export namespace DBcommand {
             $push: {  
                 "notification.$": {
                     name : cryptoName,
-                    id: 1,
                     targetvalue: targeValue
                 },
             }
         };
-        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,newValue,function(err:any,res:any){
-            if (err) throw err;
-        });
+        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,newValue);
     }
 
 
@@ -141,7 +138,7 @@ export namespace DBcommand {
         const projection = {
             notification: 1
         };
-        return await mongoClient.db(DBNAME).collection(COLLNAME).find(User, function (err: any, res: any) {
+        return mongoClient.db(DBNAME).collection(COLLNAME).find(User, function (err: any, res: any) {
             if (err) throw err;
         }).project(projection);
     }
@@ -154,15 +151,13 @@ export namespace DBcommand {
         const User = {
             user_id : id,
         };
-        const ValuetoRemove = {
+        const ValueToRemove = {
             $pull: {  notification: {
                 name : cryptoName
             }
         }
         };
-        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,ValuetoRemove,function(err:any,res:any){
-            if (err) throw err;
-        });
+        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,ValueToRemove);
     }
 
     export async function resetNotification(id:number | string): Promise<void> {
@@ -172,12 +167,10 @@ export namespace DBcommand {
         const User = {
             user_id : id,
         };
-        const ValuetoRemove = {
+        const ValueToRemove = {
             $set: { notification: []  }
         };
-        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,ValuetoRemove,function(err:any,res:any){
-            if (err) throw err;
-        });
+        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,ValueToRemove);
 }
 
 }
