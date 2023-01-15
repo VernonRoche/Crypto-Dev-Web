@@ -1,7 +1,7 @@
-<template>
+<template v-if="Login.isLog">
   <div class="inline-block whitespace-nowrap">
     <div class="grid grid-cols-3">
-      <div id="Filterfav">
+      <div id="Filterfav" class="cursor-pointer">
         <IconStarEmpty />
       </div>
     </div>
@@ -9,24 +9,42 @@
 </template>
 <script lang="ts">
 import IconStarEmpty from "@/components/icons/IconStarEmpty.vue";
+import {CryptohubApi} from "@/stores/CryptohubApi";
+import {getAuth} from "firebase/auth";
+import { Login } from "@/stores/login";
 
-function DisplayFav(): void {
-  document.getElementById("CryptoList")!.style.display = "none";
-  document.getElementById("FavoriList")!.style.display = "initial";
-  //TODO ajouter les favories dans le tableau FavoriList
+async function DisplayFav(): Promise<void> {
+  const auth = getAuth();
+  const user = auth.currentUser!.uid;
+  if(user){
+    let favorites = await CryptohubApi.getFavorites(user);    
+    let table: HTMLTableElement = document.getElementById( "CryptoList" ) as HTMLTableElement;
+    let rows: HTMLCollectionOf<HTMLTableRowElement> = table.rows;
+    let i: number;
+    for (i = 1; i < rows.length ; i++) {
+      if(!favorites[0].favorite.includes(rows[i].id)){
+        rows[i].style.display = "none"; 
+      }
+    }
+  }
 }
+
 function hideFav(): void {
-  document.getElementById("CryptoList")!.style.display = "initial";
-  document.getElementById("FavoriList")!.style.display = "none";
+    let table: HTMLTableElement = document.getElementById( "CryptoList" ) as HTMLTableElement;
+    let rows: HTMLCollectionOf<HTMLTableRowElement> = table.rows;
+    let i: number;
+    for (i = 1; i < rows.length - 1; i++) {
+      rows[i].style.display = "table-row"; 
+    }
 }
+
 export default {
   name: "CryptoListFavoriteFilter.vue",
   components: { IconStarEmpty },
   mounted() {
-    document.getElementById("Filterfav")!.addEventListener("click", () => {
-      const favIcon: HTMLImageElement = document.getElementById(
-        "filterFavImg"
-      ) as HTMLImageElement;
+    let fav = document.getElementById("Filterfav")!;    
+    fav.addEventListener("click", () => {
+      const favIcon: HTMLImageElement = fav.childNodes[0] as HTMLImageElement;
       if (favIcon.alt == "NotFav") {
         DisplayFav();
         favIcon.setAttribute("alt", "Fav");
@@ -37,6 +55,9 @@ export default {
         favIcon.src = "/src/assets/starEmpty.png";
       }
     });
+    if(!Login.isLog){
+      fav.style.display = "none";
+    }
   },
 };
 </script>

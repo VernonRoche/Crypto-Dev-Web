@@ -2,6 +2,7 @@
   <!-- Button to open modal -->
   <RegisterButton />
 
+
   <input type="checkbox" id="my-modal-register" class="modal-toggle" />
   <div class="modal" id="my-modal-register">
     <div class="modal-box">
@@ -9,63 +10,44 @@
       <!-- Register with Google -->
       <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
         <button class="btn btn-primary" @click="signInWithGoogle">
-          <IconGoogle> </IconGoogle>
+          <IconGoogle />
           Sign in with Google
         </button>
       </div>
       <br />
+      <div class="col-span-6 sm:flex sm:items-center sm:gap-4">
+        <label for="Name" class="text-zinc-50 block text-sm font-medium text-gray-400">
+          Name
+        </label>
+        <input required type="name" id="NameRegister" name="Name" v-model="name"
+          class="input-primary mt-1 w-full rounded-md text-sm shadow-sm border-gray-800 bg-gray-800 text-gray-400" />
+      </div>
+      <br />
       <!-- Register form -->
       <div class="col-span-6 text-white">
-        <label
-          for="Email"
-          class="text-zinc-50 block text-sm font-medium text-gray-400"
-        >
+        <label for="Email" class="text-zinc-50 block text-sm font-medium text-gray-400">
           Email
         </label>
-        <input
-          required
-          type="email"
-          id="Email"
-          name="email"
-          v-model="email"
-          class="input-primary mt-1 w-full rounded-md text-sm shadow-sm border-gray-800 bg-gray-800 text-gray-400"
-        />
+        <input required type="email" id="EmailRegister" name="email" v-model="email"
+          class="input-primary mt-1 w-full rounded-md text-sm shadow-sm border-gray-800 bg-gray-800 text-gray-400" />
       </div>
       <br />
       <div class="col-span-6 sm:col-span-3">
-        <label
-          for="Password"
-          class="text-zinc-50 block text-sm font-medium text-gray-400"
-        >
+        <label for="Password" class="text-zinc-50 block text-sm font-medium text-gray-400">
           Password
         </label>
 
-        <input
-          required
-          type="password"
-          id="Password"
-          name="password"
-          v-model="password"
-          class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200"
-        />
+        <input required type="password" id="PasswordEmail" name="password" v-model="password"
+          class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200" />
       </div>
       <br />
       <div class="col-span-6 sm:col-span-3">
-        <label
-          for="PasswordConfirmation"
-          class="text-zinc-50 block text-sm font-medium text-gray-400"
-        >
+        <label for="PasswordConfirmation" class="text-zinc-50 block text-sm font-medium text-gray-400">
           Password Confirmation
         </label>
 
-        <input
-          required
-          type="password"
-          id="PasswordConfirmation"
-          name="password_confirmation"
-          v-model="password2"
-          class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200"
-        />
+        <input required type="password" id="PasswordConfirmation" name="password_confirmation" v-model="password2"
+          class="mt-1 w-full rounded-md text-sm shadow-sm border-gray-700 bg-gray-800 text-gray-200" />
       </div>
       <!-- Button to create the account as well as button to switch to the login modal -->
       <div class="col-span-6 sm:flex sm:items-center sm:gap-4 mt-5">
@@ -90,42 +72,73 @@
 </template>
 
 <script setup lang="ts">
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  GoogleAuthProvider,
-  OAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, OAuthProvider, signInWithPopup, updateProfile, UserCredential } from "firebase/auth";
 import { ref } from "vue";
 import IconGoogle from "@/components/icons/IconGoogle.vue";
 import RegisterButton from "@/components/authentication/RegisterButton.vue";
 import LoginButtonPurple from "@/components/authentication/LoginButtonPurple.vue";
+import { CryptohubApi } from "@/stores/CryptohubApi";
+import CryptoList from "../cryptoList/CryptoList.vue";
+import { Login } from "@/stores/login";
+import {countsignGoogle, incrementgoogle, isconnectedwithgoogle} from "@/stores/counter";
 
-// register
-const email = ref("");
-const password = ref("");
-const password2 = ref("");
-const errMsg = ref();
+interface RegisterData {
+  email: string;
+  password: string;
+  password2: string;
+  errMsg: string;
+  name: string | null;
+}
 
-// Close the modal
-const onOkClick = () => {
+const registerData: RegisterData = {
+  email: "",
+  password: "",
+  password2: "",
+  errMsg: "",
+  name: null
+};
+
+const email = ref(registerData.email);
+const password = ref(registerData.password);
+const password2 = ref(registerData.password2);
+const errMsg = ref(registerData.errMsg);
+let name = ref(registerData.name);
+
+const auth = getAuth();
+
+/**
+ * display modal
+ */
+const onOkClick = (): void => {
   const myModal = document.getElementById("my-modal-register");
   myModal?.click();
 };
 
-// Send a request to firebase to create a user and wait possible error responses, else create the user
-const register = () => {
+/**
+ * register a new user with name, email and password with Firebase authentication and add a new user to the database
+ */
+const register = (): void => {
   if (password.value !== password2.value) {
     errMsg.value = "Passwords is different";
   } else {
     createUserWithEmailAndPassword(getAuth(), email.value, password.value)
       .then((_data) => {
         console.log("Successfully registered !!! ");
+        console.log(_data);
+        const user = auth.currentUser;
+        CryptohubApi.addUser(user!.uid, email.value, ["Bitcoin", "Ethereum", "Litecoin"], [""]);
 
-        //alert("Successfully registered !!! ");
+        updateProfile(user!, {
+          displayName: name.value,
+        });
+
+        console.log("name : " + name);
+
+        Login.changeStateLogin();
+        alert("Successfully registered !!!");
+
       })
-      .catch((error) => {
+      .catch((error: any) => {
         const obj: Record<string, string> = {
           "auth/invalid-email": "Invalid Email",
           "auth/weak-password": "Password should be at least 6 characters",
@@ -142,44 +155,61 @@ const register = () => {
   }
 };
 
-const signInWithGoogle = () => {
-  const provider = new GoogleAuthProvider();
+/**
+ * sign in with google account
+ */
+const signInWithGoogle = (): void => {
+  isconnectedwithgoogle.value = true;
+  if (countsignGoogle.value == 0) {
+    incrementgoogle();
+    const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider)
-    .then((result) => {
+    .then((result: UserCredential) => {
       console.log(result);
-
-      //alert("Successfully signed in !!! ");
+      const user = auth.currentUser;
+      CryptohubApi.addUser(user!.uid, user!.email, ["Bitcoin", "Ethereum", "Litecoin"], [""]);
+      Login.changeStateLogin();
     })
-    .catch((error) => {
-      console.log(error);
-      switch (error.code) {
-        case "auth/user-disabled":
-          errMsg.value = "User Disabled";
-          break;
+    .catch((error: any) => {
+      const obj: Record<string, string> = {
+        "auth/user-disabled": "User Disabled",
+        "auth/popup-closed-by-user": "Popup Closed By User",
+      };
+      const message = obj[error.code];
+      if (!message) {
+        errMsg.value = error.message;
+      } else {
+        errMsg.value = message;
       }
     });
+  } else {
+    errMsg.value = "You are already connected with Google ";
+  }
+
 };
 
-//microsoft
-const signInWithMicrosoft = () => {
+/**
+ * Sign in with Microsoft
+ */
+const signInWithMicrosoft = (): void => {
   const provider = new OAuthProvider("microsoft.com");
   signInWithPopup(getAuth(), provider)
-    .then((result) => {
+    .then((result: UserCredential) => {
       const credential = OAuthProvider.credentialFromResult(result);
       const accessToken = credential?.accessToken;
       const idToken = credential?.idToken;
       console.log(result);
-      //alert("Successfully signed in !!! ");
     })
-    .catch((error) => {
-      console.log(error);
-      switch (error.code) {
-        case "auth/user-disabled":
-          errMsg.value = "User Disabled";
-          break;
+    .catch((error: any) => {
+      const obj: Record<string, string> = {
+        "auth/user-disabled": "User Disabled",
+      };
+      const message = obj[error.code];
+      if (!message) {
+        errMsg.value = error.message;
+      } else {
+        errMsg.value = message;
       }
     });
 };
 </script>
-
-<style scoped></style>

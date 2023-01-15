@@ -1,12 +1,28 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 
-export const useCounterStore = defineStore("counter", () => {
-  const count = ref(0);
-  const doubleCount = computed(() => count.value * 2);
-  function increment() {
-    count.value++;
-  }
+export const count = ref(0);
+count.value = 3;
+export function increment() {
+  count.value++;
+  console.log("Count new value : " + count.value);
+}
 
-  return { count, doubleCount, increment };
-});
+export function incrementgoogle() {
+  countsignGoogle.value++;
+}
+
+export function decrementGoogle() {
+  countsignGoogle.value--;
+}
+
+export function decrement() {
+  count.value--;
+  console.log("Count new value : " + count.value);
+}
+
+export const countsignGoogle = ref(0);
+countsignGoogle.value = 0;
+export const isconnectedwithgoogle = ref(false);
+
+export default { count, increment, decrement };

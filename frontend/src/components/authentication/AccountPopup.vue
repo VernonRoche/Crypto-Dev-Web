@@ -8,7 +8,7 @@
       <div class="col-span-6">
         <label for="Hello" class="block text-lg font-medium text-gray-400">
           Hello
-          {{ user?.displayName || user?.phoneNumber || user?.email }}
+          {{ user?.displayName }}
         </label>
       </div>
       <br />
@@ -71,7 +71,7 @@
         <label for="my-modal-account" class="btn">Close</label>
       </div>
     </div>
-  </div>
+</div>
 </template>
 
 <script setup lang="ts">
@@ -86,55 +86,68 @@ import {
 } from "firebase/auth";
 import { ref } from "vue";
 import AccountButton from "@/components/authentication/AccountButton.vue";
+import  {CryptohubApi}  from "@/stores/CryptohubApi";
+import { Login } from "@/stores/login";
+import {countsignGoogle, decrementGoogle, isconnectedwithgoogle} from "@/stores/counter";
+
 
 //Initialize user variables
 const auth = getAuth();
 const user = auth.currentUser;
-const email = ref("");
-const newPassword = ref("");
-const ischangedMail = ref(false);
-const ischangedPassword = ref(false);
-const isdelete = ref(false);
+const email = ref<string>("");
+const newPassword = ref<string>("");
+const ischangedMail = ref<boolean>(false);
+const ischangedPassword = ref<boolean>(false);
+const isdelete = ref<boolean>(false);
 
+/**
+ * information about the current user
+ */
 if (user !== null) {
   const displayName = user.displayName;
   const emailUser = user.email;
   const photoURL = user.photoURL;
-  const emailVerified = user.emailVerified;
   const uid = user.uid;
-
-  user.providerData.forEach((profile) => {
-    console.log("Sign-in provider: " + profile.providerId);
-    console.log("  Provider-specific UID: " + profile.uid);
-    console.log("  Name: " + profile.displayName);
-    console.log("  Email: " + profile.email);
-    console.log("  Photo URL: " + profile.photoURL);
-  });
 } else {
-  console.log("user not found");
-}
-
-onAuthStateChanged(auth, (user: any) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user == null) {
+      console.log("user not found");
+    }
   if (user) {
-    const uid = user.uid;
-  } else {
-    console.log("user not found");
+    console.log("Sign-in provider: " + user.providerData[0].providerId);
+    console.log("  Provider-specific UID: " + user.uid);
+    console.log("  Name: " + user.displayName);
+    console.log("  Email: " + user.email);
+    console.log("  Photo URL: " + user.photoURL);
+
+    CryptohubApi.getUser(user.uid)
+
   }
 });
+}
 
-//Hide and show the input to change the email address
+
+/**
+ * confirm user clicked on change email button and display input field for new email
+ */
 const clickchangedMail = () => {
   ischangedMail.value = true;
   const div = document.querySelector("#myDiv");
   div?.classList.toggle("hidden");
 };
 
+/**
+ * change the email address of the user and send a verification email to the new address and change the new email in the database
+ */
 const changeAdresseMail = () => {
-  updateEmail(user as any, email.value)
+  if (user == null){
+    return;
+  }
+  updateEmail(user, email.value)
     .then(() => {
-      sendEmailVerification(user as any).then(() => {
-        console.log("Successfully signed in !!! ");
-        alert("Mail updated");
+      sendEmailVerification(user).then(() => {
+        CryptohubApi.changeEmail(user.uid, email.value);
+        alert("Mail sent to verify new email address");
       });
     })
     .catch((error) => {
@@ -143,17 +156,24 @@ const changeAdresseMail = () => {
     });
 };
 
-//Hide and show the input to change the password
+/**
+ * confirm user clicked on change password button and display input field for new password
+ */
 const clickchangedPassWord = () => {
   ischangedPassword.value = true;
   const div = document.querySelector("#myDiv2");
   div?.classList.toggle("hidden");
 };
 
+/**
+ * change the password of the user and send a reset password email .
+ */
 const changepassWord = () => {
-  updatePassword(user as any, newPassword.value)
+  if(user == null) {
+    return;
+  }
+  updatePassword(user, newPassword.value)
     .then(() => {
-      console.log("Successfully updated password");
       alert("Successfully updated password");
       sendPasswordResetEmail(auth, email.value).then(() => {
         alert("Mail reset password end");
@@ -165,19 +185,34 @@ const changepassWord = () => {
     });
 };
 
-//Hide and show the input to delete the account
+/**
+ * confirm user clicked on delete account button and display confirmation button
+ */
 const clickDeleteAccount = () => {
   isdelete.value = true;
   const div = document.querySelector("#myDiv3");
   div?.classList.toggle("hidden");
 };
 
+/**
+ * delete the user account and return to the Home page and delete the user in the database
+ */
 const deleteAccount = () => {
-  deleteUser(user as any)
+  if(user == null){
+    return;
+
+  }
+  if (isconnectedwithgoogle.value == true) {
+    decrementGoogle();
+    isconnectedwithgoogle.value = false;
+  }
+  deleteUser(user)
     .then(() => {
       console.log("account deleted");
-      alert("account deleted");
+      Login.changeStateLogin()
     })
     .catch((error) => {});
+    CryptohubApi.deleteUser(user.uid);
+
 };
 </script>

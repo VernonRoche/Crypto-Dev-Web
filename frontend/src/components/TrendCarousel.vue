@@ -30,7 +30,6 @@ const data = CoinGeckoApi.getTrend();
 
 // Get the trending cryptos from the CoinGecko API and add to an array to be used by the carousel element
 data.then((value: any) => {
-  console.log(data);
   value["coins"].forEach((element: any) => {
     /*
           element :
