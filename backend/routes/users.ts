@@ -86,12 +86,14 @@ router.get("/getUser", async function (req: any, res: any) {
 router.post("/addUser", async function (req: any, res: any) {
   try {    
     await DBcommand.insertUser(
-      req.body.user_id,
-      req.body.mail,
-      req.body.favorite,
-      req.body.notification,
+      req.query.user_id,
+      req.query.mail,
+      req.query.favorite,
+      req.query.notification,
       1
     );
+    console.log(req.query.favorite);
+    
     res.send("User Successfully Added");
   } catch (error) {
     console.error(error);
@@ -334,7 +336,7 @@ router.put("/changeEmail", async function (req: any, res: any) {
  *               type: string
  *             examples: {}
  *     tags:
- *       - Favorites  
+ *       - Notifications  
 */
 router.post("/addNotification", async function (req: any, res: any) {
   try {
