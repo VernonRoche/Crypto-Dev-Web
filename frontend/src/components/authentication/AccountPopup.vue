@@ -87,13 +87,16 @@ import { ref } from "vue";
 import AccountButton from "@/components/authentication/AccountButton.vue";
 import  {CryptohubApi}  from "@/stores/CryptohubApi";
 import { Login } from "@/stores/login";
+import {countsignGoogle, decrementGoogle, isconnectedwithgoogle} from "@/stores/counter";
+
+
 const auth = getAuth();
 const user = auth.currentUser;
-const email = ref("");
-const newPassword = ref("");
-const ischangedMail = ref(false);
-const ischangedPassword = ref(false);
-const isdelete = ref(false);
+const email = ref<string>("");
+const newPassword = ref<string>("");
+const ischangedMail = ref<boolean>(false);
+const ischangedPassword = ref<boolean>(false);
+const isdelete = ref<boolean>(false);
 
 /**
  * information about the current user
@@ -104,7 +107,10 @@ if (user !== null) {
   const photoURL = user.photoURL;
   const uid = user.uid;
 } else {
-  onAuthStateChanged(auth, (user: any) => {
+  onAuthStateChanged(auth, (user) => {
+    if (user == null) {
+      console.log("user not found");
+    }
   if (user) {
     console.log("Sign-in provider: " + user.providerData[0].providerId);
     console.log("  Provider-specific UID: " + user.uid);
@@ -114,8 +120,6 @@ if (user !== null) {
     
     CryptohubApi.getUser(user.uid)
     
-  } else {
-    console.log("user not found");
   }
 });
 }
@@ -195,6 +199,10 @@ const deleteAccount = () => {
   if(user == null){
     return;
 
+  }
+  if (isconnectedwithgoogle.value == true) {
+    decrementGoogle();
+    isconnectedwithgoogle.value = false;
   }
   deleteUser(user)
     .then(() => {

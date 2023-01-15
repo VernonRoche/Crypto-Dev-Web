@@ -96,9 +96,10 @@ import RegisterButton from "@/components/authentication/RegisterButton.vue";
 import { Login } from "@/stores/login";
 
 
-const email = ref("");
-const password = ref("");
-const errMsg = ref();
+const email = ref<string>("");
+const password = ref<string>("");
+const errMsg = ref<string>("");
+
 
 const user = getAuth().currentUser;
 
@@ -182,15 +183,19 @@ const signInWithGoogle = () => {
   const provider = new GoogleAuthProvider();
   signInWithPopup(getAuth(), provider)
     .then((result) => {
+      Login.changeStateLogin();
      
 
     })
     .catch((error) => {
-      console.log(error);
-      switch (error.code) {
-        case "auth/user-disabled":
-          errMsg.value = "User Disabled";
-          break;
+      const obj: Record<string, string> = {
+        "auth/user-disabled": "User Disabled",
+      };
+      const message = obj[error.code];
+      if (!message) {
+        errMsg.value = error.message;
+      } else {
+        errMsg.value = message;
       }
     });
 };
@@ -209,11 +214,14 @@ const signInWithMicrosoft = () => {
       //alert("Successfully signed in !!! ");
     })
     .catch((error) => {
-      console.log(error);
-      switch (error.code) {
-        case "auth/user-disabled":
-          errMsg.value = "User Disabled";
-          break;
+      const obj: Record<string, string> = {
+        "auth/user-disabled": "User Disabled",
+      };
+      const message = obj[error.code];
+      if (!message) {
+        errMsg.value = error.message;
+      } else {
+        errMsg.value = message;
       }
     });
 };
