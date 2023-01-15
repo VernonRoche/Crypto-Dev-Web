@@ -35,13 +35,13 @@ app.listen(port, () => {
 });
 
 // Every notificationPeriod time, fetch the data from the API and send the notifications
-
+/*
 const notificationPeriod = 1000 * 60 * 60; // 1 hour
 
 setInterval(() => {
 
 }, notificationPeriod);
-
+*/
 
 /**
  * openApi
