@@ -17,12 +17,16 @@ async function DisplayFav(): Promise<void> {
   const auth = getAuth();
   const user = auth.currentUser!.uid;
   if(user){
-    let favorites = await CryptohubApi.getFavorites(user);    
+    let favorites = await CryptohubApi.getFavorites(user);
+    let FavoriteList:Array<string> = [];
+    favorites[0].favorite.forEach((elem) =>{
+      FavoriteList.push(elem.name);
+    });    
     let table: HTMLTableElement = document.getElementById( "CryptoList" ) as HTMLTableElement;
     let rows: HTMLCollectionOf<HTMLTableRowElement> = table.rows;
-    let i: number;
+    let i: number;    
     for (i = 1; i < rows.length ; i++) {
-      if(!favorites[0].favorite.includes(rows[i].id)){
+      if(!FavoriteList.includes(rows[i].id)){
         rows[i].style.display = "none"; 
       }
     }

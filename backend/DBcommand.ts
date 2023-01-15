@@ -37,7 +37,7 @@ export namespace DBcommand {
             if (err) throw err;
         });
         await isInside(id).then((async function(val:boolean){
-            if(val){
+            if(val){                
                 const newUser = {
                     user_id : id,
                     email: mail,
@@ -82,23 +82,24 @@ export namespace DBcommand {
             if (err) throw err;
         });
         await mongoClient.db(DBNAME).collection(COLLNAME).updateOne({ user_id : id },{ $push: {  favorite: cryptoName  }  },function(err:any,res:any){
-            if (err) throw err;
+            if (err) throw err;            
         });
     }
 
-    export async function removeFavorite(id:number | string, cryptoName:string): Promise<void> {
+    export async function removeFavorite(id:number | string, cryptoName:any): Promise<void> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
         const User = {
             user_id : id,
         };
+        
         const ValuetoRemove = {
-            $pull: {  favorite: cryptoName }
+        $pull: {  favorite: {name: cryptoName }  }
         };
         
         await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,ValuetoRemove,function(err:any,res:any){
-            if (err) throw err;
+            if (err) throw err;            
         });
     }
 

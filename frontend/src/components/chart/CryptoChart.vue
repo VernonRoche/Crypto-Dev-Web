@@ -287,9 +287,9 @@ async function changeData(
   //demande d'affichage d'une crypto
   for (const key in ChartJS.instances) {
     if (ChartJS.instances[key].canvas.id == "CryptoChart") {
-      ChartJS.instances[key].options.plugins["title"]["text"] = id + " chart";
 
       try {
+        ChartJS.instances[key].options.plugins["title"]["text"] = id + " chart";
         await createCryptoData(id, currency, nbDay).then((data) => {
           let datasetList: Array<any> = [];
           for (const key in data[0]) {

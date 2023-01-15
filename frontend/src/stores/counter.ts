@@ -5,7 +5,6 @@ export const count = ref(0);
 count.value = 3;
 export function increment() {
   count.value++;
-  console.log("Count new value : " + count.value);
 }
 
 export function incrementgoogle() {
@@ -18,7 +17,6 @@ export function decrementGoogle() {
 
 export function decrement() {
   count.value--;
-  console.log("Count new value : " + count.value);
 }
 
 export const countsignGoogle = ref(0);

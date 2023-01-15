@@ -10,7 +10,7 @@ export namespace Favoris {
         const user = auth.currentUser!.uid;
         
         if(user && (count.value < 3) ){               
-            increment();
+            increment();            
             let status = await CryptohubApi.addFavorite(user,CryptoName);
             return true;
         }
@@ -20,9 +20,7 @@ export namespace Favoris {
     export async function RemoveFavorite(CryptoName:string){
         const auth = getAuth();
         const user = auth.currentUser!.uid
-        if(user ){
-            console.log("REMOVE");
-            
+        if(user ){            
             decrement();
             CryptohubApi.removeFavorite(user,CryptoName);
         } 

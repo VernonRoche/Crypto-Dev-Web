@@ -118,7 +118,11 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
       fav.addEventListener("click", async function() {
         if(Login.isLog){
           if (favIcon.alt == "NotFav") {
-            let isSucess = await Favoris.addFavoris(element["name"]);
+
+            let isSucess = await Favoris.addFavoris({
+              name: element["name"],
+              coin_id: element["id"] 
+            });
             if(!isSucess){
               alert("Vous ne pouvez avoir que 3 favoris maximum");
             }else{
@@ -132,9 +136,17 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
               newfav.setAttribute("id","FavIcon - "+element["name"]);
 
               let favName:HTMLParagraphElement = document.createElement("p");
-              favName.setAttribute("class","hover:text-accent inline font-semibold text-white");
+              favName.setAttribute("class","hover:text-accent inline font-semibold text-white cursor-pointer");
               favName.innerHTML = element["name"];
-
+              favName.addEventListener('click', function(){
+                const currencyDiv:HTMLSelectElement = document.getElementById("currency") as HTMLSelectElement;
+                if(currencyDiv == null){                  
+                  CryptoChart.methods.changeData(element["id"],"usd");
+                }else{
+                  const selectedCurrency: string = currencyDiv.options[currencyDiv.selectedIndex].text; 
+                  CryptoChart.methods.changeData(element["id"],selectedCurrency);
+                }
+              });
               newfav.appendChild(favName);
               newfav.appendChild(Favoris.createFavIcon(element["name"]));
 
@@ -148,10 +160,8 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
             // suprimer le Fav de la liste a gauche du graph
             document.getElementById("FavDivList").childNodes.forEach((child:HTMLDivElement) => {
               if(child.attributes[1].value === ("FavIcon - "+element["name"])){
-                console.log("SUPPRESION DE LA CRYPTO");
                 child.innerHTML = "";
-              } 
-              
+              }
             });
           }
         }else{
