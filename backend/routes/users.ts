@@ -35,11 +35,18 @@ router.get("/getUser", async function (req: any, res: any) {
 router.post("/addUser", async function (req: any, res: any) {
   try {
     await DBcommand.insertUser(
+<<<<<<< HEAD
       req.query.user_id,
       req.query.mail,
       req.query.favorite,
       req.query.notification,
       1
+=======
+      req.body.user_id,
+      req.body.mail,
+      req.body.favorite,
+      req.body.notification
+>>>>>>> 9117a43bdd4dce9ea5a3f4b61eca5b0931af33ba
     );
     res.send("OK");
   } catch (error) {
@@ -150,10 +157,16 @@ router.post("/addNotification", async function (req: any, res: any) {
   try {
     res.send(
       await DBcommand.addNotification(
+<<<<<<< HEAD
         req.query.user_id,
         req.query.cryptoName,
         req.query.targeValue,
         1
+=======
+        req.body.user_id,
+        req.body.cryptoName,
+        req.body.targeValue
+>>>>>>> 9117a43bdd4dce9ea5a3f4b61eca5b0931af33ba
       )
     );
   } catch (error) {
