@@ -35,10 +35,10 @@ router.get("/getUser", async function (req: any, res: any) {
 router.post("/addUser", async function (req: any, res: any) {
   try {
     await DBcommand.insertUser(
-      req.query.user_id,
-      req.query.mail,
-      req.query.favorite,
-      req.query.notification
+      req.body.user_id,
+      req.body.mail,
+      req.body.favorite,
+      req.body.notification
     );
     res.send("OK");
   } catch (error) {
@@ -149,9 +149,9 @@ router.post("/addNotification", async function (req: any, res: any) {
   try {
     res.send(
       await DBcommand.addNotification(
-        req.query.user_id,
-        req.query.cryptoName,
-        req.query.targeValue
+        req.body.user_id,
+        req.body.cryptoName,
+        req.body.targeValue
       )
     );
   } catch (error) {

@@ -121,7 +121,7 @@ export namespace DBcommand {
             $push: {  
                 "notification.$": {
                     name : cryptoName,
-                    targetvalue: targeValue
+                    targetValue: targeValue
                 },
             }
         };
@@ -173,5 +173,10 @@ export namespace DBcommand {
         };
         await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,ValueToRemove);
 }
+
+    export async function getAllUsers(): Promise<void> {
+        await mongoClient.connect();
+        return mongoClient.db(DBNAME).collection(COLLNAME).find();
+    }
 
 }
