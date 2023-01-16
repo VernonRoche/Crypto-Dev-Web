@@ -3,9 +3,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 let cors = require('cors');
-import swaggerJsDoc from 'swagger-jsdoc';
 import { serve, setup } from 'swagger-ui-express';
-
+import swaggerSpec from "./utils/swaggerSpec";
 
 // Load route
 
@@ -28,10 +27,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/cryptohub/api', usersRouter);
 
+app.use('/docs',serve,setup(swaggerSpec));
+app.get('/docs.json',(req:any,res:any) => {
+    res.setHeader("Content-Type","application/json");
+    res.send(swaggerSpec);
+});
 
+app.listen(port, async () => {
+    console.log(`App listening at http://localhost:${port}`);
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
 });
 
 // Every notificationPeriod time, fetch the data from the API and send the notifications
@@ -42,29 +46,5 @@ setInterval(() => {
 
 }, notificationPeriod);
 */
-
-/**
- * openApi
- */
-const options = {
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'CryptoHub API',
-            description: "A REST API built with Express and MongoDB.",
-            version: '1',
-        },
-        servers: [
-            {
-                url: 'http://localhost:9666/cryptohub/api',
-                description: 'Backend server',
-            },
-        ],
-    },
-    apis: ["./js/routes/users.js"],
-}
-
-const openapiSpecification = swaggerJsDoc(options);
-app.use('/docs', serve, setup(openapiSpecification));
 
 module.exports = app;
