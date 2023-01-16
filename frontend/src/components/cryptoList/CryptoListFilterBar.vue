@@ -85,10 +85,9 @@
   </tr>
 </template>
 
-<script>
+<script lang="ts">
 import SearchBox from "@/components/cryptoList/SearchBox.vue";
 import CryptoListFavoriteFilter from "@/components/cryptoList/CryptoListFavoriteFilter.vue";
-import { Login } from "@/stores/login";
 
 export default {
   name: "CryptoListFilterBar",

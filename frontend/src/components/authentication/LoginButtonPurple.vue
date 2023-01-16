@@ -2,7 +2,7 @@
   <label for="my-modal-login" class="btn btn-primary">Login</label>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: "LoginButtonPurple",
 };

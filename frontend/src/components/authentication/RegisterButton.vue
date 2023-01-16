@@ -2,7 +2,7 @@
   <label for="my-modal-register" class="btn btn-primary">Register</label>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   name: "RegisterButton",
 };
