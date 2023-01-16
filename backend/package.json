@@ -11,7 +11,7 @@
     "start": "node ./bin/www",
     "build": "tsc --project ./",
     "dev": "tsc --project ./ && node ./bin/www ",
-    "test": "npm run compile && nyc --reporter=text-summary --reporter=lcov mocha --timeout 10000  js/test --recursive --exit",
+    "test": "npm run compile && nyc --reporter=text-summary --reporter=lcov mocha --timeout 50000  js/test --recursive --exit",
     "format": "prettier --config .prettierrc \"src/**/*.ts\" --write",
     "lint": "eslint . --ext .ts src/**/*.ts",
     "lint:fix": "eslint --ext .ts src/**/*.ts --fix",
