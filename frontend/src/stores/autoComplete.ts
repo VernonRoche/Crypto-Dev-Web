@@ -1,6 +1,6 @@
 /**
-*  Autocomplete for CryptoList Search
-*/
+ *  Autocomplete for CryptoList Search
+ */
 function autoComplete(
   input: HTMLInputElement,
   completeValue: Array<string>

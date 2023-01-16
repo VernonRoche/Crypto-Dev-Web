@@ -1,8 +1,8 @@
 /**
-  * get the first Y coordinate for the current context
-  * @param context context of the ChartJS
-  * @returns Y coord 
-*/
+ * get the first Y coordinate for the current context
+ * @param context context of the ChartJS
+ * @returns Y coord
+ */
 function GetYCoords(context) {
   const chart = context.chart;
   const { data } = chart;
@@ -10,10 +10,10 @@ function GetYCoords(context) {
 }
 
 /**
-  * get the first X coordinate for the current context
-  * @param context context of the ChartJS
-  * @returns X coord 
-*/
+ * get the first X coordinate for the current context
+ * @param context context of the ChartJS
+ * @returns X coord
+ */
 function GetXCoords(context) {
   const chart = context.chart;
   const { data } = chart;

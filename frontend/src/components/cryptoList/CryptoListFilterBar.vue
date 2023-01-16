@@ -92,7 +92,7 @@ import { Login } from "@/stores/login";
 
 export default {
   name: "CryptoListFilterBar",
-  components: { CryptoListFavoriteFilter, SearchBox},
+  components: { CryptoListFavoriteFilter, SearchBox },
 };
 </script>
 

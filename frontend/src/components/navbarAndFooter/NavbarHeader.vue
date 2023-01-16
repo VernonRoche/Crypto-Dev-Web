@@ -23,15 +23,13 @@
 
         <div class="flex items-center gap-4">
           <div class="sm:flex sm:gap-4">
-
             <span v-if="isLoggedIn">
-
-              <PopupMyAccount/>
+              <PopupMyAccount />
               |
               <button class="btn" @click="handleSignOut">Logout</button>
             </span>
             <span v-else>
-              <PopupLogin/>
+              <PopupLogin />
               <RegisterPopup />
             </span>
           </div>
@@ -44,7 +42,6 @@
 <script setup lang="ts">
 import IconCryptohubLogo from "@/components/icons/IconCryptohubLogo.vue";
 import { Login } from "@/stores/login";
-
 
 import { ref } from "vue";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
@@ -66,7 +63,8 @@ onAuthStateChanged(auth, (user: any) => {
 const handleSignOut = () => {
   signOut(auth)
     .then(() => {
-      Login.changeStateLogin();    })
+      Login.changeStateLogin();
+    })
     .catch((error) => {
       console.log(error);
     });

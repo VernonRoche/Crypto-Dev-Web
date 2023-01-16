@@ -48,18 +48,17 @@ import { DBcommand } from "../DBcommand";
  *                    "notification": [""]
  *                  }
  *    tags:
- *      - User         
+ *      - User
  */
 router.get("/getUser", async function (req: any, res: any) {
   res.setHeader("Content-Type", "application/json");
   try {
-    res.status(200).json(await DBcommand.getUser(req.query.user_id , 1));
+    res.status(200).json(await DBcommand.getUser(req.query.user_id, 1));
   } catch (error) {
     console.error(error);
     await res.status(424).json({ error });
   }
 });
-
 
 /**
  * @openapi
@@ -109,17 +108,17 @@ router.get("/getUser", async function (req: any, res: any) {
  *               '0':
  *                 value: 'User Successfully Added'
  *     tags:
- *       - User   
+ *       - User
  */
-router.post("/addUser", async function (req:any, res: any) {
-  try {    
+router.post("/addUser", async function (req: any, res: any) {
+  try {
     await DBcommand.insertUser(
       req.query.user_id,
       req.query.mail,
       req.query.favorite,
       req.query.notification,
       1
-    );    
+    );
     res.setHeader("Content-Type", "application/json");
     res.status(200).json({ message: "User Successfully Added" });
   } catch (error) {
@@ -127,8 +126,6 @@ router.post("/addUser", async function (req:any, res: any) {
     await res.status(424).json({ error });
   }
 });
-
-
 
 /**
  * @openapi
@@ -154,11 +151,11 @@ router.post("/addUser", async function (req:any, res: any) {
  *                      type: string
  *                      example: User Successfully Deleted
  *    tags:
- *      - User     
+ *      - User
  */
 router.delete("/deleteUser", async function (req: any, res: any) {
-  try {    
-    await DBcommand.deleteUser(req.query.user_id,1);
+  try {
+    await DBcommand.deleteUser(req.query.user_id, 1);
     res.send("User Successfully Deleted");
   } catch (error) {
     console.error(error);
@@ -200,11 +197,11 @@ router.delete("/deleteUser", async function (req: any, res: any) {
  *                    {"coin_id":"litecoin","name":"Litecoin"}
  *                  ]
  *     tags:
- *       - Favorites    
-*/
+ *       - Favorites
+ */
 router.get("/getFavorite", async function (req: any, res: any) {
   try {
-    res.send(await DBcommand.getFavorite(req.query.user_id , 1));
+    res.send(await DBcommand.getFavorite(req.query.user_id, 1));
   } catch (error) {
     console.error(error);
     await res.status(424).json({ error: error });
@@ -252,11 +249,11 @@ router.get("/getFavorite", async function (req: any, res: any) {
  *               value:
  *                 { "message":"Favorite Successfully Added"}
  *     tags:
- *       - Favorites  
-*/
+ *       - Favorites
+ */
 router.put("/addFavorite", async function (req: any, res: any) {
   try {
-    await DBcommand.addFavorite(req.body.user_id, req.body.cryptoName,1);
+    await DBcommand.addFavorite(req.body.user_id, req.body.cryptoName, 1);
     res.send("Favorite Successfully Added");
   } catch (error) {
     console.error(error);
@@ -287,7 +284,7 @@ router.put("/addFavorite", async function (req: any, res: any) {
  *              type: string
  *         example:
  *           {  "coin_id": "bitcoin",  "name": "Bitcoin" }
- *         required: true 
+ *         required: true
  *     responses:
  *       '200':
  *         description: Favorite Successfully Deleted
@@ -302,18 +299,17 @@ router.put("/addFavorite", async function (req: any, res: any) {
  *               value:
  *                 { "message":"Favorite Successfully Deleted"}
  *     tags:
- *       - Favorites  
+ *       - Favorites
  */
 router.delete("/removeFavorite", async function (req: any, res: any) {
   try {
-    await DBcommand.removeFavorite(req.query.user_id, req.query.cryptoName,1);
+    await DBcommand.removeFavorite(req.query.user_id, req.query.cryptoName, 1);
     res.send("Favorite Successfully Deleted");
   } catch (error) {
     console.error(error);
     await res.status(424).json({ error: error });
   }
 });
-
 
 /**
  * @openapi
@@ -352,12 +348,12 @@ router.delete("/removeFavorite", async function (req: any, res: any) {
  *               '0':
  *                 value: { "message": "Mail Successfully Changed" }
  *     tags:
- *       - Mail  
+ *       - Mail
  */
 router.put("/changeEmail", async function (req: any, res: any) {
   if (req.body.user_id && req.body.newMail) {
     try {
-      await DBcommand.changeEmail(req.body.user_id, req.body.newMail,1);
+      await DBcommand.changeEmail(req.body.user_id, req.body.newMail, 1);
       res.send("Mail Successfully Changed");
     } catch (error) {
       console.error(error);
@@ -372,7 +368,7 @@ router.put("/changeEmail", async function (req: any, res: any) {
  * @openapi
  * /addNotification:
  *   post:
- *     description: Add a new notification for a specific user 
+ *     description: Add a new notification for a specific user
  *     requestBody:
  *       content:
  *         application/json:
@@ -400,12 +396,12 @@ router.put("/changeEmail", async function (req: any, res: any) {
  *           text/html; charset=utf-8:
  *             schema:
  *               type: string
- *             examples: 
+ *             examples:
  *                '0':
  *                  value: Notification Successfully Added
  *     tags:
- *       - Notifications  
-*/
+ *       - Notifications
+ */
 router.post("/addNotification", async function (req: any, res: any) {
   try {
     await DBcommand.addNotification(
@@ -454,7 +450,7 @@ router.post("/addNotification", async function (req: any, res: any) {
  *                    cryptoName: Bitcoin
  *                    targeValue: 20519
  *    tags:
- *      - Notifications  
+ *      - Notifications
  */
 router.get("/getNotification", async function (req: any, res: any) {
   try {
@@ -495,11 +491,11 @@ router.get("/getNotification", async function (req: any, res: any) {
  *           text/html; charset=utf-8:
  *             schema:
  *               type: string
- *             examples: 
+ *             examples:
  *                '0':
  *                  value: Notification Successfully Deleted
  *     tags:
- *       - Notifications  
+ *       - Notifications
  */
 router.delete("/removeNotification", async function (req: any, res: any) {
   try {
@@ -541,11 +537,11 @@ router.delete("/removeNotification", async function (req: any, res: any) {
  *           text/html; charset=utf-8:
  *             schema:
  *               type: string
- *             examples: 
+ *             examples:
  *                '0':
  *                  value: Notification Successfully Reset
  *     tags:
- *       - Notifications         
+ *       - Notifications
  */
 router.put("/resetNotification", async function (req: any, res: any) {
   try {
@@ -556,7 +552,5 @@ router.put("/resetNotification", async function (req: any, res: any) {
     await res.status(424).json({ error: error });
   }
 });
-
-
 
 module.exports = router;

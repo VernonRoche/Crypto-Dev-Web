@@ -72,13 +72,15 @@ test("test : addFavorite", async function () {
     user2.favorite,
     user.notification
   );
-  const newfavorites = { 
+  const newfavorites = {
     name: "etc",
     coin_id: "etc",
-  }
-  await CryptohubApi.addFavorite(user2.user_id,{newfavorites}).then((responce) => {
-    assert.equal(responce, 200);
-  });
+  };
+  await CryptohubApi.addFavorite(user2.user_id, { newfavorites }).then(
+    (responce) => {
+      assert.equal(responce, 200);
+    }
+  );
 });
 
 test("test : getFavorites", async function () {
@@ -86,7 +88,6 @@ test("test : getFavorites", async function () {
     const res = JSON.parse(JSON.stringify(responce));
     assert.equal(res[0].favorite[0].name, user2.favorite[0].name);
     assert.equal(res[0].favorite[0].coin_id, user2.favorite[0].coin_id);
-
   });
 });
 

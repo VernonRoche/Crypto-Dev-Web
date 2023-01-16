@@ -1,52 +1,52 @@
 <template>
-<div class="inline">
-  <div class="container m-auto">
-    <div id="chart-container" class="container h-50 w-50">
-      <Line
-        id="CryptoChart"
-        v-if="loaded"
-        :data="chartData"
-        :options="options"
-        ref="line"
-      />
-      <div id="legendBox"></div>
-    </div>
-    <!-- Data range selectors -->
-    <div class="flex w-full">
-      <!-- Data type selector -->
-      <div
-        class="grid h-20 flex-auto w-1/2 card bg-base-300 rounded-box place-items-center"
-      >
-        <select
-          class="select select-secondary select-lg"
-          v-model="nbDataset"
-          @change="changeDatasets(nbDataset)"
-        >
-          <option Value="0">Prices</option>
-          <option Value="1">Market Caps</option>
-          <option Value="2">Total Volumes</option>
-        </select>
+  <div class="inline">
+    <div class="container m-auto">
+      <div id="chart-container" class="container h-50 w-50">
+        <Line
+          id="CryptoChart"
+          v-if="loaded"
+          :data="chartData"
+          :options="options"
+          ref="line"
+        />
+        <div id="legendBox"></div>
       </div>
-      <div class="divider divider-horizontal"></div>
-      <!-- Data range selector -->
-      <div
-        class="grid h-20 flex-auto w-1/2 card bg-base-300 rounded-box place-items-center"
-      >
-        <select
-          class="select select-secondary select-lg"
-          v-model="TimeRange"
-          @change="changeTimeRange(this.TimeRange)"
+      <!-- Data range selectors -->
+      <div class="flex w-full">
+        <!-- Data type selector -->
+        <div
+          class="grid h-20 flex-auto w-1/2 card bg-base-300 rounded-box place-items-center"
         >
-          <option Value="1">1 Day</option>
-          <option Value="5">5 Day</option>
-          <option Value="30">1 Month</option>
-          <option Value="365">1 Year</option>
-          <option Value="1825">5 Year</option>
-        </select>
+          <select
+            class="select select-secondary select-lg"
+            v-model="nbDataset"
+            @change="changeDatasets(nbDataset)"
+          >
+            <option Value="0">Prices</option>
+            <option Value="1">Market Caps</option>
+            <option Value="2">Total Volumes</option>
+          </select>
+        </div>
+        <div class="divider divider-horizontal"></div>
+        <!-- Data range selector -->
+        <div
+          class="grid h-20 flex-auto w-1/2 card bg-base-300 rounded-box place-items-center"
+        >
+          <select
+            class="select select-secondary select-lg"
+            v-model="TimeRange"
+            @change="changeTimeRange(this.TimeRange)"
+          >
+            <option Value="1">1 Day</option>
+            <option Value="5">5 Day</option>
+            <option Value="30">1 Month</option>
+            <option Value="365">1 Year</option>
+            <option Value="1825">5 Year</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script lang="ts">
@@ -128,7 +128,7 @@ function changeDatasets(nbDataset: number = 0) {
 
 /**
  * Generate a random color
- * @return a Hexadecimal code coresponding to a color 
+ * @return a Hexadecimal code coresponding to a color
  */
 function randomColor() {
   return (
@@ -311,7 +311,6 @@ async function changeData(
   //demande d'affichage d'une crypto
   for (const key in ChartJS.instances) {
     if (ChartJS.instances[key].canvas.id == "CryptoChart") {
-
       try {
         ChartJS.instances[key].options.plugins["title"]["text"] = id + " chart";
         await createCryptoData(id, currency, nbDay).then((data) => {

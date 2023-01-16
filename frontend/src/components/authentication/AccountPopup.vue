@@ -71,7 +71,7 @@
         <label for="my-modal-account" class="btn">Close</label>
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -86,10 +86,13 @@ import {
 } from "firebase/auth";
 import { ref } from "vue";
 import AccountButton from "@/components/authentication/AccountButton.vue";
-import  {CryptohubApi}  from "@/stores/CryptohubApi";
+import { CryptohubApi } from "@/stores/CryptohubApi";
 import { Login } from "@/stores/login";
-import {countsignGoogle, decrementGoogle, isconnectedwithgoogle} from "@/stores/counter";
-
+import {
+  countsignGoogle,
+  decrementGoogle,
+  isconnectedwithgoogle,
+} from "@/stores/counter";
 
 //Initialize user variables
 const auth = getAuth();
@@ -113,19 +116,17 @@ if (user !== null) {
     if (user == null) {
       console.log("user not found");
     }
-  if (user) {
-    console.log("Sign-in provider: " + user.providerData[0].providerId);
-    console.log("  Provider-specific UID: " + user.uid);
-    console.log("  Name: " + user.displayName);
-    console.log("  Email: " + user.email);
-    console.log("  Photo URL: " + user.photoURL);
+    if (user) {
+      console.log("Sign-in provider: " + user.providerData[0].providerId);
+      console.log("  Provider-specific UID: " + user.uid);
+      console.log("  Name: " + user.displayName);
+      console.log("  Email: " + user.email);
+      console.log("  Photo URL: " + user.photoURL);
 
-    CryptohubApi.getUser(user.uid)
-
-  }
-});
+      CryptohubApi.getUser(user.uid);
+    }
+  });
 }
-
 
 /**
  * confirm user clicked on change email button and display input field for new email
@@ -140,7 +141,7 @@ const clickchangedMail = () => {
  * change the email address of the user and send a verification email to the new address and change the new email in the database
  */
 const changeAdresseMail = () => {
-  if (user == null){
+  if (user == null) {
     return;
   }
   updateEmail(user, email.value)
@@ -169,7 +170,7 @@ const clickchangedPassWord = () => {
  * change the password of the user and send a reset password email .
  */
 const changepassWord = () => {
-  if(user == null) {
+  if (user == null) {
     return;
   }
   updatePassword(user, newPassword.value)
@@ -198,9 +199,8 @@ const clickDeleteAccount = () => {
  * delete the user account and return to the Home page and delete the user in the database
  */
 const deleteAccount = () => {
-  if(user == null){
+  if (user == null) {
     return;
-
   }
   if (isconnectedwithgoogle.value == true) {
     decrementGoogle();
@@ -209,10 +209,9 @@ const deleteAccount = () => {
   deleteUser(user)
     .then(() => {
       console.log("account deleted");
-      Login.changeStateLogin()
+      Login.changeStateLogin();
     })
     .catch((error) => {});
-    CryptohubApi.deleteUser(user.uid);
-
+  CryptohubApi.deleteUser(user.uid);
 };
 </script>

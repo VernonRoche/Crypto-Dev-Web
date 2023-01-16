@@ -8,7 +8,7 @@
 import { CoinGeckoApi } from "@/stores/CoinGeckoApi";
 
 /**
-* Create a Div containing Trending Crypto currencies
+ * Create a Div containing Trending Crypto currencies
  */
 function CreateTrendElement(): HTMLDivElement {
   const trendGrid: HTMLDivElement = document.createElement("div");
@@ -46,10 +46,9 @@ function CreateTrendElement(): HTMLDivElement {
   });
   return trendGrid;
 }
-export default   
-{
+export default {
   name: "TrendChoice.vue",
-  mounted(){
+  mounted() {
     document.getElementById("trend")?.appendChild(CreateTrendElement());
   },
 };

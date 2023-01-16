@@ -33,16 +33,17 @@ test("create and Sign with password", async () => {
   const password = "0123456";
 
   const auth = getAuth();
-  await createUserWithEmailAndPassword(auth, email, password).then((_data) => {
-
-    const user = auth.currentUser;
-    CryptohubApi.addUser(user!.uid, email,["Bitcoin", "Ethereum", "Litecoin"],["add user"]);
-    
-  }).catch((error) => {
-    
-  });
-;
-
+  await createUserWithEmailAndPassword(auth, email, password)
+    .then((_data) => {
+      const user = auth.currentUser;
+      CryptohubApi.addUser(
+        user!.uid,
+        email,
+        ["Bitcoin", "Ethereum", "Litecoin"],
+        ["add user"]
+      );
+    })
+    .catch((error) => {});
   await signInWithEmailAndPassword(auth, email, password);
 
   const user = auth.currentUser;
@@ -74,23 +75,22 @@ test("Is reset password", async () => {
   expect(user?.email).toEqual(email);
 });
 
-
-
- test("connect with google",async () => {
+test("connect with google", async () => {
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
-  await signInWithPopup(auth, provider).then((result) => {
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential?.accessToken;
-    const user = result.user;
-  }).catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    const email = error.email;
-    const credential = GoogleAuthProvider.credentialFromError(error);
-  });
-
-  })
+  await signInWithPopup(auth, provider)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential?.accessToken;
+      const user = result.user;
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.email;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+    });
+});
 
 test("delete user", async () => {
   await signInWithEmailAndPassword(auth, "test@cryptohub.fr", "0123456");

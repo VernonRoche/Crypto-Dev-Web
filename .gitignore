@@ -113,5 +113,4 @@ dist
 /backend/app.js
 /backend/routes/*.js
 /backend/DBcommand.js
-/backend/package-lock.json
-/frontend/package-lock.json
+

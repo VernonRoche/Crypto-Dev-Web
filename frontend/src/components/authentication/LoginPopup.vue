@@ -1,7 +1,5 @@
 <template>
-
   <LoginButton />
-
 
   <input type="checkbox" id="my-modal-login" class="modal-toggle" />
   <div class="modal" id="my-modal-login">
@@ -48,7 +46,7 @@
         </p>
       </div>
 
-      <p class="text-red-500" v-if="errMsg">{{ errMsg  }}</p>
+      <p class="text-red-500" v-if="errMsg">{{ errMsg }}</p>
 
       <!-- Reset password button if the user got this password wrong multiple times -->
       <div class="col-span-6 sm:col-span-3" v-if="cpt >= 3">
@@ -79,7 +77,7 @@
         <label for="my-modal-login" class="btn">Close</label>
       </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -100,11 +98,9 @@ import LoginButton from "@/components/authentication/LoginButton.vue";
 import RegisterButton from "@/components/authentication/RegisterButton.vue";
 import { Login } from "@/stores/login";
 
-
 const email = ref<string>("");
 const password = ref<string>("");
 const errMsg = ref<string>("");
-
 
 const user = getAuth().currentUser;
 
@@ -178,7 +174,6 @@ const resetPassWord = () => {
     });
 };
 
-
 /**
  * Sign in a user with google using firebase auth
  */
@@ -187,8 +182,6 @@ const signInWithGoogle = () => {
   signInWithPopup(getAuth(), provider)
     .then((result) => {
       Login.changeStateLogin();
-
-
     })
     .catch((error) => {
       const obj: Record<string, string> = {

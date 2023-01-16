@@ -26,7 +26,7 @@ export namespace DBcommand {
         return await mongoClient.db(DBNAME).collection(COLLNAME).findOne(User);
     }
 
-    async function isInside(id:number | string ) : Promise<boolean>{
+    export async function isInside(id:number | string ) : Promise<boolean>{
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
         });
@@ -177,7 +177,9 @@ export namespace DBcommand {
             }
         }
         };
-        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,ValueToRemove);
+        await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,ValueToRemove,function(err:any,res:any){
+            if (err) throw err;
+        });
     }
 
 

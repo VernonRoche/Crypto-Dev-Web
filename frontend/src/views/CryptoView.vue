@@ -10,13 +10,10 @@ data.then((value: any) => {
 
 <template>
   <div>
-    <header>
-    </header>
+    <header></header>
     <body>
       <div>
-        <div id="trend">
-          
-        </div>
+        <div id="trend"></div>
       </div>
     </body>
   </div>

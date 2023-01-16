@@ -1,80 +1,94 @@
 /**
-* Handle all mouse event for the Chart
-* @param chart a ChartJS
-* @param mousemove  mouse event
-*/
-export function crosshairLine(chart,mousemove:MouseEvent){
-    const {canvas, ctx, data, chartArea,scales} = chart;
-    const {left, right, top, bottom} = chartArea;
-    const {x, y} = scales; 
-  
-    chart.update('none');
-    ctx.restore();
+ * Handle all mouse event for the Chart
+ * @param chart a ChartJS
+ * @param mousemove  mouse event
+ */
+export function crosshairLine(chart, mousemove: MouseEvent) {
+  const { canvas, ctx, data, chartArea, scales } = chart;
+  const { left, right, top, bottom } = chartArea;
+  const { x, y } = scales;
+
+  chart.update("none");
+  ctx.restore();
+  /////////////////////////////////////////////////////
+  //              Change cursor to Cross             //
+  //               if inside Chart                   //
+  /////////////////////////////////////////////////////
+  if (
+    mousemove.offsetX >= left &&
+    mousemove.offsetX <= right &&
+    mousemove.offsetY >= top &&
+    mousemove.offsetY <= bottom
+  ) {
+    canvas.style.cursor = "crosshair";
+  } else {
+    canvas.style.cursor = "default";
+  }
+  ctx.strokeStyle = "#666";
+  ctx.lineWidth = 1;
+  ctx.setLineDash([3, 3]);
+
+  if (
+    mousemove.offsetX >= left &&
+    mousemove.offsetX <= right &&
+    mousemove.offsetY >= top &&
+    mousemove.offsetY <= bottom
+  ) {
     /////////////////////////////////////////////////////
-    //              Change cursor to Cross             //
-    //               if inside Chart                   //
+    //              Draw lines on Cursor               //
+    //                                                 //
     /////////////////////////////////////////////////////
-    if(mousemove.offsetX >= left && mousemove.offsetX <= right && mousemove.offsetY >= top && mousemove.offsetY <= bottom){
-      canvas.style.cursor = 'crosshair';
-    }else{
-      canvas.style.cursor = 'default';
-    }
-    ctx.strokeStyle = '#666';
-    ctx.lineWidth = 1;
-    ctx.setLineDash([3,3]);
-  
+    //ligne horizontale
+    ctx.beginPath();
+    ctx.moveTo(left, mousemove.offsetY);
+    ctx.lineTo(right, mousemove.offsetY);
+    ctx.stroke();
 
-    if(mousemove.offsetX >= left && mousemove.offsetX <= right && mousemove.offsetY >= top && mousemove.offsetY <= bottom ){
-        /////////////////////////////////////////////////////
-        //              Draw lines on Cursor               //
-        //                                                 //
-        /////////////////////////////////////////////////////
-        //ligne horizontale
-        ctx.beginPath();
-        ctx.moveTo(left,mousemove.offsetY);
-        ctx.lineTo(right,mousemove.offsetY);
-        ctx.stroke();
-        
-    
-        //ligne Vertical
-        ctx.moveTo(mousemove.offsetX,top);
-        ctx.lineTo(mousemove.offsetX,bottom);
-        ctx.stroke();
-        ctx.closePath();
-    
-        ctx.font= '12px sans-serif';
-        ctx.textBaseline = 'middle';
-        ctx.textAlign = 'center';
+    //ligne Vertical
+    ctx.moveTo(mousemove.offsetX, top);
+    ctx.lineTo(mousemove.offsetX, bottom);
+    ctx.stroke();
+    ctx.closePath();
 
-        /////////////////////////////////////////////////////
-        //              Draw Labels according              //
-        //               To cursor Position                //
-        /////////////////////////////////////////////////////
-        //label Y
-        const date:string = (new Date(x.getValueForPixel(mousemove.offsetX))).toString().split("GMT")[0];
-        const textwidth = ctx.measureText(date).width;
-        
-        ctx.beginPath();
-        ctx.fillStyle = 'rgba(132,132,132,1)';
-        ctx.fillRect(left-50,mousemove.offsetY - 10,50,20);
-        ctx.closePath();
-        ctx.fillStyle = 'white';
-        ctx.fillText(y.getValueForPixel(mousemove.offsetY).toFixed(0),left-25, mousemove.offsetY);
-    
-        //label X
-        ctx.beginPath();
-        ctx.fillStyle = 'rgba(132,132,132,1)';
-        ctx.fillRect(mousemove.offsetX-55,bottom,textwidth,20);
-        ctx.closePath();
-        ctx.fillStyle = 'white';
-        ctx.fillText( date,mousemove.offsetX + 25, bottom + 10);
+    ctx.font = "12px sans-serif";
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
 
-        /////////////////////////////////////////////////////
-        //              Interpolation on curve             //
-        //            according To cursor Position         //
-        //                 (WORK IN PROGRESS)              //
-        /////////////////////////////////////////////////////
- /*       
+    /////////////////////////////////////////////////////
+    //              Draw Labels according              //
+    //               To cursor Position                //
+    /////////////////////////////////////////////////////
+    //label Y
+    const date: string = new Date(x.getValueForPixel(mousemove.offsetX))
+      .toString()
+      .split("GMT")[0];
+    const textwidth = ctx.measureText(date).width;
+
+    ctx.beginPath();
+    ctx.fillStyle = "rgba(132,132,132,1)";
+    ctx.fillRect(left - 50, mousemove.offsetY - 10, 50, 20);
+    ctx.closePath();
+    ctx.fillStyle = "white";
+    ctx.fillText(
+      y.getValueForPixel(mousemove.offsetY).toFixed(0),
+      left - 25,
+      mousemove.offsetY
+    );
+
+    //label X
+    ctx.beginPath();
+    ctx.fillStyle = "rgba(132,132,132,1)";
+    ctx.fillRect(mousemove.offsetX - 55, bottom, textwidth, 20);
+    ctx.closePath();
+    ctx.fillStyle = "white";
+    ctx.fillText(date, mousemove.offsetX + 25, bottom + 10);
+
+    /////////////////////////////////////////////////////
+    //              Interpolation on curve             //
+    //            according To cursor Position         //
+    //                 (WORK IN PROGRESS)              //
+    /////////////////////////////////////////////////////
+    /*       
         const arrayLength = data.datasets[0].data.length - 1; 
 
         const xFirst= data.datasets[0].data[0];
@@ -122,7 +136,7 @@ export function crosshairLine(chart,mousemove:MouseEvent){
         ctx.fill();
         ctx.stroke();
         */
-    }
+  }
 }
 
 export default crosshairLine;
