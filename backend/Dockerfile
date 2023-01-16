@@ -13,9 +13,6 @@ RUN npm install
 COPY . .
 
 
-RUN npm run dev
-
-
 
 EXPOSE 9666
-CMD["npm","run","serve"] 
+CMD ["npm","run","dev"] 

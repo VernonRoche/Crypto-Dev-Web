@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "cleantest": "rimraf js",
-    "clean": "npm run cleantest && rimraf ./dist ./node_modules  .nyc_output coverage package-lock.json",
+    "clean": "npm run cleantest && rimraf ./dist ./node_modules  .nyc_output coverage ",
     "compile": "npm run cleantest && tsc",
     "start": "node ./bin/www",
     "build": "tsc --project ./",
