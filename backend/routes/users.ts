@@ -91,9 +91,7 @@ router.post("/addUser", async function (req: any, res: any) {
       req.query.favorite,
       req.query.notification,
       1
-    );
-    console.log(req.query.favorite);
-    
+    );    
     res.send("User Successfully Added");
   } catch (error) {
     console.error(error);
@@ -472,5 +470,7 @@ router.put("/resetNotification", async function (req: any, res: any) {
     await res.status(424).json({ error: error });
   }
 });
+
+
 
 module.exports = router;
