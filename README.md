@@ -46,6 +46,11 @@ npm run dev
 
 To run Docker-compose :
 ```bash
-docker-compose up --build
+docker-compose build
 
 ```
+and
+```bash
+docker-compose up
+```
+
