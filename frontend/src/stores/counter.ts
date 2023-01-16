@@ -1,6 +1,8 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-
+/**
+*  Count the number of Favorite for the current User
+*/
 export const count = ref(0);
 count.value = 3;
 export function increment() {

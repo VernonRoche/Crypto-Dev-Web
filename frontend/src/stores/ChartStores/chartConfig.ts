@@ -1,14 +1,25 @@
+/**
+  * get the first Y coordinate for the current context
+  * @param context context of the ChartJS
+  * @returns Y coord 
+*/
 function GetYCoords(context) {
   const chart = context.chart;
   const { data } = chart;
   return data.datasets[0].data[0];
 }
 
+/**
+  * get the first X coordinate for the current context
+  * @param context context of the ChartJS
+  * @returns X coord 
+*/
 function GetXCoords(context) {
   const chart = context.chart;
   const { data } = chart;
   return data.labels[0];
 }
+
 export const option = {
   responsive: true,
   maintainAspectRation: false,

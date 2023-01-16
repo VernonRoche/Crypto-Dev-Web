@@ -2,6 +2,10 @@ import { CoinGeckoApi } from "@/stores/CoinGeckoApi";
 import IconSearch from "@/components/icons/IconSearch.vue";
 import IconSupport from "@/components/icons/IconSupport.vue";
 
+/**
+*  Create a Div tha represend the trending Crypto currency 
+* @returns Div containing trending Crypto currency
+*/
 export function CreateTrendElement(): HTMLDivElement {
   const trendGrid: HTMLDivElement = document.createElement("div");
   trendGrid.setAttribute("class", "grid gap-4 grid-cols-{7} ");

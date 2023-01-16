@@ -1,3 +1,8 @@
+/**
+* Handle all mouse event for the Chart
+* @param chart a ChartJS
+* @param mousemove  mouse event
+*/
 export function crosshairLine(chart,mousemove:MouseEvent){
     const {canvas, ctx, data, chartArea,scales} = chart;
     const {left, right, top, bottom} = chartArea;
@@ -67,6 +72,7 @@ export function crosshairLine(chart,mousemove:MouseEvent){
         /////////////////////////////////////////////////////
         //              Interpolation on curve             //
         //            according To cursor Position         //
+        //                 (WORK IN PROGRESS)              //
         /////////////////////////////////////////////////////
  /*       
         const arrayLength = data.datasets[0].data.length - 1; 

@@ -1,6 +1,13 @@
 import { CoinGeckoApi }  from "@/stores/CoinGeckoApi"
 import 'chartjs-adapter-luxon';
 
+/**
+*  Fetch and Clear data for the Chart
+* @param id CoinGecko ID representing a Crypto currency
+* @param currency the name of a crypto currency
+* @param nbDay range of Days 
+* @returns Datasets for the Chart
+*/
 export async function createCryptoData(id:string="bitcoin",currency:string="usd",nbDay:number=1) {
     let datasets:Array<object>  = [];
     let labels:Array<string> = [];
@@ -23,12 +30,6 @@ export async function createCryptoData(id:string="bitcoin",currency:string="usd"
             datasets[key] = datas;
         }
     });
-    /*
-    labels.sort((a:Date,b:Date) =>{
-        return a.getTime() - b.getTime();
-    });
-    */
-   
     return [datasets,labels];
 }
 

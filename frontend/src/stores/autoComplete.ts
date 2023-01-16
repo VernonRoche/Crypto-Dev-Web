@@ -1,4 +1,6 @@
-// Used in the search bar to autocomplete results depending on user input
+/**
+*  Autocomplete for CryptoList Search
+*/
 function autoComplete(
   input: HTMLInputElement,
   completeValue: Array<string>

@@ -1,4 +1,12 @@
 export namespace Gradient {
+    /**
+    *  Get Gradient Value for current Data
+    * @param ctx context of current ChartJS
+    * @param chartArea Area of current ChartJS
+    * @param data data of current ChartJS
+    * @param scales Axes of current ChartJS
+    * @returns Gradient value
+    */
     export function getGradient(ctx, chartArea, data, scales){
         const {left, right, top , bottom, width, height} = chartArea;
          const {x, y} = scales;
@@ -15,7 +23,16 @@ export namespace Gradient {
          gradientBorder.addColorStop(shift,'rgba(255,26,104,1)');
          gradientBorder.addColorStop(1,'rgba(255,26,104,1)');
          return gradientBorder;
-       }
+    }
+
+    /**
+    *  Get BelowGradient Value for current Data
+    * @param ctx context of current ChartJS
+    * @param chartArea Area of current ChartJS
+    * @param data data of current ChartJS
+    * @param scales Axes of current ChartJS
+    * @returns BelowGradient value
+    */
     export function getBelowGradient(ctx, chartArea, data, scales){
         const {left, right, top , bottom, width, height} = chartArea;
         const {x, y} = scales;
@@ -24,6 +41,15 @@ export namespace Gradient {
         gradientBelow.addColorStop(1,'rgba(255,26,104,0.5)');
         return gradientBelow;
     }
+
+    /**
+    *  Get AboveGradient Value for current Data
+    * @param ctx context of current ChartJS
+    * @param chartArea Area of current ChartJS
+    * @param data data of current ChartJS
+    * @param scales Axes of current ChartJS
+    * @returns AboveGradient value
+    */
     export function getAboveGradient(ctx, chartArea, data, scales){
         const {left, right, top , bottom, width, height} = chartArea;
         const {x, y} = scales;

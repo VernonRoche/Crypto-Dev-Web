@@ -2,9 +2,13 @@ import { CoinGeckoApi } from "@/stores/CoinGeckoApi";
 import IconSupport from "@/components/icons/IconSupport.vue";
 import IconSearch from "@/components/icons/IconSearch.vue";
 
+/**
+*  Search for a Crypto Currency on CoinGecho database and return a Div containing the Data
+* @param query Name of the Crypto currency to retrieve data
+* @returns Div containing data from the query
+*/
 export function SearchCoin(query: string): HTMLDivElement {
   const coinsGrid: HTMLDivElement = document.createElement("div");
-  //coinsGrid.setAttribute("class","grid-rows-{2}");
   coinsGrid.setAttribute("class", "container mx-auto overflow-scroll");
   const data = CoinGeckoApi.Search(query);
   data.then((value: any) => {
@@ -19,8 +23,6 @@ export function SearchCoin(query: string): HTMLDivElement {
         symbol:
         thumb:
       */
-      console.log(element);
-
       const coin: HTMLDivElement = document.createElement("div");
       coin.setAttribute("class", "container mx-auto");
       coin.setAttribute("class", "flex");

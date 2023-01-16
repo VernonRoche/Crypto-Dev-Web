@@ -4,7 +4,11 @@ import {getAuth} from "firebase/auth";
 import {count, increment, decrement} from "@/stores/counter"; 
 export namespace Favoris {
 
-
+    /**
+    *  Add a Crypto currencies to Favorite
+    * @param CryptoName Name of a Crypto Currency
+    * @returns true if Favoris as been added false otherwise
+    */
     export async function addFavoris(CryptoName:string) {
         const auth = getAuth();
         const user = auth.currentUser!.uid;
@@ -16,7 +20,11 @@ export namespace Favoris {
         }
         return false;
     }
-
+    /**
+    *  Remove a Crypto currencies to Favorite
+    * @param CryptoName Name of a Crypto Currency
+    * @returns true if Favoris as been removed false otherwise
+    */
     export async function RemoveFavorite(CryptoName:string){
         const auth = getAuth();
         const user = auth.currentUser!.uid
@@ -25,7 +33,11 @@ export namespace Favoris {
             CryptohubApi.removeFavorite(user,CryptoName);
         } 
     }
-
+    /**
+    *  Create a Div that represent a Crypto currencies
+    * @param name Name of a Crypto Currency
+    * @returns Div for the Crypto currency
+    */
     export function createFavIcon(name:string){
         let favIcon: HTMLImageElement = document.createElement("img");
         favIcon.setAttribute("class", "FavIcon inline cursor-pointer");
