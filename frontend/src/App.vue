@@ -6,6 +6,7 @@ import TrendCarousel from "@/components/TrendCarousel.vue";
 import CryptoChart from "@/components/chart/CryptoChart.vue";
 import Fav from "@/components/Fav.vue";
 import { Login } from "@/stores/login";
+import NotificationBar from "@/components/notifications/NotificationBar.vue";
 
 </script>
 <template>
@@ -15,9 +16,10 @@ import { Login } from "@/stores/login";
   </header>
   <body>
     <div class="grid-rows-2 grid-cols-1">
-      <Fav v-if="Login.isLog"/>
+      <Fav v-if="Login.isLog" />
       <CryptoChart />
     </div>
+    <NotificationBar v-if="Login.isLog" />
     <TrendCarousel />
     <CryptoList />
   </body>

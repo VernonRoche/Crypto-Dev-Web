@@ -12,7 +12,6 @@ import { Login } from "@/stores/login";
 import {Favoris} from "@/stores/Favoris";
 import CryptoChart from  "@/components/chart/CryptoChart.vue";
 
-
 export default {
   name: "Fav.vue",
   async mounted(){    
@@ -28,7 +27,6 @@ export default {
           favDiv.setAttribute("class","grid-cols-"+favorites[0].favorite.length);
           favDiv.setAttribute("id","FavDivList");
           favorites[0].favorite.forEach(element => {
-              
               let fav:HTMLDivElement = document.createElement("div");
               fav.setAttribute("class","space-x-5");
               fav.setAttribute("id","FavIcon - "+element.name);

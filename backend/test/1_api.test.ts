@@ -102,8 +102,6 @@ describe('DBcommand', function() {
 
 
     });
-
-   
 });
 
 

@@ -62,7 +62,6 @@ export namespace DBcommand {
             }
         }));
     }
-
     export async function deleteUser(id:number | string , optiontest: number): Promise<void> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
@@ -136,6 +135,7 @@ export namespace DBcommand {
             user_id : id,
         };
         const newValue = {
+
             $push: {  
                 "notification.$": {
                     name : cryptoName,
@@ -143,6 +143,7 @@ export namespace DBcommand {
                 },
             }
         };
+
         await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,newValue);
     }
 
@@ -179,6 +180,7 @@ export namespace DBcommand {
         await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,ValueToRemove);
     }
 
+
     export async function resetNotification(id:number | string , optiontest: number): Promise<void> {
         await mongoClient.connect(async (err: any, db:any) => {
             if (err) throw err;
@@ -192,6 +194,7 @@ export namespace DBcommand {
         };
         await mongoClient.db(DBNAME).collection(COLLNAME).updateOne(User,ValueToRemove);
 }
+
 
     export async function getAllUsers(): Promise<void> {
         await mongoClient.connect();

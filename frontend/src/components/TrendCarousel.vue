@@ -1,6 +1,6 @@
 <template>
   <div
-    class="text-3xl font-bold text-primary overline content-center w-full h-full my-3 py-3"
+    class="text-3xl font-bold text-secondary overline content-center w-full h-full my-3 py-3"
     style="text-align: center"
   >
     Trending Cryptos

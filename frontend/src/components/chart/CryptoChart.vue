@@ -11,39 +11,39 @@
       />
       <div id="legendBox"></div>
     </div>
-  </div>
-  <!-- Data range selectors -->
-  <div class="flex w-full">
-    <!-- Data type selector -->
-    <div
-      class="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center"
-    >
-      <select
-        class="select select-secondary select-lg"
-        v-model="nbDataset"
-        @change="changeDatasets(nbDataset)"
+    <!-- Data range selectors -->
+    <div class="flex w-full">
+      <!-- Data type selector -->
+      <div
+        class="grid h-20 flex-auto w-1/2 card bg-base-300 rounded-box place-items-center"
       >
-        <option Value="0">Prices</option>
-        <option Value="1">Market Caps</option>
-        <option Value="2">Total Volumes</option>
-      </select>
-    </div>
-    <div class="divider divider-horizontal"></div>
-    <!-- Data range selector -->
-    <div
-      class="grid h-20 flex-grow card bg-base-300 rounded-box place-items-center"
-    >
-      <select
-        class="select select-secondary select-lg"
-        v-model="TimeRange"
-        @change="changeTimeRange(this.TimeRange)"
+        <select
+          class="select select-secondary select-lg"
+          v-model="nbDataset"
+          @change="changeDatasets(nbDataset)"
+        >
+          <option Value="0">Prices</option>
+          <option Value="1">Market Caps</option>
+          <option Value="2">Total Volumes</option>
+        </select>
+      </div>
+      <div class="divider divider-horizontal"></div>
+      <!-- Data range selector -->
+      <div
+        class="grid h-20 flex-auto w-1/2 card bg-base-300 rounded-box place-items-center"
       >
-        <option Value="1">1 Day</option>
-        <option Value="5">5 Day</option>
-        <option Value="30">1 Month</option>
-        <option Value="365">1 Year</option>
-        <option Value="1825">5 Year</option>
-      </select>
+        <select
+          class="select select-secondary select-lg"
+          v-model="TimeRange"
+          @change="changeTimeRange(this.TimeRange)"
+        >
+          <option Value="1">1 Day</option>
+          <option Value="5">5 Day</option>
+          <option Value="30">1 Month</option>
+          <option Value="365">1 Year</option>
+          <option Value="1825">5 Year</option>
+        </select>
+      </div>
     </div>
   </div>
 </div>
@@ -359,12 +359,18 @@ async function changeData(
   }
 }
 
+let currentCurrency: string = "Bitcoin";
+function changeCurrentCurrency(name: string) {
+  currentCurrency = name;
+}
+
 export default {
   name: "CryptoChart",
   components: { Line },
   props: ["data"],
   data() {
     return {
+      currentCurrency,
       loaded: false,
       chartData: null,
       options: option,
@@ -378,6 +384,7 @@ export default {
     changeData: changeData,
     changeTimeRange: changeTimeRange,
     initData: initData,
+    changeCurrentCurrency,
   },
   async mounted() {
     await this.initData();
