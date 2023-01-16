@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 import { DBcommand } from "../DBcommand";
-
 /**
  * @openapi
  * /getUser:
@@ -20,20 +19,47 @@ import { DBcommand } from "../DBcommand";
  *        content:
  *          application/json; charset=utf-8:
  *            schema:
- *              type: string
- *            examples: {}
+ *              type: object
+ *              properties:
+ *                user_id:
+ *                  type: string
+ *                mail:
+ *                  type: string
+ *                favorite:
+ *                  type: array
+ *                  items:
+ *                    type: object
+ *                    properties:
+ *                      coin_id:
+ *                        type: string
+ *                      name:
+ *                        type: string
+ *                notification:
+ *                  type: array
+ *                  items:
+ *                    type: string
+ *            examples:
+ *              '0':
+ *                value: |-
+ *                  {
+ *                    "user_id": "FgstGsdUOmV6MOUsV7yL9Vbvs5g1",
+ *                    "mail": "mai@mail.fr",
+ *                    "favorite": [{"name":"Bitcoin",  "coin_id":"bitcoin"   }, {"name":"Ethereum",  "coin_id":"ethereum"   }, {"name":"Litecoin",  "coin_id":"litecoin" } ],
+ *                    "notification": [""]
+ *                  }
  *    tags:
  *      - User         
  */
 router.get("/getUser", async function (req: any, res: any) {
   res.setHeader("Content-Type", "application/json");
   try {
-    res.send(await DBcommand.getUser(req.query.user_id , 1));
+    res.status(200).json(await DBcommand.getUser(req.query.user_id , 1));
   } catch (error) {
     console.error(error);
     await res.status(424).json({ error });
   }
 });
+
 
 /**
  * @openapi
@@ -76,14 +102,16 @@ router.get("/getUser", async function (req: any, res: any) {
  *       '200':
  *         description: User Successfully Added
  *         content:
- *           text/html; charset=utf-8:
+ *           application/json; charset=utf-8:
  *             schema:
  *               type: string
- *             examples: {}
+ *             examples:
+ *               '0':
+ *                 value: 'User Successfully Added'
  *     tags:
  *       - User   
  */
-router.post("/addUser", async function (req: any, res: any) {
+router.post("/addUser", async function (req:any, res: any) {
   try {    
     await DBcommand.insertUser(
       req.query.user_id,
@@ -92,12 +120,15 @@ router.post("/addUser", async function (req: any, res: any) {
       req.query.notification,
       1
     );    
-    res.send("User Successfully Added");
+    res.setHeader("Content-Type", "application/json");
+    res.status(200).json({ message: "User Successfully Added" });
   } catch (error) {
     console.error(error);
     await res.status(424).json({ error });
   }
 });
+
+
 
 /**
  * @openapi
@@ -106,7 +137,7 @@ router.post("/addUser", async function (req: any, res: any) {
  *    description: Delete a User from the Database
  *    parameters:
  *      - name: user_id
- *        in: query
+ *        in: path
  *        schema:
  *          type: string
  *        example: FgstGsdUOmV6MOUsV7yL9Vbvs5g1
@@ -114,6 +145,14 @@ router.post("/addUser", async function (req: any, res: any) {
  *    responses:
  *      '200':
  *        description: User Successfully Deleted
+ *        content:
+ *            application/json:
+ *                schema:
+ *                  type: object
+ *                  properties:
+ *                    message:
+ *                      type: string
+ *                      example: User Successfully Deleted
  *    tags:
  *      - User     
  */
@@ -143,10 +182,23 @@ router.delete("/deleteUser", async function (req: any, res: any) {
  *       '200':
  *         description: List of favorites of the user
  *         content:
- *           application/json; charset=utf-8:
+ *           application/json:
  *             schema:
- *               type: string
- *             examples: {}
+ *                type: array
+ *                items:
+ *                  type: object
+ *                  properties:
+ *                    coin_id:
+ *                      type: string
+ *                    name:
+ *                      type: string
+ *             examples:
+ *                value:
+ *                  [
+ *                    {"coin_id":"bitcoin","name":"Bitcoin"},
+ *                    {"coin_id":"ethereum","name":"Ethereum"},
+ *                    {"coin_id":"litecoin","name":"Litecoin"}
+ *                  ]
  *     tags:
  *       - Favorites    
 */
@@ -184,16 +236,21 @@ router.get("/getFavorite", async function (req: any, res: any) {
  *               value: |-
  *                 {
  *                   "user_id": "FgstGsdUOmV6MOUsV7yL9Vbvs5g1",
- *                   "favorite": {  "name": "Bitcoin",  "coin_id": "bitcoin" }
+ *                   "favorite": {  "coin_id": "bitcoin",  "name": "Bitcoin" }
  *                 }
  *     responses:
  *       '200':
  *         description: Favorite Successfully Added
  *         content:
- *           text/html; charset=utf-8:
+ *           application/json:
  *             schema:
- *               type: string
- *             examples: {}
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *             examples:
+ *               value:
+ *                 { "message":"Favorite Successfully Added"}
  *     tags:
  *       - Favorites  
 */
@@ -219,7 +276,7 @@ router.put("/addFavorite", async function (req: any, res: any) {
  *          type: string
  *         example: FgstGsdUOmV6MOUsV7yL9Vbvs5g1
  *         required: true
- *       - name: cryptoName
+ *       - name: favorite
  *         in: query
  *         schema:
  *          type: object
@@ -229,16 +286,21 @@ router.put("/addFavorite", async function (req: any, res: any) {
  *            name:
  *              type: string
  *         example:
- *           {  "name": "Bitcoin",  "coin_id": "bitcoin" }
+ *           {  "coin_id": "bitcoin",  "name": "Bitcoin" }
  *         required: true 
  *     responses:
  *       '200':
  *         description: Favorite Successfully Deleted
  *         content:
- *           text/html; charset=utf-8:
+ *           application/json:
  *             schema:
- *               type: string
- *             examples: {}
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *             examples:
+ *               value:
+ *                 { "message":"Favorite Successfully Deleted"}
  *     tags:
  *       - Favorites  
  */
@@ -259,6 +321,7 @@ router.delete("/removeFavorite", async function (req: any, res: any) {
  *  put:
  *     description: Replace the current mail address for a specific user by a new one
  *     requestBody:
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
@@ -279,10 +342,15 @@ router.delete("/removeFavorite", async function (req: any, res: any) {
  *       '200':
  *         description: Mail Successfully Changed
  *         content:
- *           text/html; charset=utf-8:
+ *           application/json:
  *             schema:
- *               type: string
- *             examples: {}
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *             examples:
+ *               '0':
+ *                 value: { "message": "Mail Successfully Changed" }
  *     tags:
  *       - Mail  
  */
@@ -332,7 +400,9 @@ router.put("/changeEmail", async function (req: any, res: any) {
  *           text/html; charset=utf-8:
  *             schema:
  *               type: string
- *             examples: {}
+ *             examples: 
+ *                '0':
+ *                  value: Notification Successfully Added
  *     tags:
  *       - Notifications  
 */
@@ -369,8 +439,20 @@ router.post("/addNotification", async function (req: any, res: any) {
  *        content:
  *          application/json; charset=utf-8:
  *            schema:
- *              type: string
- *            examples: {}
+ *              type: array
+ *              items:
+ *                type: object
+ *                properties:
+ *                  user_id:
+ *                    type: string
+ *                  cryptoName:
+ *                    type: string
+ *                  targeValue:
+ *                    type: integer
+ *                example:
+ *                  - user_id: FgstGsdUOmV6MOUsV7yL9Vbvs5g1
+ *                    cryptoName: Bitcoin
+ *                    targeValue: 20519
  *    tags:
  *      - Notifications  
  */
@@ -389,23 +471,23 @@ router.get("/getNotification", async function (req: any, res: any) {
  *     description: Delete a notification for a specific user
  *     parameters:
  *       - name: user_id
- *         in: query
+ *         in: path
  *         schema:
  *          type: string
  *         example: FgstGsdUOmV6MOUsV7yL9Vbvs5g1
  *         required: true
- *       - name: cryptoName
- *         in: query
+ *       - name: coin_id
+ *         in: path
  *         schema:
- *          type: object
- *          properties:
- *            coin_id:
- *              type: string
- *            name:
- *              type: string
- *         example:
- *           {  "name": "Bitcoin",  "coin_id": "bitcoin" }
- *         required: true        
+ *          type: string
+ *         example: bitcoin
+ *         required: true
+ *       - name: name
+ *         in: path
+ *         schema:
+ *          type: string
+ *         example: Bitcoin
+ *         required: true
  *     responses:
  *       '200':
  *         description: Notification Successfully Deleted
@@ -413,7 +495,9 @@ router.get("/getNotification", async function (req: any, res: any) {
  *           text/html; charset=utf-8:
  *             schema:
  *               type: string
- *             examples: {}
+ *             examples: 
+ *                '0':
+ *                  value: Notification Successfully Deleted
  *     tags:
  *       - Notifications  
  */
@@ -457,7 +541,9 @@ router.delete("/removeNotification", async function (req: any, res: any) {
  *           text/html; charset=utf-8:
  *             schema:
  *               type: string
- *             examples: {}
+ *             examples: 
+ *                '0':
+ *                  value: Notification Successfully Reset
  *     tags:
  *       - Notifications         
  */
