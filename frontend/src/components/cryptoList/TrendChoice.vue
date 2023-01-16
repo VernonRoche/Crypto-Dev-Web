@@ -7,6 +7,9 @@
 <script lang="ts">
 import { CoinGeckoApi } from "@/stores/CoinGeckoApi";
 
+/**
+* Create a Div containing Trending Crypto currencies
+ */
 function CreateTrendElement(): HTMLDivElement {
   const trendGrid: HTMLDivElement = document.createElement("div");
   trendGrid.setAttribute("class", "grid gap-4 grid-cols-{7} ");

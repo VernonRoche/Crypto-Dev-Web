@@ -79,6 +79,12 @@ ChartJS.register(
 ChartJS.register(zoomPlugin);
 ChartJS.register(annotationPlugin);
 
+/**
+ * Change the time range of the graph
+ * @param this reference to this component
+ * @param range time range in days (from 1 day to 1825)
+ * @param currency An array of favorite cryptocurrencies
+ */
 function changeTimeRange(
   this: {
     changeDatasets: (nbDataset?: number) => void;
@@ -104,6 +110,10 @@ function changeTimeRange(
   }
 }
 
+/**
+ * Change the dataset diplaying in the graph (Prices or Market Cap or Volumes)
+ * @param nbDataset number representing wich dataset to display (0 = Prices , 1 = Market Cap, 2 = Volumes)
+ */
 function changeDatasets(nbDataset: number = 0) {
   for (const key in ChartJS.instances) {
     if (ChartJS.instances[key].canvas.id == "CryptoChart") {
@@ -116,6 +126,10 @@ function changeDatasets(nbDataset: number = 0) {
   }
 }
 
+/**
+ * Generate a random color
+ * @return a Hexadecimal code coresponding to a color 
+ */
 function randomColor() {
   return (
     "#" +
@@ -126,7 +140,12 @@ function randomColor() {
   );
 }
 
-// This is the main component of the chart, it initializes the data and displays it
+/**
+ * Initial building of the Chart and loading of datas
+ * @param this reference to this component
+ * @param range time range in days (from 1 day to 1825)
+ * @param currency the target currency of market data (eur,usd,jpy,...)
+ */
 async function initData(this: {
   chartData: { labels: any; datasets: Object[] };
   loaded: boolean;
@@ -223,8 +242,13 @@ async function initData(this: {
   }
 }
 
-// Similarly to the initData function, this function is used to update the data of the chart instead
-
+/**
+ * Call to change the Crypto curencies Data currently displaying by the chart
+ * @param this reference to this component
+ * @param  id CoinGecko ID representing the CryptoCurency
+ * @param currency the target currency of market data (eur,usd,jpy,...)
+ * @param nbday time range in days (from 1 day to 1825)
+ */
 async function changeData(
   this: {
     TimeRange: number;

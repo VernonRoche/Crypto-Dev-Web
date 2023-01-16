@@ -207,6 +207,7 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
 /**
 * Sort the Crypto List by ascending or descending
 * @param dir the direction for the sort (ascending or descending)
+* @param nbHeader a number representing the header that will be used to sort the list
  */
 function sortTableByHeader(dir: string, nbHeader: number): void {
   let tableName: string = "CryptoList";
