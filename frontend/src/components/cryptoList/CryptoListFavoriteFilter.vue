@@ -13,6 +13,10 @@ import {CryptohubApi} from "@/stores/CryptohubApi";
 import {getAuth} from "firebase/auth";
 import { Login } from "@/stores/login";
 
+
+/**
+* Hide all Crypto currencies of the CryptoList that are not favorites
+ */
 async function DisplayFav(): Promise<void> {
   const auth = getAuth();
   const user = auth.currentUser!.uid;
@@ -33,6 +37,10 @@ async function DisplayFav(): Promise<void> {
   }
 }
 
+
+/**
+* Show all the Crypto currencies of the CryptoList.
+ */
 function hideFav(): void {
     let table: HTMLTableElement = document.getElementById( "CryptoList" ) as HTMLTableElement;
     let rows: HTMLCollectionOf<HTMLTableRowElement> = table.rows;

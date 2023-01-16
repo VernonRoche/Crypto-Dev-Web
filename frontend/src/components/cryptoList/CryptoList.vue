@@ -18,7 +18,11 @@ import CryptoChart from "@/components/chart/CryptoChart.vue";
 let CryptoName: Array<string> = [];
 let cryptoPrices: { name: string; price: number }[] = [];
 
-// Get the list of all cryptos, and builds up progressively the list by adding the cryptos one by one as HTML elements
+/**
+* Create a Div containing all Crypto currencies availables
+* @param currency the target currency of market data (eur,usd,jpy,...)
+* @returns Div containing all Crypto currencies availables
+ */
 function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
   let tbody: HTMLTableSectionElement = document.createElement("tbody");
   tbody.setAttribute("id","CryptoRow");
@@ -195,12 +199,15 @@ function createCryptoList(currency: string = "usd"): HTMLTableSectionElement {
         window.scrollTo(0, 0);
       });
       tbody.appendChild(row);
-    }
+    });
   });
 
   return tbody;
 }
-
+/**
+* Sort the Crypto List by ascending or descending
+* @param dir the direction for the sort (ascending or descending)
+ */
 function sortTableByHeader(dir: string, nbHeader: number): void {
   let tableName: string = "CryptoList";
   let i: number;

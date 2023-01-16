@@ -22,6 +22,9 @@
 <script lang="ts">
 import IconSearch from "@/components/icons/IconSearch.vue";
 
+/**
+* Search for a Crypto currencies inside CryptoList
+ */
 function SearchCoin(): void {
   const input = document.getElementById("cryptoSearch") as HTMLInputElement;
   const filter = input.value.toUpperCase();
