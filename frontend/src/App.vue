@@ -14,7 +14,7 @@ import NotificationBar from "@/components/notifications/NotificationBar.vue";
     <NavbarHeader />
   </header>
   <body>
-    <div class="grid-rows-2 grid-cols-1">
+    <div class="whitespace-nowrap grid-rows-2 grid-cols-1">
       <Fav v-if="Login.isLog" />
       <CryptoChart />
     </div>

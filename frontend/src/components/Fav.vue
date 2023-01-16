@@ -25,7 +25,8 @@ export default {
         let favorites = await CryptohubApi.getFavorites(user);
         if(favorites.length > 0){
           let favDiv:HTMLDivElement = document.createElement("div");
-          favDiv.setAttribute("class","grid-cols-"+favorites[0].favorite.length);
+          favDiv.setAttribute("class","flaot-left bg-base-300 rounded-box p-6");
+          favDiv.setAttribute("display","table-cell");
           favDiv.setAttribute("id","FavDivList");
           favorites[0].favorite.forEach(element => {
 
