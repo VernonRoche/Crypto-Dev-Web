@@ -2,14 +2,11 @@
   "name": "frontend",
   "version": "0.0.0",
   "scripts": {
-    "clean": "rimraf .nyc_output  ./node_modules ./coverage package-lock.json" ,
-    "cleantest": "rimraf js",
-    "compile": "npm run cleantest && tsc",
+    "clean": "rimraf   ./node_modules  package-lock.json" ,
     "dev": "vite",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "test:unit": "vitest --environment jsdom --root src/",
-    "test": "npm run compile && nyc --reporter=text-summary --reporter=lcov mocha js/test --recursive --exit",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"

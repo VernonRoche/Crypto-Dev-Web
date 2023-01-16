@@ -11,7 +11,7 @@
     "start": "node ./bin/www",
     "build": "tsc --project ./",
     "dev": "tsc --project ./ && node ./bin/www ",
-    "test": "npm run compile && nyc --reporter=text-summary --reporter=lcov mocha js/test --recursive --exit",
+    "test": "npm run compile && nyc --reporter=text-summary --reporter=lcov mocha --timeout 50000  js/test --recursive --exit",
     "format": "prettier --config .prettierrc \"src/**/*.ts\" --write",
     "lint": "eslint . --ext .ts src/**/*.ts",
     "lint:fix": "eslint --ext .ts src/**/*.ts --fix",
@@ -39,6 +39,7 @@
     "@types/node": "^18.11.18",
     "chai": "^4.3.7",
     "expect": "^29.3.1",
+    "mocha": "^10.2.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4"
   }

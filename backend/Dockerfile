@@ -17,5 +17,5 @@ RUN npm run dev
 
 
 
-EXPOSE 5173
+EXPOSE 9666
 CMD["npm","run","serve"] 

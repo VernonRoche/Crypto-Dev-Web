@@ -36,7 +36,7 @@ test("create and Sign with password", async () => {
   await createUserWithEmailAndPassword(auth, email, password).then((_data) => {
 
     const user = auth.currentUser;
-    CryptohubApi.addUser(user!.uid, email,["Bitcoin", "Ethereum", "Litecoin"],[""]);
+    CryptohubApi.addUser(user!.uid, email,["Bitcoin", "Ethereum", "Litecoin"],["add user"]);
     
   }).catch((error) => {
     

@@ -1,16 +1,15 @@
 <template>
-  <div class="inline">
-    <div class="container m-auto">
-      <div id="chart-container" class="container h-50 w-50">
-        <Line
-          id="CryptoChart"
-          v-if="loaded"
-          :data="chartData"
-          :options="options"
-          ref="line"
-        />
-        <div id="legendBox"></div>
-      </div>
+<div class="inline">
+  <div class="container m-auto">
+    <div id="chart-container" class="container h-50 w-50">
+      <Line
+        id="CryptoChart"
+        v-if="loaded"
+        :data="chartData"
+        :options="options"
+        ref="line"
+      />
+      <div id="legendBox"></div>
     </div>
     <!-- Data range selectors -->
     <div class="flex w-full">
@@ -47,6 +46,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script lang="ts">
@@ -287,9 +287,9 @@ async function changeData(
   //demande d'affichage d'une crypto
   for (const key in ChartJS.instances) {
     if (ChartJS.instances[key].canvas.id == "CryptoChart") {
-      ChartJS.instances[key].options.plugins["title"]["text"] = id + " chart";
 
       try {
+        ChartJS.instances[key].options.plugins["title"]["text"] = id + " chart";
         await createCryptoData(id, currency, nbDay).then((data) => {
           let datasetList: Array<any> = [];
           for (const key in data[0]) {

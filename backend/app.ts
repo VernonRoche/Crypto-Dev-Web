@@ -3,9 +3,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 let cors = require('cors');
-import swaggerJsDoc from 'swagger-jsdoc';
-import { serve, setup } from 'swagger-ui-express';
 
+import { serve, setup } from 'swagger-ui-express';
+import swaggerSpec from "./utils/swaggerSpec";
 
 // Load route
 
@@ -28,35 +28,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/cryptohub/api', usersRouter);
 
-
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
+app.use('/docs',serve,setup(swaggerSpec));
+app.get('/docs.json',(req:any,res:any) => {
+    res.setHeader("Content-Type","application/json");
+    res.send(swaggerSpec);
 });
 
+app.listen(port, async () => {
+    console.log(`App listening at http://localhost:${port}`);
 
-/**
- * openApi
- */
-const options = {
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'Contact REST API',
-            description: "A REST API built with Express and MongoDB.",
-            version: '0.1',
-        },
-        servers: [
-            {
-                url: 'http://localhost:9666/api',
-                description: 'Development server',
-            },
-        ],
-    },
-    apis: ["./js/routes/users.js"],
-}
+});
 
-const openapiSpecification = swaggerJsDoc(options);
-app.use('/docs', serve, setup(openapiSpecification));
+// Every notificationPeriod time, fetch the data from the API and send the notifications
+/*
+const notificationPeriod = 1000 * 60 * 60; // 1 hour
+
+setInterval(() => {
+
+}, notificationPeriod);
+*/
 
 module.exports = app;

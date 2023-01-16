@@ -126,8 +126,7 @@ const register = (): void => {
         console.log("Successfully registered !!! ");
         console.log(_data);
         const user = auth.currentUser;
-        CryptohubApi.addUser(user!.uid, email.value, ["Bitcoin", "Ethereum", "Litecoin"], [""]);
-
+        CryptohubApi.addUser(user!.uid, email.value, [{name:"Bitcoin",  coin_id:"bitcoin"   }, {name:"Ethereum",  coin_id:"ethereum"   }, {name:"Litecoin",  coin_id:"litecoin" } ], [""]);
         updateProfile(user!, {
           displayName: name.value,
         });
