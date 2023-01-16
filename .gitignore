@@ -108,3 +108,9 @@ dist
 
 # Webstorm
 .idea
+
+# Backend
+/backend/app.js
+/backend/routes/*.js
+/backend/DBcommand.js
+

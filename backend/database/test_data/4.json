@@ -1,0 +1,1 @@
+{"user_id": "1234567890", "favorites": ["Bitcoin", "Ethereum", "Litecoin"], "email": "john.doefour@gmail.com", "notifications": [{"name": "Bitcoin", "target_value": 10000}, {"name": "Ethereum", "target_value": 5000}]}
