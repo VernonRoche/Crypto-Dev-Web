@@ -10,7 +10,7 @@ const DBNAME = "test";
 describe('DBcommand', function() {
     
     // test la fonction insertUser
-    describe('insertUser et getUser', function() {
+    describe('User', function() {
         it('should insert a user', async function() {
             await DBcommand.insertUser("0123456789", "test@crypto.fr",["test"],[""],2);
             const user = await DBcommand.getUser("0123456789",2);
@@ -32,7 +32,9 @@ describe('DBcommand', function() {
 
 
         });
+    
 
+    
         it('should delete a user', async function() {
             await DBcommand.deleteUser("0123456789",2) ;
             const user = await DBcommand.getUser("0123456789", 2);
@@ -42,7 +44,9 @@ describe('DBcommand', function() {
             // assert.deepEqual(result.favorite, null);
             // assert.deepEqual(result.notification, null);
         });
+    });
 
+    describe('Favorite', function() {
         it('should add and get  favorite', async function() {
             await DBcommand.insertUser("01234", "test2@crypto.fr",[""],[""],2);
             await DBcommand.addFavorite("01234", "crypto",2);
@@ -59,7 +63,10 @@ describe('DBcommand', function() {
             assert.deepEqual(result.favorite, []);
         });
 
+    });
 
+
+    describe('Notification', function() {
         it('change email', async function() {
             await DBcommand.changeEmail("01234", "toto@test.com",2);
             const user = DBcommand.getUser("01234",2);
@@ -99,9 +106,13 @@ describe('DBcommand', function() {
 
         });
 
-
-
     });
+
+
+
+    
 });
+
+
 
 
